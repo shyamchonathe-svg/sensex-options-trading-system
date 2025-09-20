@@ -1,0 +1,9 @@
+aiosqlite==0.21.0
+ft-pandas-ta==0.3.15
+kiteconnect==5.0.1
+numpy==2.2.6
+pandas==2.3.1
+python-dotenv==1.1.1
+python-telegram-bot==22.3
+pytz==2025.2
+tenacity==9.1.2

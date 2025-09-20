@@ -1,0 +1,28 @@
+{
+  "position_size": 100,
+  "lot_size": 20,
+  "max_daily_trades": 3,
+  "max_consecutive_losses": 2,
+  "max_daily_loss": -25000,
+  "max_exposure": 100000,
+  "data_dir": "option_data",
+  "instruments": ["SENSEX"],
+  "market_holidays": [
+    "2025-10-02", 
+    "2025-10-21", 
+    "2025-10-22", 
+    "2025-11-05", 
+    "2025-12-25"
+  ],
+  "signal_config": {
+    "min_confidence": 0.8,
+    "sensex": {
+      "ema_diff_threshold": 51,
+      "proximity_threshold": 21
+    },
+    "option": {
+      "ema_diff_threshold": 15,
+      "proximity_threshold": 21
+    }
+  }
+}
