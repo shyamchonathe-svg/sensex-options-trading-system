@@ -1,0 +1,3999 @@
+{
+  "metadata": {
+    "spot_price": 80710.76,
+    "min_strike": 79700,
+    "max_strike": 81800,
+    "range_points": 1000,
+    "generated_at": "2025-09-05T13:20:15.527004",
+    "total_expiries": 20,
+    "weekly_expiries": [
+      "2025-09-11",
+      "2025-09-18",
+      "2025-09-25",
+      "2025-10-02",
+      "2025-10-09",
+      "2025-10-16",
+      "2025-10-23"
+    ]
+  },
+  "expiries": {
+    "2025-09-11": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591179700CE",
+            "instrument_token": 220002821,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591179700PE",
+            "instrument_token": 219940869,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591179800CE",
+            "instrument_token": 219955461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591179800PE",
+            "instrument_token": 219998213,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591179900CE",
+            "instrument_token": 219909125,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591179900PE",
+            "instrument_token": 219951621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591180000CE",
+            "instrument_token": 219975941,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180000PE",
+            "instrument_token": 219909381,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591180100CE",
+            "instrument_token": 219929861,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180100PE",
+            "instrument_token": 219968517,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591180200CE",
+            "instrument_token": 220067845,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180200PE",
+            "instrument_token": 219923717,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591180300CE",
+            "instrument_token": 219943429,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180300PE",
+            "instrument_token": 219982085,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591180400CE",
+            "instrument_token": 220079109,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180400PE",
+            "instrument_token": 219937541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591180500CE",
+            "instrument_token": 219952901,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180500PE",
+            "instrument_token": 220073221,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591180600CE",
+            "instrument_token": 220090117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180600PE",
+            "instrument_token": 219949317,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX2591180700CE",
+            "instrument_token": 219964165,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180700PE",
+            "instrument_token": 220084485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591180800CE",
+            "instrument_token": 219917829,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180800PE",
+            "instrument_token": 219957253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591180900CE",
+            "instrument_token": 220056069,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591180900PE",
+            "instrument_token": 219911173,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591181000CE",
+            "instrument_token": 219984645,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181000PE",
+            "instrument_token": 220020741,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591181100CE",
+            "instrument_token": 220038405,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181100PE",
+            "instrument_token": 220077061,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591181200CE",
+            "instrument_token": 219995653,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181200PE",
+            "instrument_token": 220033797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181300CE",
+            "instrument_token": 220047877,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181300PE",
+            "instrument_token": 219990277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181400CE",
+            "instrument_token": 220004869,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181400PE",
+            "instrument_token": 220043269,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181500CE",
+            "instrument_token": 219958789,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181500PE",
+            "instrument_token": 220000261,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181600CE",
+            "instrument_token": 220015877,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181600PE",
+            "instrument_token": 220052741,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181700CE",
+            "instrument_token": 219972613,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181700PE",
+            "instrument_token": 220008965,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591181800CE",
+            "instrument_token": 220029445,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591181800PE",
+            "instrument_token": 220066053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 5
+    },
+    "2025-09-18": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591879700CE",
+            "instrument_token": 220694533,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591879700PE",
+            "instrument_token": 220782341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591879800CE",
+            "instrument_token": 220796677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591879800PE",
+            "instrument_token": 220689925,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591879900CE",
+            "instrument_token": 220761605,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591879900PE",
+            "instrument_token": 220792069,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591880000CE",
+            "instrument_token": 220733445,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880000PE",
+            "instrument_token": 220762117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX2591880100CE",
+            "instrument_token": 220776453,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880100PE",
+            "instrument_token": 220806149,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591880200CE",
+            "instrument_token": 220742917,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880200PE",
+            "instrument_token": 220773381,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591880300CE",
+            "instrument_token": 220783877,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880300PE",
+            "instrument_token": 220677125,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591880400CE",
+            "instrument_token": 220749829,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880400PE",
+            "instrument_token": 220780293,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591880500CE",
+            "instrument_token": 220793605,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880500PE",
+            "instrument_token": 220745989,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX2591880600CE",
+            "instrument_token": 220758277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880600PE",
+            "instrument_token": 220788741,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX2591880700CE",
+            "instrument_token": 220725765,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880700PE",
+            "instrument_token": 220753413,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591880800CE",
+            "instrument_token": 220769285,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880800PE",
+            "instrument_token": 220798469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591880900CE",
+            "instrument_token": 220734981,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591880900PE",
+            "instrument_token": 220763909,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591881000CE",
+            "instrument_token": 220678149,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881000PE",
+            "instrument_token": 220706309,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591881100CE",
+            "instrument_token": 220720389,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881100PE",
+            "instrument_token": 220748037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX2591881200CE",
+            "instrument_token": 220687365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881200PE",
+            "instrument_token": 220715269,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881300CE",
+            "instrument_token": 220728069,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881300PE",
+            "instrument_token": 220683013,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881400CE",
+            "instrument_token": 220696325,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881400PE",
+            "instrument_token": 220724229,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881500CE",
+            "instrument_token": 220799749,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881500PE",
+            "instrument_token": 220691973,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881600CE",
+            "instrument_token": 220702469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881600PE",
+            "instrument_token": 220732677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881700CE",
+            "instrument_token": 220672773,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881700PE",
+            "instrument_token": 220700165,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX2591881800CE",
+            "instrument_token": 220712197,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX2591881800PE",
+            "instrument_token": 220803589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 12
+    },
+    "2025-09-25": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25SEP79700CE",
+            "instrument_token": 215521797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP79700PE",
+            "instrument_token": 215426565,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25SEP79800CE",
+            "instrument_token": 215434757,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP79800PE",
+            "instrument_token": 215515909,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25SEP79900CE",
+            "instrument_token": 215407365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP79900PE",
+            "instrument_token": 215431685,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25SEP80000CE",
+            "instrument_token": 293813253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80000PE",
+            "instrument_token": 293727493,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25SEP80100CE",
+            "instrument_token": 215420677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80100PE",
+            "instrument_token": 215495429,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25SEP80200CE",
+            "instrument_token": 215509253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80200PE",
+            "instrument_token": 215416581,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25SEP80300CE",
+            "instrument_token": 215476229,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80300PE",
+            "instrument_token": 215503621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25SEP80400CE",
+            "instrument_token": 215518469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80400PE",
+            "instrument_token": 215423237,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25SEP80500CE",
+            "instrument_token": 215484677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80500PE",
+            "instrument_token": 215514373,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25SEP80600CE",
+            "instrument_token": 215404549,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80600PE",
+            "instrument_token": 215480325,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25SEP80700CE",
+            "instrument_token": 215492357,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80700PE",
+            "instrument_token": 215523333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25SEP80800CE",
+            "instrument_token": 215413253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80800PE",
+            "instrument_token": 215488517,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25SEP80900CE",
+            "instrument_token": 215500805,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP80900PE",
+            "instrument_token": 215408901,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25SEP81000CE",
+            "instrument_token": 293449221,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81000PE",
+            "instrument_token": 293558789,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25SEP81100CE",
+            "instrument_token": 215424261,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81100PE",
+            "instrument_token": 215446277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25SEP81200CE",
+            "instrument_token": 215456517,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81200PE",
+            "instrument_token": 215483141,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81300CE",
+            "instrument_token": 215429893,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81300PE",
+            "instrument_token": 215453189,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81400CE",
+            "instrument_token": 215464197,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81400PE",
+            "instrument_token": 215427589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81500CE",
+            "instrument_token": 215436037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81500PE",
+            "instrument_token": 215459845,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81600CE",
+            "instrument_token": 215410181,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81600PE",
+            "instrument_token": 215432709,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81700CE",
+            "instrument_token": 215443461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81700PE",
+            "instrument_token": 215468293,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25SEP81800CE",
+            "instrument_token": 215418885,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25SEP81800PE",
+            "instrument_token": 215440389,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 19
+    },
+    "2025-10-01": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0179700CE",
+            "instrument_token": 221554693,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0179700PE",
+            "instrument_token": 221451525,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0179800CE",
+            "instrument_token": 221464581,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0179800PE",
+            "instrument_token": 221549061,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0179900CE",
+            "instrument_token": 221564421,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0179900PE",
+            "instrument_token": 221459205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0180000CE",
+            "instrument_token": 221533957,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180000PE",
+            "instrument_token": 221564677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0180100CE",
+            "instrument_token": 221504773,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180100PE",
+            "instrument_token": 221530117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0180200CE",
+            "instrument_token": 221541893,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180200PE",
+            "instrument_token": 221442309,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0180300CE",
+            "instrument_token": 221512453,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180300PE",
+            "instrument_token": 221538821,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0180400CE",
+            "instrument_token": 221550853,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180400PE",
+            "instrument_token": 221448965,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0180500CE",
+            "instrument_token": 221519621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180500PE",
+            "instrument_token": 221546757,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0180600CE",
+            "instrument_token": 221561349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180600PE",
+            "instrument_token": 221516293,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25O0180700CE",
+            "instrument_token": 221526277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180700PE",
+            "instrument_token": 221556485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0180800CE",
+            "instrument_token": 221497349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180800PE",
+            "instrument_token": 221522949,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0180900CE",
+            "instrument_token": 221534981,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0180900PE",
+            "instrument_token": 221434373,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0181000CE",
+            "instrument_token": 221480965,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181000PE",
+            "instrument_token": 221510917,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0181100CE",
+            "instrument_token": 221449477,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181100PE",
+            "instrument_token": 221476613,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0181200CE",
+            "instrument_token": 221491205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181200PE",
+            "instrument_token": 221518341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181300CE",
+            "instrument_token": 221456901,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181300PE",
+            "instrument_token": 221486341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181400CE",
+            "instrument_token": 221499653,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181400PE",
+            "instrument_token": 221453061,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181500CE",
+            "instrument_token": 221466117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181500PE",
+            "instrument_token": 221495813,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181600CE",
+            "instrument_token": 221436165,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181600PE",
+            "instrument_token": 221462277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181700CE",
+            "instrument_token": 221473285,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181700PE",
+            "instrument_token": 221503749,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0181800CE",
+            "instrument_token": 221443589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0181800PE",
+            "instrument_token": 221470469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 25
+    },
+    "2025-10-09": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0979700CE",
+            "instrument_token": 223477253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0979700PE",
+            "instrument_token": 223522053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0979800CE",
+            "instrument_token": 223507205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0979800PE",
+            "instrument_token": 223553029,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0979900CE",
+            "instrument_token": 223494661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0979900PE",
+            "instrument_token": 223539973,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0980000CE",
+            "instrument_token": 223540997,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980000PE",
+            "instrument_token": 223497733,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O0980100CE",
+            "instrument_token": 223482117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980100PE",
+            "instrument_token": 223526149,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0980200CE",
+            "instrument_token": 223563781,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980200PE",
+            "instrument_token": 223515909,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0980300CE",
+            "instrument_token": 223499525,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980300PE",
+            "instrument_token": 223545349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0980400CE",
+            "instrument_token": 223490053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980400PE",
+            "instrument_token": 223486469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0980500CE",
+            "instrument_token": 223517445,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980500PE",
+            "instrument_token": 223567365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O0980600CE",
+            "instrument_token": 223547141,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980600PE",
+            "instrument_token": 223502341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25O0980700CE",
+            "instrument_token": 223535109,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980700PE",
+            "instrument_token": 223492613,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0980800CE",
+            "instrument_token": 223475205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980800PE",
+            "instrument_token": 223520261,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0980900CE",
+            "instrument_token": 223556357,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0980900PE",
+            "instrument_token": 223550469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0981000CE",
+            "instrument_token": 223476229,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981000PE",
+            "instrument_token": 223521285,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0981100CE",
+            "instrument_token": 223505669,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981100PE",
+            "instrument_token": 223551493,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O0981200CE",
+            "instrument_token": 223494149,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981200PE",
+            "instrument_token": 223491589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981300CE",
+            "instrument_token": 223523077,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981300PE",
+            "instrument_token": 223480069,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981400CE",
+            "instrument_token": 223553797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981400PE",
+            "instrument_token": 223508997,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981500CE",
+            "instrument_token": 223540485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981500PE",
+            "instrument_token": 223497221,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981600CE",
+            "instrument_token": 223481861,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981600PE",
+            "instrument_token": 223525637,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981700CE",
+            "instrument_token": 223563269,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981700PE",
+            "instrument_token": 223558661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O0981800CE",
+            "instrument_token": 223499269,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O0981800PE",
+            "instrument_token": 223544837,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 33
+    },
+    "2025-10-16": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O1679700CE",
+            "instrument_token": 223946757,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1679700PE",
+            "instrument_token": 224311557,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O1679800CE",
+            "instrument_token": 224206341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1679800PE",
+            "instrument_token": 223823109,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O1679900CE",
+            "instrument_token": 224144645,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1679900PE",
+            "instrument_token": 224121349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O1680000CE",
+            "instrument_token": 223757061,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680000PE",
+            "instrument_token": 224157445,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O1680100CE",
+            "instrument_token": 224002565,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680100PE",
+            "instrument_token": 224332805,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O1680200CE",
+            "instrument_token": 223877125,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680200PE",
+            "instrument_token": 223852293,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O1680300CE",
+            "instrument_token": 224167685,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680300PE",
+            "instrument_token": 223779589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O1680400CE",
+            "instrument_token": 223671813,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680400PE",
+            "instrument_token": 224044549,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O1680500CE",
+            "instrument_token": 224274437,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680500PE",
+            "instrument_token": 223902725,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O1680600CE",
+            "instrument_token": 223792133,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680600PE",
+            "instrument_token": 224186117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25O1680700CE",
+            "instrument_token": 223715589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680700PE",
+            "instrument_token": 223688197,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O1680800CE",
+            "instrument_token": 223926277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680800PE",
+            "instrument_token": 224297221,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O1680900CE",
+            "instrument_token": 223837189,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1680900PE",
+            "instrument_token": 223808773,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O1681000CE",
+            "instrument_token": 223937541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681000PE",
+            "instrument_token": 223889925,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O1681100CE",
+            "instrument_token": 224201477,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681100PE",
+            "instrument_token": 223815173,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O1681200CE",
+            "instrument_token": 223703557,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681200PE",
+            "instrument_token": 224114437,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681300CE",
+            "instrument_token": 224315653,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681300PE",
+            "instrument_token": 223978757,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681400CE",
+            "instrument_token": 223825925,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681400PE",
+            "instrument_token": 224220421,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681500CE",
+            "instrument_token": 223755525,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681500PE",
+            "instrument_token": 223726341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681600CE",
+            "instrument_token": 224000517,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681600PE",
+            "instrument_token": 224332037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681700CE",
+            "instrument_token": 224231941,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681700PE",
+            "instrument_token": 223850245,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O1681800CE",
+            "instrument_token": 224166917,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O1681800PE",
+            "instrument_token": 223778309,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 40
+    },
+    "2025-10-23": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O2379700CE",
+            "instrument_token": 224804101,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2379700PE",
+            "instrument_token": 224742405,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O2379800CE",
+            "instrument_token": 224719365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2379800PE",
+            "instrument_token": 224785413,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O2379900CE",
+            "instrument_token": 224703493,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2379900PE",
+            "instrument_token": 224699141,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O2380000CE",
+            "instrument_token": 224770053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380000PE",
+            "instrument_token": 224764933,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25O2380100CE",
+            "instrument_token": 224809733,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380100PE",
+            "instrument_token": 224748805,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O2380200CE",
+            "instrument_token": 224723461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380200PE",
+            "instrument_token": 224790789,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O2380300CE",
+            "instrument_token": 224709381,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380300PE",
+            "instrument_token": 224774917,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O2380400CE",
+            "instrument_token": 224751365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380400PE",
+            "instrument_token": 224815621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O2380500CE",
+            "instrument_token": 224735237,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380500PE",
+            "instrument_token": 224799493,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25O2380600CE",
+            "instrument_token": 224777477,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380600PE",
+            "instrument_token": 224714245,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25O2380700CE",
+            "instrument_token": 224762885,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380700PE",
+            "instrument_token": 224755461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O2380800CE",
+            "instrument_token": 224801797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380800PE",
+            "instrument_token": 224739589,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O2380900CE",
+            "instrument_token": 224717061,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2380900PE",
+            "instrument_token": 224782341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O2381000CE",
+            "instrument_token": 224731397,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381000PE",
+            "instrument_token": 224797701,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O2381100CE",
+            "instrument_token": 224718597,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381100PE",
+            "instrument_token": 224784133,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25O2381200CE",
+            "instrument_token": 224759557,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381200PE",
+            "instrument_token": 224697605,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381300CE",
+            "instrument_token": 224743685,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381300PE",
+            "instrument_token": 224806661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381400CE",
+            "instrument_token": 224786437,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381400PE",
+            "instrument_token": 224721669,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381500CE",
+            "instrument_token": 224769541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381500PE",
+            "instrument_token": 224764677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381600CE",
+            "instrument_token": 224809477,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381600PE",
+            "instrument_token": 224748037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381700CE",
+            "instrument_token": 224723205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381700PE",
+            "instrument_token": 224790277,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25O2381800CE",
+            "instrument_token": 224708869,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25O2381800PE",
+            "instrument_token": 224774661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": true,
+      "days_to_expiry": 47
+    },
+    "2025-10-30": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25OCT79700CE",
+            "instrument_token": 220571909,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT79700PE",
+            "instrument_token": 220510213,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25OCT79800CE",
+            "instrument_token": 220529669,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT79800PE",
+            "instrument_token": 220566021,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25OCT79900CE",
+            "instrument_token": 220482821,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT79900PE",
+            "instrument_token": 220523781,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25OCT80000CE",
+            "instrument_token": 220545797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80000PE",
+            "instrument_token": 220483077,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25OCT80100CE",
+            "instrument_token": 220501765,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80100PE",
+            "instrument_token": 220540677,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25OCT80200CE",
+            "instrument_token": 220457221,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80200PE",
+            "instrument_token": 220495621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25OCT80300CE",
+            "instrument_token": 220513541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80300PE",
+            "instrument_token": 220551941,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25OCT80400CE",
+            "instrument_token": 220467205,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80400PE",
+            "instrument_token": 220507397,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25OCT80500CE",
+            "instrument_token": 220526341,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80500PE",
+            "instrument_token": 220461829,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25OCT80600CE",
+            "instrument_token": 220478981,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80600PE",
+            "instrument_token": 220520453,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25OCT80700CE",
+            "instrument_token": 220613381,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80700PE",
+            "instrument_token": 220472069,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25OCT80800CE",
+            "instrument_token": 220491013,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80800PE",
+            "instrument_token": 220531461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25OCT80900CE",
+            "instrument_token": 220625669,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT80900PE",
+            "instrument_token": 220484613,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25OCT81000CE",
+            "instrument_token": 220552965,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81000PE",
+            "instrument_token": 220590085,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25OCT81100CE",
+            "instrument_token": 220606469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81100PE",
+            "instrument_token": 220465157,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25OCT81200CE",
+            "instrument_token": 220563973,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81200PE",
+            "instrument_token": 220601093,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81300CE",
+            "instrument_token": 220617477,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81300PE",
+            "instrument_token": 220558597,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81400CE",
+            "instrument_token": 220574469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81400PE",
+            "instrument_token": 220611333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81500CE",
+            "instrument_token": 220532485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81500PE",
+            "instrument_token": 220568837,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81600CE",
+            "instrument_token": 220585733,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81600PE",
+            "instrument_token": 220623365,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81700CE",
+            "instrument_token": 220542469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81700PE",
+            "instrument_token": 220578821,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25OCT81800CE",
+            "instrument_token": 220597253,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25OCT81800PE",
+            "instrument_token": 220536837,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 54
+    },
+    "2025-11-27": {
+      "strike_count": 22,
+      "strikes": {
+        "79700": {
+          "strike": 79700,
+          "distance_from_spot": -1010.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25NOV79700CE",
+            "instrument_token": 224323333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV79700PE",
+            "instrument_token": 224001797,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79800": {
+          "strike": 79800,
+          "distance_from_spot": -910.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25NOV79800CE",
+            "instrument_token": 224255237,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV79800PE",
+            "instrument_token": 223876613,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "79900": {
+          "strike": 79900,
+          "distance_from_spot": -810.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25NOV79900CE",
+            "instrument_token": 223769349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV79900PE",
+            "instrument_token": 224167429,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25NOV80000CE",
+            "instrument_token": 224171013,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80000PE",
+            "instrument_token": 223784709,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80100": {
+          "strike": 80100,
+          "distance_from_spot": -610.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25NOV80100CE",
+            "instrument_token": 224102661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80100PE",
+            "instrument_token": 223707141,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80200": {
+          "strike": 80200,
+          "distance_from_spot": -510.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25NOV80200CE",
+            "instrument_token": 224279045,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80200PE",
+            "instrument_token": 223908869,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80300": {
+          "strike": 80300,
+          "distance_from_spot": -410.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25NOV80300CE",
+            "instrument_token": 224212485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80300PE",
+            "instrument_token": 223830533,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80400": {
+          "strike": 80400,
+          "distance_from_spot": -310.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25NOV80400CE",
+            "instrument_token": 223720709,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80400PE",
+            "instrument_token": 224126981,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80500": {
+          "strike": 80500,
+          "distance_from_spot": -210.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25NOV80500CE",
+            "instrument_token": 224325893,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80500PE",
+            "instrument_token": 224300805,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80600": {
+          "strike": 80600,
+          "distance_from_spot": -110.75999999999476,
+          "ce": {
+            "symbol": "SENSEX25NOV80600CE",
+            "instrument_token": 223842565,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80600PE",
+            "instrument_token": 224236037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80700": {
+          "strike": 80700,
+          "distance_from_spot": -10.759999999994761,
+          "ce": {
+            "symbol": "SENSEX25NOV80700CE",
+            "instrument_token": 224137733,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80700PE",
+            "instrument_token": 223742725,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80800": {
+          "strike": 80800,
+          "distance_from_spot": 89.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25NOV80800CE",
+            "instrument_token": 224028165,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80800PE",
+            "instrument_token": 223674117,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "80900": {
+          "strike": 80900,
+          "distance_from_spot": 189.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25NOV80900CE",
+            "instrument_token": 224243717,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV80900PE",
+            "instrument_token": 223865349,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25NOV81000CE",
+            "instrument_token": 224318213,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81000PE",
+            "instrument_token": 223988229,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81100": {
+          "strike": 81100,
+          "distance_from_spot": 389.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25NOV81100CE",
+            "instrument_token": 224247557,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81100PE",
+            "instrument_token": 224225541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81200": {
+          "strike": 81200,
+          "distance_from_spot": 489.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25NOV81200CE",
+            "instrument_token": 223760133,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81200PE",
+            "instrument_token": 224161029,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81300": {
+          "strike": 81300,
+          "distance_from_spot": 589.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81300CE",
+            "instrument_token": 223685637,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81300PE",
+            "instrument_token": 224336645,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81400": {
+          "strike": 81400,
+          "distance_from_spot": 689.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81400CE",
+            "instrument_token": 223880965,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81400PE",
+            "instrument_token": 224267269,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81500": {
+          "strike": 81500,
+          "distance_from_spot": 789.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81500CE",
+            "instrument_token": 224169733,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81500PE",
+            "instrument_token": 223783685,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81600": {
+          "strike": 81600,
+          "distance_from_spot": 889.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81600CE",
+            "instrument_token": 224100101,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81600PE",
+            "instrument_token": 223706629,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81700": {
+          "strike": 81700,
+          "distance_from_spot": 989.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81700CE",
+            "instrument_token": 224277765,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81700PE",
+            "instrument_token": 223906053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81800": {
+          "strike": 81800,
+          "distance_from_spot": 1089.2400000000052,
+          "ce": {
+            "symbol": "SENSEX25NOV81800CE",
+            "instrument_token": 224211461,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25NOV81800PE",
+            "instrument_token": 224189445,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 82
+    },
+    "2025-12-24": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX25DEC80000CE",
+            "instrument_token": 225421573,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25DEC80000PE",
+            "instrument_token": 225439237,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX25DEC81000CE",
+            "instrument_token": 215777541,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX25DEC81000PE",
+            "instrument_token": 215801093,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 109
+    },
+    "2026-03-26": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX26MAR80000CE",
+            "instrument_token": 281891333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26MAR80000PE",
+            "instrument_token": 281922053,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX26MAR81000CE",
+            "instrument_token": 281828357,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26MAR81000PE",
+            "instrument_token": 281861893,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 201
+    },
+    "2026-06-25": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX26JUN80000CE",
+            "instrument_token": 225433861,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26JUN80000PE",
+            "instrument_token": 225452293,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX26JUN81000CE",
+            "instrument_token": 215794949,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26JUN81000PE",
+            "instrument_token": 215818245,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 292
+    },
+    "2026-12-31": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX26DEC80000CE",
+            "instrument_token": 225434373,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26DEC80000PE",
+            "instrument_token": 225453829,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX26DEC81000CE",
+            "instrument_token": 215795717,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX26DEC81000PE",
+            "instrument_token": 215819013,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 481
+    },
+    "2027-06-24": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX27JUN80000CE",
+            "instrument_token": 225447429,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX27JUN80000PE",
+            "instrument_token": 225379333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX27JUN81000CE",
+            "instrument_token": 215813637,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX27JUN81000PE",
+            "instrument_token": 215836421,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 656
+    },
+    "2027-12-30": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX27DEC80000CE",
+            "instrument_token": 225422597,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX27DEC80000PE",
+            "instrument_token": 225440005,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX27DEC81000CE",
+            "instrument_token": 215779333,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX27DEC81000PE",
+            "instrument_token": 215803141,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 845
+    },
+    "2028-06-29": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX28JUN80000CE",
+            "instrument_token": 225395717,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX28JUN80000PE",
+            "instrument_token": 225454597,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX28JUN81000CE",
+            "instrument_token": 215796485,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX28JUN81000PE",
+            "instrument_token": 215819525,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 1027
+    },
+    "2028-12-28": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX28DEC80000CE",
+            "instrument_token": 225435653,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX28DEC80000PE",
+            "instrument_token": 225454853,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX28DEC81000CE",
+            "instrument_token": 215797509,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX28DEC81000PE",
+            "instrument_token": 215820805,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 1209
+    },
+    "2029-06-28": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX29JUN80000CE",
+            "instrument_token": 220286981,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX29JUN80000PE",
+            "instrument_token": 220156421,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX29JUN81000CE",
+            "instrument_token": 219500037,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX29JUN81000PE",
+            "instrument_token": 220879621,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 1391
+    },
+    "2029-12-27": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX29DEC80000CE",
+            "instrument_token": 215526661,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX29DEC80000PE",
+            "instrument_token": 215490821,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX29DEC81000CE",
+            "instrument_token": 215530501,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX29DEC81000PE",
+            "instrument_token": 215552261,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 1573
+    },
+    "2030-06-27": {
+      "strike_count": 2,
+      "strikes": {
+        "80000": {
+          "strike": 80000,
+          "distance_from_spot": -710.7599999999948,
+          "ce": {
+            "symbol": "SENSEX30JUN80000CE",
+            "instrument_token": 216166405,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX30JUN80000PE",
+            "instrument_token": 216200197,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        },
+        "81000": {
+          "strike": 81000,
+          "distance_from_spot": 289.24000000000524,
+          "ce": {
+            "symbol": "SENSEX30JUN81000CE",
+            "instrument_token": 216094469,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "pe": {
+            "symbol": "SENSEX30JUN81000PE",
+            "instrument_token": 216133637,
+            "lot_size": 20,
+            "tick_size": 0.05
+          },
+          "has_both": true
+        }
+      },
+      "is_weekly": false,
+      "days_to_expiry": 1755
+    }
+  },
+  "quote_test_results": {
+    "2025-09-11": {
+      "80500": {
+        "ce_price": 560,
+        "ce_symbol": "SENSEX2591180500CE",
+        "pe_price": 230.75,
+        "pe_symbol": "SENSEX2591180500PE"
+      },
+      "80600": {
+        "ce_price": 492.25,
+        "ce_symbol": "SENSEX2591180600CE",
+        "pe_price": 265.2,
+        "pe_symbol": "SENSEX2591180600PE"
+      },
+      "80700": {
+        "ce_price": 436,
+        "ce_symbol": "SENSEX2591180700CE",
+        "pe_price": 306.8,
+        "pe_symbol": "SENSEX2591180700PE"
+      },
+      "80800": {
+        "ce_price": 380.95,
+        "ce_symbol": "SENSEX2591180800CE",
+        "pe_price": 351.75,
+        "pe_symbol": "SENSEX2591180800PE"
+      },
+      "80900": {
+        "ce_price": 329.35,
+        "ce_symbol": "SENSEX2591180900CE",
+        "pe_price": 400.5,
+        "pe_symbol": "SENSEX2591180900PE"
+      }
+    },
+    "2025-09-18": {
+      "80500": {
+        "ce_price": 817.55,
+        "ce_symbol": "SENSEX2591880500CE",
+        "pe_price": 385.45,
+        "pe_symbol": "SENSEX2591880500PE"
+      },
+      "80600": {
+        "ce_price": 756.65,
+        "ce_symbol": "SENSEX2591880600CE",
+        "pe_price": 422.15,
+        "pe_symbol": "SENSEX2591880600PE"
+      },
+      "80700": {
+        "ce_price": 711.7,
+        "ce_symbol": "SENSEX2591880700CE",
+        "pe_price": 461.55,
+        "pe_symbol": "SENSEX2591880700PE"
+      },
+      "80800": {
+        "ce_price": 638.95,
+        "ce_symbol": "SENSEX2591880800CE",
+        "pe_price": 505,
+        "pe_symbol": "SENSEX2591880800PE"
+      },
+      "80900": {
+        "ce_price": 575.95,
+        "ce_symbol": "SENSEX2591880900CE",
+        "pe_price": 550.05,
+        "pe_symbol": "SENSEX2591880900PE"
+      }
+    },
+    "2025-09-25": {
+      "80500": {
+        "ce_price": 1070,
+        "ce_symbol": "SENSEX25SEP80500CE",
+        "pe_price": 495.05,
+        "pe_symbol": "SENSEX25SEP80500PE"
+      },
+      "80600": {
+        "ce_price": 1014.9,
+        "ce_symbol": "SENSEX25SEP80600CE",
+        "pe_price": 531.65,
+        "pe_symbol": "SENSEX25SEP80600PE"
+      },
+      "80700": {
+        "ce_price": 933.15,
+        "ce_symbol": "SENSEX25SEP80700CE",
+        "pe_price": 567.3,
+        "pe_symbol": "SENSEX25SEP80700PE"
+      },
+      "80800": {
+        "ce_price": 881.65,
+        "ce_symbol": "SENSEX25SEP80800CE",
+        "pe_price": 607,
+        "pe_symbol": "SENSEX25SEP80800PE"
+      },
+      "80900": {
+        "ce_price": 821.75,
+        "ce_symbol": "SENSEX25SEP80900CE",
+        "pe_price": 646.15,
+        "pe_symbol": "SENSEX25SEP80900PE"
+      }
+    }
+  }
+}

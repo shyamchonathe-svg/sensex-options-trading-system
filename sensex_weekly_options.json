@@ -1,0 +1,249 @@
+{
+  "metadata": {
+    "spot_price": 80710.76,
+    "min_strike": 79700,
+    "max_strike": 81800,
+    "range_points": 1000,
+    "generated_at": "2025-09-05T13:20:15.527004",
+    "total_expiries": 20,
+    "weekly_expiries": [
+      "2025-09-11",
+      "2025-09-18",
+      "2025-09-25",
+      "2025-10-02",
+      "2025-10-09",
+      "2025-10-16",
+      "2025-10-23"
+    ]
+  },
+  "weekly_expiries": {
+    "2025-09-11": {
+      "days_to_expiry": 5,
+      "strike_count": 10,
+      "strikes": {
+        "80300": {
+          "strike": 80300,
+          "distance": -410.75999999999476,
+          "ce_symbol": "SENSEX2591180300CE",
+          "pe_symbol": "SENSEX2591180300PE",
+          "lot_size": 20
+        },
+        "80400": {
+          "strike": 80400,
+          "distance": -310.75999999999476,
+          "ce_symbol": "SENSEX2591180400CE",
+          "pe_symbol": "SENSEX2591180400PE",
+          "lot_size": 20
+        },
+        "80500": {
+          "strike": 80500,
+          "distance": -210.75999999999476,
+          "ce_symbol": "SENSEX2591180500CE",
+          "pe_symbol": "SENSEX2591180500PE",
+          "lot_size": 20
+        },
+        "80600": {
+          "strike": 80600,
+          "distance": -110.75999999999476,
+          "ce_symbol": "SENSEX2591180600CE",
+          "pe_symbol": "SENSEX2591180600PE",
+          "lot_size": 20
+        },
+        "80700": {
+          "strike": 80700,
+          "distance": -10.759999999994761,
+          "ce_symbol": "SENSEX2591180700CE",
+          "pe_symbol": "SENSEX2591180700PE",
+          "lot_size": 20
+        },
+        "80800": {
+          "strike": 80800,
+          "distance": 89.24000000000524,
+          "ce_symbol": "SENSEX2591180800CE",
+          "pe_symbol": "SENSEX2591180800PE",
+          "lot_size": 20
+        },
+        "80900": {
+          "strike": 80900,
+          "distance": 189.24000000000524,
+          "ce_symbol": "SENSEX2591180900CE",
+          "pe_symbol": "SENSEX2591180900PE",
+          "lot_size": 20
+        },
+        "81000": {
+          "strike": 81000,
+          "distance": 289.24000000000524,
+          "ce_symbol": "SENSEX2591181000CE",
+          "pe_symbol": "SENSEX2591181000PE",
+          "lot_size": 20
+        },
+        "81100": {
+          "strike": 81100,
+          "distance": 389.24000000000524,
+          "ce_symbol": "SENSEX2591181100CE",
+          "pe_symbol": "SENSEX2591181100PE",
+          "lot_size": 20
+        },
+        "81200": {
+          "strike": 81200,
+          "distance": 489.24000000000524,
+          "ce_symbol": "SENSEX2591181200CE",
+          "pe_symbol": "SENSEX2591181200PE",
+          "lot_size": 20
+        }
+      }
+    },
+    "2025-09-18": {
+      "days_to_expiry": 12,
+      "strike_count": 10,
+      "strikes": {
+        "80300": {
+          "strike": 80300,
+          "distance": -410.75999999999476,
+          "ce_symbol": "SENSEX2591880300CE",
+          "pe_symbol": "SENSEX2591880300PE",
+          "lot_size": 20
+        },
+        "80400": {
+          "strike": 80400,
+          "distance": -310.75999999999476,
+          "ce_symbol": "SENSEX2591880400CE",
+          "pe_symbol": "SENSEX2591880400PE",
+          "lot_size": 20
+        },
+        "80500": {
+          "strike": 80500,
+          "distance": -210.75999999999476,
+          "ce_symbol": "SENSEX2591880500CE",
+          "pe_symbol": "SENSEX2591880500PE",
+          "lot_size": 20
+        },
+        "80600": {
+          "strike": 80600,
+          "distance": -110.75999999999476,
+          "ce_symbol": "SENSEX2591880600CE",
+          "pe_symbol": "SENSEX2591880600PE",
+          "lot_size": 20
+        },
+        "80700": {
+          "strike": 80700,
+          "distance": -10.759999999994761,
+          "ce_symbol": "SENSEX2591880700CE",
+          "pe_symbol": "SENSEX2591880700PE",
+          "lot_size": 20
+        },
+        "80800": {
+          "strike": 80800,
+          "distance": 89.24000000000524,
+          "ce_symbol": "SENSEX2591880800CE",
+          "pe_symbol": "SENSEX2591880800PE",
+          "lot_size": 20
+        },
+        "80900": {
+          "strike": 80900,
+          "distance": 189.24000000000524,
+          "ce_symbol": "SENSEX2591880900CE",
+          "pe_symbol": "SENSEX2591880900PE",
+          "lot_size": 20
+        },
+        "81000": {
+          "strike": 81000,
+          "distance": 289.24000000000524,
+          "ce_symbol": "SENSEX2591881000CE",
+          "pe_symbol": "SENSEX2591881000PE",
+          "lot_size": 20
+        },
+        "81100": {
+          "strike": 81100,
+          "distance": 389.24000000000524,
+          "ce_symbol": "SENSEX2591881100CE",
+          "pe_symbol": "SENSEX2591881100PE",
+          "lot_size": 20
+        },
+        "81200": {
+          "strike": 81200,
+          "distance": 489.24000000000524,
+          "ce_symbol": "SENSEX2591881200CE",
+          "pe_symbol": "SENSEX2591881200PE",
+          "lot_size": 20
+        }
+      }
+    },
+    "2025-09-25": {
+      "days_to_expiry": 19,
+      "strike_count": 10,
+      "strikes": {
+        "80300": {
+          "strike": 80300,
+          "distance": -410.75999999999476,
+          "ce_symbol": "SENSEX25SEP80300CE",
+          "pe_symbol": "SENSEX25SEP80300PE",
+          "lot_size": 20
+        },
+        "80400": {
+          "strike": 80400,
+          "distance": -310.75999999999476,
+          "ce_symbol": "SENSEX25SEP80400CE",
+          "pe_symbol": "SENSEX25SEP80400PE",
+          "lot_size": 20
+        },
+        "80500": {
+          "strike": 80500,
+          "distance": -210.75999999999476,
+          "ce_symbol": "SENSEX25SEP80500CE",
+          "pe_symbol": "SENSEX25SEP80500PE",
+          "lot_size": 20
+        },
+        "80600": {
+          "strike": 80600,
+          "distance": -110.75999999999476,
+          "ce_symbol": "SENSEX25SEP80600CE",
+          "pe_symbol": "SENSEX25SEP80600PE",
+          "lot_size": 20
+        },
+        "80700": {
+          "strike": 80700,
+          "distance": -10.759999999994761,
+          "ce_symbol": "SENSEX25SEP80700CE",
+          "pe_symbol": "SENSEX25SEP80700PE",
+          "lot_size": 20
+        },
+        "80800": {
+          "strike": 80800,
+          "distance": 89.24000000000524,
+          "ce_symbol": "SENSEX25SEP80800CE",
+          "pe_symbol": "SENSEX25SEP80800PE",
+          "lot_size": 20
+        },
+        "80900": {
+          "strike": 80900,
+          "distance": 189.24000000000524,
+          "ce_symbol": "SENSEX25SEP80900CE",
+          "pe_symbol": "SENSEX25SEP80900PE",
+          "lot_size": 20
+        },
+        "81000": {
+          "strike": 81000,
+          "distance": 289.24000000000524,
+          "ce_symbol": "SENSEX25SEP81000CE",
+          "pe_symbol": "SENSEX25SEP81000PE",
+          "lot_size": 20
+        },
+        "81100": {
+          "strike": 81100,
+          "distance": 389.24000000000524,
+          "ce_symbol": "SENSEX25SEP81100CE",
+          "pe_symbol": "SENSEX25SEP81100PE",
+          "lot_size": 20
+        },
+        "81200": {
+          "strike": 81200,
+          "distance": 489.24000000000524,
+          "ce_symbol": "SENSEX25SEP81200CE",
+          "pe_symbol": "SENSEX25SEP81200PE",
+          "lot_size": 20
+        }
+      }
+    }
+  }
+}
