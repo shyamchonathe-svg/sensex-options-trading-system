@@ -1,206 +1,214 @@
 #!/usr/bin/env python3
 """
-SecureConfigManager - Loads .env configuration for EC2 deployment.
-Handles token expiry and atomic updates for trading bot.
+Secure Configuration Manager for Trading System
+Handles .env, config.json, and defaults with secret masking
 """
 import os
-import re
-from datetime import datetime, timedelta
-from pathlib import Path
-from typing import Optional, Dict, Any, List
-from dotenv import load_dotenv
+import json
 import logging
-from zoneinfo import ZoneInfo
+from pathlib import Path
+from typing import Dict, Any, Optional
+from datetime import datetime
+import secrets
 
 logger = logging.getLogger(__name__)
-IST = ZoneInfo("Asia/Kolkata")
 
 class SecureConfigManager:
-    """Loads .env configuration for EC2 deployment."""
+    """Securely manages configuration with multiple fallback sources."""
     
-    def __init__(self, env_file: str = '.env'):
+    def __init__(self, env_file: str = '.env', config_file: str = 'config.json'):
         self.env_file = Path(env_file)
-        if self.env_file.exists():
-            load_dotenv(self.env_file)
-        else:
-            print(f"⚠️  Warning: {env_file} not found. Using environment variables only.")
-        self._load_and_validate()
-    
-    def _load_and_validate(self):
-        """Load all configuration variables with validation."""
-        # Zerodha API
-        self.ZAPI_KEY = os.getenv('ZAPI_KEY', '')
-        self.ZAPI_SECRET = os.getenv('ZAPI_SECRET', '') 
-        self.ACCESS_TOKEN = os.getenv('ACCESS_TOKEN', '')
+        self.config_file = Path(config_file)
+        self.config_cache: Optional[Dict[str, Any]] = None
+        self._mask_length = 4
         
-        # Telegram
-        self.TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN', '')
-        self.TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '')
-        
-        # Trading Mode
-        self.MODE = os.getenv('MODE', 'TEST').upper()
-        
-        # Auth Server
-        self.POSTBACK_HOST = os.getenv('POSTBACK_HOST', 'localhost')
-        self.POSTBACK_PORT = int(os.getenv('POSTBACK_PORT', '8080'))
-        self.USE_HTTPS = os.getenv('USE_HTTPS', 'false').lower() == 'true'
-        self.AUTH_TIMEOUT = int(os.getenv('AUTH_TIMEOUT', '300'))
-        
-        # Risk Management
-        self.MAX_DAILY_TRADES = int(os.getenv('MAX_DAILY_TRADES', '3'))
-        self.DAILY_LOSS_CAP = float(os.getenv('DAILY_LOSS_CAP', '25000'))
-        self.CONSECUTIVE_LOSS_LIMIT = int(os.getenv('CONSECUTIVE_LOSS_LIMIT', '2'))
-        self.LOT_SIZE = int(os.getenv('LOT_SIZE', '20'))
-        self.POSITION_SIZE = int(os.getenv('POSITION_SIZE', '100'))
-        
-        # Technical Parameters
-        self.EMA_FAST_PERIOD = int(os.getenv('EMA_FAST_PERIOD', '10'))
-        self.EMA_SLOW_PERIOD = int(os.getenv('EMA_SLOW_PERIOD', '20'))
-        self.RANGE_THRESHOLD_SENSEX = float(os.getenv('RANGE_THRESHOLD_SENSEX', '51'))
-        self.RANGE_THRESHOLD_PREMIUM = float(os.getenv('RANGE_THRESHOLD_PREMIUM', '15'))
-        self.TARGET_POINTS = float(os.getenv('TARGET_POINTS', '25'))
-        self.STOP_LOSS_POINTS = float(os.getenv('STOP_LOSS_POINTS', '15'))
-        
-        # Instruments
-        self.SENSEX_TOKEN = os.getenv('SENSEX_TOKEN', '256265')
-        self.NIFTY_TOKEN = os.getenv('NIFTY_TOKEN', '260105')
-        
-        # Market Holidays
-        holidays_str = os.getenv('MARKET_HOLIDAYS', '')
-        self.MARKET_HOLIDAYS = [h.strip() for h in holidays_str.split(',') if h.strip()]
-        
-        # Validation
-        self._validate_required()
-        self._check_token_expiry()
-        
-        # Create directories
-        for dir_name in ['auth_data', 'logs', 'data_raw', 'archives']:
-            Path(dir_name).mkdir(exist_ok=True)
-        
-        print(f"✅ Config loaded - Mode: {self.MODE}, HTTPS: {self.USE_HTTPS}")
-    
-    def _validate_required(self):
-        """Validate required environment variables."""
-        required = {
-            'ZAPI_KEY': self.ZAPI_KEY,
-            'ZAPI_SECRET': self.ZAPI_SECRET,
-            'TELEGRAM_TOKEN': self.TELEGRAM_TOKEN,
-            'TELEGRAM_CHAT_ID': self.TELEGRAM_CHAT_ID
+        # Default configuration
+        self._defaults = {
+            # Trading Mode
+            "MODE": "TEST",
+            "HOST": "127.0.0.1",
+            "PORT": 8080,
+            "HTTPS": False,
+            
+            # Zerodha API
+            "ZAPI_KEY": "",
+            "ZAPI_SECRET": "",
+            "ACCESS_TOKEN": "",
+            "SENSEX_TOKEN": 256265,  # BSE SENSEX instrument token
+            
+            # Trading Parameters
+            "MAX_TRADES_PER_DAY": 3,
+            "MAX_SL_HITS": 2,
+            "DAILY_LOSS_CAP": 25000,
+            "RISK_PER_TRADE": 0.01,  # 1% risk per trade
+            "MIN_BALANCE": 50000,
+            "EMA_FAST": 10,
+            "EMA_SLOW": 20,
+            "VOLATILITY_THRESHOLD": 0.02,  # 2% threshold
+            "SL_PERCENT": 0.03,  # 3% stop loss
+            "TP_PERCENT": 0.06,  # 6% take profit
+            
+            # Telegram
+            "TELEGRAM_TOKEN": "",
+            "TELEGRAM_CHAT_ID": "",
+            "ENABLE_NOTIFICATIONS": True,
+            
+            # Data Management
+            "DATA_RETENTION_HOT": 90,  # days
+            "DATA_RETENTION_WARM": 730,  # 2 years
+            "AUTH_TIMEOUT": 1800,  # 30 minutes
+            
+            # Logging
+            "LOG_LEVEL": "INFO",
+            "POSTBACK_HOST": "sensexbot.ddns.net",
+            "POSTBACK_PORT": 443
         }
         
-        missing = [k for k, v in required.items() if not v]
+        self._load_config()
+    
+    def _load_env(self) -> Dict[str, str]:
+        """Load environment variables from .env file."""
+        env_data = {}
+        if self.env_file.exists():
+            try:
+                for line in self.env_file.read_text().splitlines():
+                    line = line.strip()
+                    if line and not line.startswith('#'):
+                        if '=' in line:
+                            key, value = line.split('=', 1)
+                            env_data[key.strip()] = value.strip()
+                logger.info(f"✅ Loaded {len(env_data)} env vars from {self.env_file}")
+            except Exception as e:
+                logger.error(f"❌ Failed to load .env: {e}")
+        
+        # Override with system environment variables
+        for key, value in os.environ.items():
+            if key in self._defaults:
+                env_data[key] = value
+        
+        return env_data
+    
+    def _load_json(self) -> Dict[str, Any]:
+        """Load configuration from JSON file."""
+        json_data = {}
+        if self.config_file.exists():
+            try:
+                json_data = json.loads(self.config_file.read_text())
+                logger.info(f"✅ Loaded config from {self.config_file}")
+            except Exception as e:
+                logger.error(f"❌ Failed to load {self.config_file}: {e}")
+        return json_data
+    
+    def _load_config(self):
+        """Load configuration from all sources with priority."""
+        env_data = self._load_env()
+        json_data = self._load_json()
+        
+        # Merge with priority: env > json > defaults
+        config = self._defaults.copy()
+        config.update(json_data)
+        config.update(env_data)
+        
+        # Validate required fields
+        required = ['ZAPI_KEY', 'ZAPI_SECRET', 'TELEGRAM_TOKEN', 'TELEGRAM_CHAT_ID']
+        missing = [key for key in required if not config.get(key)]
+        
         if missing:
-            print(f"⚠️  WARNING: Missing env vars: {', '.join(missing)}")
-            print("💡 Create .env file with your credentials")
-    
-    def _check_token_expiry(self):
-        """Check if access token is expired."""
-        if not self.ACCESS_TOKEN:
-            return
+            raise ValueError(f"❌ Missing required config: {', '.join(missing)}")
         
-        now = datetime.now(IST)
-        # Zerodha tokens expire at 9 AM next day
-        expiry_today = now.replace(hour=9, minute=0, second=0, microsecond=0)
-        if now.date() > expiry_today.date():
-            print("⚠️  ACCESS_TOKEN appears expired - use /auth to refresh")
-            self.ACCESS_TOKEN = ''
+        # Mask secrets
+        self.config_cache = self._mask_secrets(config)
+        logger.info("✅ Configuration loaded successfully")
     
-    def update_access_token(self, new_token: str) -> bool:
-        """Atomically update ACCESS_TOKEN in .env file."""
-        if not new_token or len(new_token) != 32:
-            print(f"❌ Invalid token length: {len(new_token) if new_token else 0}")
-            return False
+    def _mask_secrets(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Mask sensitive values in configuration."""
+        masked = config.copy()
+        secrets_to_mask = ['ZAPI_KEY', 'ZAPI_SECRET', 'ACCESS_TOKEN', 'TELEGRAM_TOKEN']
         
+        for key in secrets_to_mask:
+            if key in masked and masked[key]:
+                value = masked[key]
+                if len(value) > (self._mask_length * 2):
+                    masked[key] = f"{value[:self._mask_length]}...{value[-self._mask_length:]}"
+                else:
+                    masked[key] = f"{value[:2]}***"
+        
+        return masked
+    
+    def get_config(self) -> Dict[str, Any]:
+        """Get complete configuration with masking."""
+        if self.config_cache is None:
+            self._load_config()
+        return self.config_cache.copy()
+    
+    def get_raw_value(self, key: str) -> Any:
+        """Get raw (unmasked) value for internal use."""
+        # Reload env to get raw values
+        env_data = self._load_env()
+        return env_data.get(key, self._defaults.get(key))
+    
+    def reload_config(self):
+        """Reload configuration from files."""
+        logger.info("🔄 Reloading configuration...")
+        self.config_cache = None
+        self._load_config()
+    
+    def update_access_token(self, access_token: str) -> bool:
+        """Atomically update access token in .env file."""
         try:
-            # Create .env if it doesn't exist
             if not self.env_file.exists():
-                print(f"📝 Creating new .env file: {self.env_file}")
-                self.env_file.touch()
+                # Create .env file
+                self.env_file.write_text(f"ACCESS_TOKEN={access_token}\n")
+                self.env_file.chmod(0o600)
+                logger.info(f"✅ Created .env with new token")
+                return True
             
-            # Read current .env content
-            content = self.env_file.read_text(encoding='utf-8') if self.env_file.stat().st_size > 0 else ''
-            lines = content.splitlines() if content else []
-            
-            # Update ACCESS_TOKEN line
-            updated_lines = []
+            # Read existing content
+            lines = self.env_file.read_text().splitlines()
             updated = False
             
+            # Update or add ACCESS_TOKEN line
+            new_lines = []
             for line in lines:
                 if line.strip().startswith('ACCESS_TOKEN='):
-                    updated_lines.append(f'ACCESS_TOKEN={new_token}')
+                    new_lines.append(f"ACCESS_TOKEN={access_token}")
                     updated = True
                 else:
-                    updated_lines.append(line)
+                    new_lines.append(line)
             
-            # Add if not present
             if not updated:
-                updated_lines.append(f'\n# Daily Access Token (updated via /auth)')
-                updated_lines.append(f'ACCESS_TOKEN={new_token}')
+                new_lines.append(f"ACCESS_TOKEN={access_token}")
             
-            # Atomic write
+            # Write atomically
             temp_file = self.env_file.with_suffix('.tmp')
-            temp_file.write_text('\n'.join(updated_lines) + '\n', encoding='utf-8')
-            temp_file.replace(self.env_file)
+            temp_file.write_text('\n'.join(new_lines) + '\n')
+            temp_file.chmod(0o600)
             
-            # Secure permissions
-            self.env_file.chmod(0o600)
+            # Atomic replace
+            self.env_file.unlink()
+            temp_file.rename(self.env_file)
             
-            # Update in-memory
-            self.ACCESS_TOKEN = new_token
-            
-            print(f"✅ ACCESS_TOKEN updated (masked: {new_token[:8]}...)")
+            logger.info("✅ Access token updated atomically")
+            self.reload_config()
             return True
             
         except Exception as e:
-            print(f"❌ Failed to update ACCESS_TOKEN: {e}")
-            if 'temp_file' in locals() and temp_file.exists():
-                temp_file.unlink()
+            logger.error(f"❌ Failed to update access token: {e}")
             return False
     
-    def get_auth_url(self) -> str:
-        """Get complete auth server URL."""
-        protocol = 'https' if self.USE_HTTPS else 'http'
-        return f"{protocol}://{self.POSTBACK_HOST}:{self.POSTBACK_PORT}"
-    
-    def is_market_holiday(self) -> bool:
-        """Check if today is a market holiday."""
-        today = datetime.now(IST).strftime('%Y-%m-%d')
-        return today in self.MARKET_HOLIDAYS
-    
-    def is_market_open(self) -> bool:
-        """Check if market is currently open."""
-        if self.is_market_holiday():
-            return False
+    def __getattr__(self, name: str):
+        """Dynamic attribute access to config values."""
+        if self.config_cache is None:
+            self._load_config()
         
-        now = datetime.now(IST)
-        # Trading window: 9:18 AM - 3:15 PM IST
-        if now.hour < 9 or now.hour > 15:
-            return False
-        if now.hour == 15 and now.minute > 15:
-            return False
-        if now.hour == 9 and now.minute < 18:
-            return False
+        raw_value = self.get_raw_value(name)
+        masked_value = self.config_cache.get(name, raw_value)
         
-        return True
-    
-    def get_summary(self) -> Dict[str, Any]:
-        """Get safe configuration summary."""
-        return {
-            'mode': self.MODE,
-            'token_valid': bool(self.ACCESS_TOKEN),
-            'auth_url': self.get_auth_url(),
-            'https': self.USE_HTTPS,
-            'lot_size': self.LOT_SIZE,
-            'max_trades': self.MAX_DAILY_TRADES,
-            'market_open': self.is_market_open(),
-            'holidays_today': self.is_market_holiday(),
-            'sensex_token': self.SENSEX_TOKEN
-        }
+        # Return raw for sensitive operations, masked for logging
+        sensitive_keys = ['ZAPI_KEY', 'ZAPI_SECRET', 'ACCESS_TOKEN', 'TELEGRAM_TOKEN']
+        if name in sensitive_keys and raw_value:
+            return raw_value
+        return masked_value
 
-# For direct testing
-if __name__ == "__main__":
-    config = SecureConfigManager()
-    print("=== Configuration Summary ===")
-    summary = config.get_summary()
-    for key, value in summary.items():
-        print(f"{key}: {value}")
+# Global instance for easy access
+config = SecureConfigManager()
