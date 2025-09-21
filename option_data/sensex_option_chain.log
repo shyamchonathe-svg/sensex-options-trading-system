@@ -1,0 +1,20 @@
+2025-09-07 12:34:37,492 - __main__ - INFO - Created default config file: config.json
+2025-09-07 12:34:38,253 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 12:34:38,253 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-07 12:34:38,254 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=2025-09-11, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-07 12:34:39,043 - optimized_sensex_option_chain - INFO - Loaded BSE instruments
+2025-09-07 12:34:39,769 - optimized_sensex_option_chain - INFO - Loaded BFO instruments
+2025-09-07 12:34:39,771 - optimized_sensex_option_chain - INFO - Found instrument token for BSE:SENSEX: 265
+2025-09-07 12:34:39,974 - optimized_sensex_option_chain - INFO - Fetched historical Sensex price for 2025-09-02: 80157.88
+2025-09-07 12:34:39,975 - __main__ - INFO - Sensex spot price for 2025-09-02: 80157.88
+2025-09-07 12:34:39,977 - optimized_sensex_option_chain - ERROR - No instrument found for symbol: BFO:SENSEX25091180200CE
+2025-09-07 12:34:39,978 - optimized_sensex_option_chain - ERROR - No instrument found for symbol: SENSEX25091180200CE
+2025-09-07 12:34:39,978 - __main__ - INFO - Constructed option symbol: SENSEX2591180200CE for expiry 2025-09-11, strike 80200, type CE
+2025-09-07 12:34:39,978 - __main__ - WARNING - Fallback to constructed symbol: SENSEX2591180200CE
+2025-09-07 12:34:39,978 - __main__ - INFO - ATM CE option symbol: SENSEX2591180200CE
+2025-09-07 12:34:39,978 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-07 12:34:39,978 - __main__ - ERROR - Sensex data file not found: option_data/SENSEX_2025-09-02.csv
+2025-09-07 12:34:39,979 - __main__ - ERROR - ❌ <b>No Sensex data available for 2025-09-02</b>
+📈 Sensex Spot Price: ₹80,157.88
+🏷️ ATM Option: <code>SENSEX2591180200CE</code>
+2025-09-07 12:34:40,306 - utils - INFO - Telegram message sent successfully

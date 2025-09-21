@@ -1,0 +1,10 @@
+nohup: ignoring input
+2025-09-07 23:14:27,219 IST - telegram_bot_handler - INFO - Starting Telegram bot listener...
+2025-09-07 23:14:27,220 IST - __main__ - INFO - Telegram bot started
+2025-09-07 23:14:27,611 IST - telegram_bot_handler - INFO - Telegram message sent successfully
+2025-09-07 23:14:27,638 IST - __main__ - INFO - Telegram message sent
+2025-09-07 23:14:27,639 IST - __main__ - INFO - Scheduled daily authentication for 9:00 AM IST
+2025-09-07 23:14:27,677 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-07 23:14:28,064 IST - __main__ - INFO - Telegram message sent
+2025-09-08 09:00:53,022 IST - __main__ - INFO - Daily authentication triggered at 09:00:53 IST
+2025-09-08 09:00:53,340 IST - __main__ - INFO - Telegram message sent

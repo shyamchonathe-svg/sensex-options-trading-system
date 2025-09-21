@@ -1,195 +1,202 @@
-#!/usr/bin/env python3
 """
-Database Layer - Manages SQLite database for trading sessions and positions
-Supports trading session and position storage
+Thread-safe SQLite database layer with WAL mode
 """
-
 import sqlite3
 import logging
-from typing import Dict, Any
 from datetime import datetime
-import json
+from typing import Optional, Dict, Any, List
+import threading
+from contextlib import contextmanager
 
+logger = logging.getLogger(__name__)
 
 class DatabaseLayer:
-    def __init__(self, db_path: str):
+    """Thread-safe SQLite database for trade auditing"""
+    
+    def __init__(self, db_path: str = "trades.db"):
         self.db_path = db_path
-        self.logger = logging.getLogger(__name__)
-        self._initialize_schema()
-        self.logger.info(f"DatabaseLayer initialized with database: {db_path}")
-
-    def _initialize_schema(self):
-        """Initialize SQLite database schema."""
-        try:
-            with sqlite3.connect(self.db_path) as conn:
-                cursor = conn.cursor()
-                # Positions table
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS positions (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        symbol TEXT NOT NULL,
-                        strike INTEGER,
-                        entry_price REAL,
-                        exit_price REAL,
-                        quantity INTEGER,
-                        entry_time TEXT,
-                        exit_time TEXT,
-                        exit_reason TEXT,
-                        pnl REAL,
-                        metadata TEXT
-                    )
-                """)
-                # Trading sessions table
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS trading_sessions (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        date TEXT NOT NULL,
-                        start_time TEXT,
-                        end_time TEXT,
-                        sensex_entry_price REAL,
-                        positions_opened INTEGER,
-                        positions_closed INTEGER,
-                        total_pnl REAL,
-                        total_signals INTEGER,
-                        metadata TEXT,
-                        UNIQUE(date)
-                    )
-                """)
-                # System alerts table
-                cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS system_alerts (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        timestamp TEXT,
-                        alert_type TEXT,
-                        message TEXT,
-                        metadata TEXT
-                    )
-                """)
+        self._lock = threading.Lock()
+        self._init_db()
+    
+    def _init_db(self):
+        """Initialize database with proper settings and schema"""
+        with self.get_connection() as conn:
+            # Enable WAL mode for better concurrency
+            conn.execute("PRAGMA journal_mode=WAL;")
+            conn.execute("PRAGMA synchronous=NORMAL;")
+            conn.execute("PRAGMA cache_size=10000;")
+            conn.commit()
+            
+            # Create trades table if not exists
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS trades (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    date DATE NOT NULL,
+                    session_id TEXT NOT NULL,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    side TEXT NOT NULL,  -- 'CALL' or 'PUT'
+                    strike INTEGER NOT NULL,
+                    quantity INTEGER NOT NULL,
+                    entry_price REAL NOT NULL,
+                    exit_price REAL,
+                    outcome TEXT,  -- 'SL', 'TP', 'TIME_EXIT'
+                    pnl REAL,
+                    signal_strength REAL,
+                    mode TEXT DEFAULT 'TEST'  -- LIVE, TEST, DEBUG
+                )
+            """)
+            
+            # Create indexes for performance
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_date_session ON trades(date, session_id)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_timestamp ON trades(timestamp)")
+            
+            conn.commit()
+            logger.info(f"Database initialized at {self.db_path}")
+    
+    @contextmanager
+    def get_connection(self):
+        """Context manager for thread-safe database connections"""
+        with self._lock:
+            conn = sqlite3.connect(self.db_path, timeout=10.0)
+            try:
+                yield conn
                 conn.commit()
-                self.logger.info("Database schema initialized")
-        except sqlite3.Error as e:
-            self.logger.error(f"Error initializing database schema: {e}")
-            raise
-
-    def save_position(self, position: Dict[str, Any]):
-        """Save a position to the database."""
+            except Exception as e:
+                conn.rollback()
+                logger.error(f"Database transaction failed: {e}")
+                raise
+            finally:
+                conn.close()
+    
+    def record_trade(self, trade_data: Dict[str, Any]) -> bool:
+        """Record a new trade in the database"""
         try:
-            with sqlite3.connect(self.db_path) as conn:
+            with self.get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    INSERT INTO positions (
-                        symbol, strike, entry_price, exit_price, quantity,
-                        entry_time, exit_time, exit_reason, pnl, metadata
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO trades 
+                    (date, session_id, side, strike, quantity, entry_price, signal_strength, mode)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
-                    position.get('symbol'),
-                    position.get('strike'),
-                    position.get('entry_price'),
-                    position.get('exit_price'),
-                    position.get('quantity'),
-                    position.get('entry_time').isoformat() if position.get('entry_time') else None,
-                    position.get('exit_time').isoformat() if position.get('exit_time') else None,
-                    position.get('exit_reason'),
-                    position.get('pnl'),
-                    json.dumps(position.get('metadata', {}))
+                    trade_data['date'],
+                    trade_data['session_id'],
+                    trade_data['side'],
+                    trade_data['strike'],
+                    trade_data['quantity'],
+                    trade_data['entry_price'],
+                    trade_data.get('signal_strength', 0.0),
+                    trade_data.get('mode', 'TEST')
                 ))
-                conn.commit()
-                self.logger.info(f"Saved position: {position.get('symbol')} {position.get('quantity')} @ {position.get('entry_price')}")
-        except sqlite3.Error as e:
-            self.logger.error(f"Error saving position: {e}")
-            raise
-
-    def save_session(self, session: Dict[str, Any]):
-        """Save or update a trading session in the database."""
-        try:
-            with sqlite3.connect(self.db_path) as conn:
-                cursor = conn.cursor()
-                # Check if session exists for the date
-                cursor.execute("SELECT id FROM trading_sessions WHERE date = ?", (session.get('date'),))
-                existing_session = cursor.fetchone()
                 
-                if existing_session:
-                    # Update existing session
-                    cursor.execute("""
-                        UPDATE trading_sessions
-                        SET start_time = ?, sensex_entry_price = ?, positions_opened = ?,
-                            positions_closed = ?, total_pnl = ?, total_signals = ?, metadata = ?
-                        WHERE date = ?
-                    """, (
-                        session.get('start_time').isoformat() if session.get('start_time') else None,
-                        session.get('sensex_entry_price', 0.0),
-                        session.get('positions_opened', 0),
-                        session.get('positions_closed', 0),
-                        session.get('total_pnl', 0.0),
-                        session.get('total_signals', 0),
-                        json.dumps(session.get('metadata', {})),
-                        session.get('date')
-                    ))
-                    self.logger.info(f"Updated trading session: {session.get('date')}")
-                else:
-                    # Insert new session
-                    cursor.execute("""
-                        INSERT INTO trading_sessions (
-                            date, start_time, sensex_entry_price, positions_opened,
-                            positions_closed, total_pnl, total_signals, metadata
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        session.get('date'),
-                        session.get('start_time').isoformat() if session.get('start_time') else None,
-                        session.get('sensex_entry_price', 0.0),
-                        session.get('positions_opened', 0),
-                        session.get('positions_closed', 0),
-                        session.get('total_pnl', 0.0),
-                        session.get('total_signals', 0),
-                        json.dumps(session.get('metadata', {}))
-                    ))
-                    self.logger.info(f"Saved trading session: {session.get('date')}")
+                trade_id = cursor.lastrowid
                 conn.commit()
-        except sqlite3.Error as e:
-            self.logger.error(f"Error saving trading session: {e}")
-            raise
-
-    def update_session(self, session: Dict[str, Any]):
-        """Update an existing trading session in the database."""
+                logger.info(f"Trade recorded with ID: {trade_id}")
+                return True
+                
+        except Exception as e:
+            logger.error(f"Failed to record trade: {e}")
+            return False
+    
+    def update_trade_outcome(self, trade_id: int, outcome: str, exit_price: float = None, pnl: float = None):
+        """Update trade outcome when position is closed"""
         try:
-            with sqlite3.connect(self.db_path) as conn:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                update_fields = []
+                params = [trade_id, outcome]
+                
+                if exit_price is not None:
+                    update_fields.append("exit_price = ?")
+                    params.append(exit_price)
+                
+                if pnl is not None:
+                    update_fields.append("pnl = ?")
+                    params.append(pnl)
+                
+                if update_fields:
+                    query = f"""
+                        UPDATE trades 
+                        SET outcome = ?, {', '.join(update_fields)}
+                        WHERE id = ?
+                    """
+                    params.append(trade_id)  # Add trade_id at end
+                    cursor.execute(query, params)
+                    conn.commit()
+                    logger.info(f"Trade {trade_id} outcome updated: {outcome}")
+                    
+        except Exception as e:
+            logger.error(f"Failed to update trade outcome: {e}")
+    
+    def get_daily_stats(self, date: datetime, session_id: str) -> Dict[str, Any]:
+        """Get daily trading statistics"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Total P&L
+                cursor.execute("""
+                    SELECT COALESCE(SUM(pnl), 0) 
+                    FROM trades 
+                    WHERE date = ? AND session_id = ?
+                """, (date.date(), session_id))
+                total_pnl = cursor.fetchone()[0]
+                
+                # Trade count
+                cursor.execute("""
+                    SELECT COUNT(*) 
+                    FROM trades 
+                    WHERE date = ? AND session_id = ?
+                """, (date.date(), session_id))
+                trade_count = cursor.fetchone()[0]
+                
+                # Consecutive SL count
+                cursor.execute("""
+                    SELECT COUNT(*) 
+                    FROM trades t1
+                    WHERE t1.date = ? AND t1.session_id = ?
+                    AND t1.outcome = 'SL'
+                    AND NOT EXISTS (
+                        SELECT 1 FROM trades t2 
+                        WHERE t2.date = t1.date 
+                        AND t2.session_id = t1.session_id
+                        AND t2.timestamp > t1.timestamp 
+                        AND t2.outcome != 'SL'
+                    )
+                """, (date.date(), session_id))
+                consecutive_sl = cursor.fetchone()[0]
+                
+                return {
+                    'total_pnl': float(total_pnl),
+                    'trade_count': int(trade_count),
+                    'consecutive_sl': int(consecutive_sl)
+                }
+                
+        except Exception as e:
+            logger.error(f"Failed to get daily stats: {e}")
+            return {'total_pnl': 0.0, 'trade_count': 0, 'consecutive_sl': 0}
+    
+    def get_recent_trades(self, limit: int = 10) -> List[Dict[str, Any]]:
+        """Get most recent trades"""
+        try:
+            with self.get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    UPDATE trading_sessions
-                    SET end_time = ?, positions_opened = ?, positions_closed = ?,
-                        total_pnl = ?, total_signals = ?, metadata = ?
-                    WHERE date = ?
-                """, (
-                    session.get('end_time').isoformat() if session.get('end_time') else None,
-                    session.get('positions_opened', 0),
-                    session.get('positions_closed', 0),
-                    session.get('total_pnl', 0.0),
-                    session.get('total_signals', 0),
-                    json.dumps(session.get('metadata', {})),
-                    session.get('date')
-                ))
-                conn.commit()
-                self.logger.info(f"Updated trading session: {session.get('date')}")
-        except sqlite3.Error as e:
-            self.logger.error(f"Error updating trading session: {e}")
-            raise
-
-    def save_alert(self, alert_type: str, message: str, metadata: Dict[str, Any] = None):
-        """Save a system alert to the database."""
-        try:
-            with sqlite3.connect(self.db_path) as conn:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT INTO system_alerts (timestamp, alert_type, message, metadata)
-                    VALUES (?, ?, ?, ?)
-                """, (
-                    datetime.now().isoformat(),
-                    alert_type,
-                    message,
-                    json.dumps(metadata or {})
-                ))
-                conn.commit()
-                self.logger.info(f"Saved system alert: {alert_type}")
-        except sqlite3.Error as e:
-            self.logger.error(f"Error saving system alert: {e}")
-            raise
+                    SELECT id, date, side, strike, quantity, entry_price, 
+                           exit_price, outcome, pnl, timestamp
+                    FROM trades 
+                    ORDER BY timestamp DESC 
+                    LIMIT ?
+                """, (limit,))
+                
+                columns = [description[0] for description in cursor.description]
+                trades = []
+                
+                for row in cursor.fetchall():
+                    trade_dict = dict(zip(columns, row))
+                    trades.append(trade_dict)
+                
+                return trades
+                
+        except Exception as e:
+            logger.error(f"Failed to get recent trades: {e}")
+            return []

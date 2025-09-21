@@ -1,0 +1,95 @@
+2025-09-05 11:33:58,963 - INFO - Configuration loaded successfully
+2025-09-05 11:33:59,007 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-05 11:33:59,026 - INFO - Cleared existing tokens from server
+2025-09-05 11:33:59,433 - INFO - Telegram notification sent
+2025-09-05 11:33:59,433 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-05 11:34:44,771 - INFO - Token received (age: 0s)
+2025-09-05 11:34:44,959 - INFO - Exchanging request token for access token...
+2025-09-05 11:34:45,216 - INFO - Token saved to: latest_token.txt
+2025-09-05 11:34:45,216 - INFO - Token saved to: debug_token.txt
+2025-09-05 11:34:45,216 - INFO - Token saved to: debug_token_20250905_170445.txt
+2025-09-05 11:34:45,540 - INFO - Telegram notification sent
+2025-09-06 03:35:14,173 - INFO - Configuration loaded successfully
+2025-09-06 03:36:58,049 - INFO - Configuration loaded successfully
+2025-09-06 03:36:58,093 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-06 03:36:58,112 - INFO - Cleared existing tokens from server
+2025-09-06 03:36:58,441 - INFO - Telegram notification sent
+2025-09-06 03:36:58,441 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-06 03:37:54,814 - INFO - Token found in backup file
+2025-09-06 03:37:55,007 - INFO - Exchanging request token for access token...
+2025-09-06 03:37:55,863 - INFO - Token saved to: latest_token.txt
+2025-09-06 03:37:55,863 - INFO - Token saved to: debug_token.txt
+2025-09-06 03:37:55,863 - INFO - Token saved to: debug_token_20250906_090755.txt
+2025-09-06 03:37:56,179 - INFO - Telegram notification sent
+2025-09-06 16:37:45,619 - INFO - Configuration loaded successfully
+2025-09-06 16:37:45,663 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-06 16:37:45,681 - INFO - Cleared existing tokens from server
+2025-09-06 16:37:46,004 - INFO - Telegram notification sent
+2025-09-06 16:37:46,004 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-06 16:38:25,964 - INFO - Token received (age: 0s)
+2025-09-06 16:38:26,154 - INFO - Exchanging request token for access token...
+2025-09-06 16:38:26,545 - INFO - Token saved to: latest_token.txt
+2025-09-06 16:38:26,545 - INFO - Token saved to: debug_token.txt
+2025-09-06 16:38:26,545 - INFO - Token saved to: debug_token_20250906_220826.txt
+2025-09-06 16:38:26,949 - INFO - Telegram notification sent
+2025-09-06 17:24:59,256 - INFO - Configuration loaded successfully
+2025-09-06 17:24:59,298 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-06 17:24:59,317 - INFO - Cleared existing tokens from server
+2025-09-06 17:24:59,649 - INFO - Telegram notification sent
+2025-09-06 17:24:59,650 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-06 17:26:06,163 - INFO - Token received (age: 2s)
+2025-09-06 17:26:06,355 - INFO - Exchanging request token for access token...
+2025-09-06 17:26:06,945 - INFO - Token saved to: latest_token.txt
+2025-09-06 17:26:06,945 - INFO - Token saved to: debug_token.txt
+2025-09-06 17:26:06,945 - INFO - Token saved to: debug_token_20250906_225606.txt
+2025-09-06 17:26:07,280 - INFO - Telegram notification sent
+2025-09-06 17:35:48,327 - INFO - Configuration loaded successfully
+2025-09-06 17:35:48,370 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-06 17:35:48,389 - INFO - Cleared existing tokens from server
+2025-09-06 17:35:48,780 - INFO - Telegram notification sent
+2025-09-06 17:35:48,780 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-06 17:36:22,037 - INFO - Token received (age: 1s)
+2025-09-06 17:36:22,228 - INFO - Exchanging request token for access token...
+2025-09-06 17:36:23,399 - INFO - Token saved to: latest_token.txt
+2025-09-06 17:36:23,399 - INFO - Token saved to: debug_token.txt
+2025-09-06 17:36:23,399 - INFO - Token saved to: debug_token_20250906_230623.txt
+2025-09-06 17:36:23,721 - INFO - Telegram notification sent
+2025-09-06 17:38:32,100 - INFO - Configuration loaded successfully
+2025-09-06 17:38:32,143 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-06 17:38:32,162 - INFO - Cleared existing tokens from server
+2025-09-06 17:38:32,494 - INFO - Telegram notification sent
+2025-09-06 17:38:32,494 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-06 17:38:57,265 - INFO - Token received (age: 1s)
+2025-09-06 17:38:57,459 - INFO - Exchanging request token for access token...
+2025-09-06 17:38:57,895 - INFO - Token saved to: latest_token.txt
+2025-09-06 17:38:57,895 - INFO - Token saved to: debug_token.txt
+2025-09-06 17:38:57,896 - INFO - Token saved to: debug_token_20250906_230857.txt
+2025-09-06 17:38:58,218 - INFO - Telegram notification sent
+2025-09-07 10:20:15,980 - INFO - Configuration loaded successfully
+2025-09-07 10:21:19,609 - INFO - Configuration loaded successfully
+2025-09-07 10:21:56,718 - INFO - Configuration loaded successfully
+2025-09-07 10:21:56,753 - INFO - Found working server: http://sensexbot.ddns.net:8001
+2025-09-07 10:21:56,758 - INFO - Cleared existing tokens from server
+2025-09-07 10:21:57,088 - INFO - Telegram notification sent
+2025-09-07 10:21:57,088 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-07 10:23:14,246 - INFO - Configuration loaded successfully
+2025-09-07 10:23:14,280 - INFO - Found working server: http://sensexbot.ddns.net:8001
+2025-09-07 10:23:14,284 - INFO - Cleared existing tokens from server
+2025-09-07 10:23:14,627 - INFO - Telegram notification sent
+2025-09-07 10:23:14,627 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-07 10:24:07,176 - INFO - Configuration loaded successfully
+2025-09-07 10:24:07,214 - INFO - Found working server: http://sensexbot.ddns.net:8001
+2025-09-07 10:24:07,217 - INFO - Cleared existing tokens from server
+2025-09-07 10:24:07,540 - INFO - Telegram notification sent
+2025-09-07 10:24:07,540 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-07 11:02:55,976 - INFO - Configuration loaded successfully
+2025-09-07 11:02:56,029 - INFO - Found working server: https://sensexbot.ddns.net
+2025-09-07 11:02:56,048 - INFO - Cleared existing tokens from server
+2025-09-07 11:02:56,377 - INFO - Telegram notification sent
+2025-09-07 11:02:56,377 - INFO - Waiting for authentication (timeout: 300s)...
+2025-09-07 11:04:12,235 - INFO - Token received (age: 0s)
+2025-09-07 11:04:12,475 - INFO - Exchanging request token for access token...
+2025-09-07 11:04:12,780 - INFO - Token saved to: latest_token.txt
+2025-09-07 11:04:12,780 - INFO - Token saved to: debug_token.txt
+2025-09-07 11:04:12,780 - INFO - Token saved to: debug_token_20250907_110412.txt
+2025-09-07 11:04:13,159 - INFO - Telegram notification sent

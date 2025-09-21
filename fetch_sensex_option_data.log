@@ -1,0 +1,484 @@
+2025-09-05 11:05:08,547 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 11:05:08,956 - __main__ - ERROR - No instrument token found for BSE:SENSEX
+2025-09-05 11:05:09,125 - __main__ - ERROR - Error fetching historical data for token None: invalid token
+2025-09-05 11:05:09,126 - __main__ - ERROR - Error fetching option data: string indices must be integers
+2025-09-05 11:11:48,018 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 11:11:48,506 - __main__ - ERROR - Failed to fetch INDICES instruments: Unknown Content-Type (application/xml) with response: (b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>3R24CSSK9AB0ZWV3</RequestId><HostId>NgORNNte5H+ITzvvAXeQGT+XQTeWoye7Ky+F4TVbXRmA8QHpwgDrw79BV8HW1NnyIZTGwRYRDwqE+I7dhxP9y610/9O1VF9wtP9FHKCm2oA=</HostId></Error>')
+2025-09-05 11:11:48,507 - __main__ - ERROR - No instrument token found for BSE:SENSEX
+2025-09-05 11:11:48,510 - __main__ - WARNING - Sensex token not found, proceeding with option data
+2025-09-05 11:11:48,510 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 11:11:48,510 - __main__ - ERROR - Error fetching option data: string indices must be integers
+2025-09-05 11:14:41,546 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 11:14:42,911 - __main__ - ERROR - Failed to fetch INDICES instruments: Unknown Content-Type (application/xml) with response: (b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>620XJ6XZ98ZVDJ1P</RequestId><HostId>Je84zSbGfQ8XNhOqnh6zDGpOsK46a0JyhwnY19Z0zkpRm8MqYGHqIxqdskmibXbI6B4i11VFYADqmNyLNrzncaNcLIoqluQ8YCjQmcY0hOg=</HostId></Error>')
+2025-09-05 11:14:42,912 - __main__ - ERROR - No instrument token found for BSE:SENSEX
+2025-09-05 11:14:42,915 - __main__ - WARNING - Sensex token not found, proceeding with option data
+2025-09-05 11:14:42,915 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 11:14:42,915 - __main__ - ERROR - Error fetching option data: string indices must be integers
+2025-09-05 11:38:32,860 - __main__ - ERROR - Failed to initialize Kite Connect: Incorrect `api_key` or `access_token`.
+2025-09-05 11:39:08,665 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 11:39:09,571 - __main__ - ERROR - Failed to fetch INDICES instruments: Unknown Content-Type (application/xml) with response: (b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>KM43FXGH6BK8V0BD</RequestId><HostId>dNFPfoaH+H1l8PdrclcNH3r1jXmacf9V/fJ4qHYmuLCn51524SnpABiCYLi/VtwhgDhEdM83LtI=</HostId></Error>')
+2025-09-05 11:39:09,572 - __main__ - ERROR - No instrument token found for BSE:SENSEX
+2025-09-05 11:39:09,575 - __main__ - WARNING - Sensex token not found, proceeding with option data
+2025-09-05 11:39:09,575 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 11:39:09,575 - __main__ - ERROR - Error fetching option data: string indices must be integers
+2025-09-05 11:39:54,671 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 11:39:55,240 - __main__ - ERROR - Failed to fetch INDICES instruments: Unknown Content-Type (application/xml) with response: (b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>266NX9X5YWXD8ERQ</RequestId><HostId>WfoyzNdQPoO1E1lbFeEqXk7UtOInjAdnYBeds1RvwfGBZoVr3WWCF7rwpK1KnvXUUIDjW7jbPkvpIuX7rwu/zFvofY82jq5XW7ynAQDojOc=</HostId></Error>')
+2025-09-05 11:39:55,240 - __main__ - ERROR - No instrument token found for BSE:SENSEX
+2025-09-05 11:39:55,244 - __main__ - WARNING - Sensex token not found, proceeding with option data
+2025-09-05 11:39:55,244 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 11:39:55,244 - __main__ - ERROR - Error fetching option data: string indices must be integers
+2025-09-05 12:00:08,751 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 12:00:08,752 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-05 12:00:08,752 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 12:00:09,168 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-05 12:00:09,543 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-05 12:00:09,748 - __main__ - ERROR - Error fetching historical data for token 219943429: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:10,443 - __main__ - ERROR - Error fetching historical data for token 219982085: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:10,944 - __main__ - WARNING - No CE data for strike 80300
+2025-09-05 12:00:10,944 - __main__ - WARNING - No PE data for strike 80300
+2025-09-05 12:00:11,320 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-05 12:00:12,427 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-05 12:00:12,631 - __main__ - ERROR - Error fetching historical data for token 220079109: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:13,343 - __main__ - ERROR - Error fetching historical data for token 219937541: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:13,844 - __main__ - WARNING - No CE data for strike 80400
+2025-09-05 12:00:13,845 - __main__ - WARNING - No PE data for strike 80400
+2025-09-05 12:00:14,235 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-05 12:00:14,615 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-05 12:00:14,804 - __main__ - ERROR - Error fetching historical data for token 219952901: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:15,487 - __main__ - ERROR - Error fetching historical data for token 220073221: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:15,988 - __main__ - WARNING - No CE data for strike 80500
+2025-09-05 12:00:15,988 - __main__ - WARNING - No PE data for strike 80500
+2025-09-05 12:00:16,365 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-05 12:00:16,734 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-05 12:00:16,920 - __main__ - ERROR - Error fetching historical data for token 220090117: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:17,602 - __main__ - ERROR - Error fetching historical data for token 219949317: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:18,103 - __main__ - WARNING - No CE data for strike 80600
+2025-09-05 12:00:18,103 - __main__ - WARNING - No PE data for strike 80600
+2025-09-05 12:00:18,487 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-05 12:00:18,864 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-05 12:00:19,049 - __main__ - ERROR - Error fetching historical data for token 219964165: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:19,734 - __main__ - ERROR - Error fetching historical data for token 220084485: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:20,235 - __main__ - WARNING - No CE data for strike 80700
+2025-09-05 12:00:20,235 - __main__ - WARNING - No PE data for strike 80700
+2025-09-05 12:00:20,651 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-05 12:00:21,033 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-05 12:00:21,240 - __main__ - ERROR - Error fetching historical data for token 219917829: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:21,926 - __main__ - ERROR - Error fetching historical data for token 219957253: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:22,427 - __main__ - WARNING - No CE data for strike 80800
+2025-09-05 12:00:22,427 - __main__ - WARNING - No PE data for strike 80800
+2025-09-05 12:00:22,814 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-05 12:00:23,227 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-05 12:00:23,417 - __main__ - ERROR - Error fetching historical data for token 220056069: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:24,107 - __main__ - ERROR - Error fetching historical data for token 219911173: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:24,608 - __main__ - WARNING - No CE data for strike 80900
+2025-09-05 12:00:24,608 - __main__ - WARNING - No PE data for strike 80900
+2025-09-05 12:00:24,982 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-05 12:00:25,360 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-05 12:00:25,546 - __main__ - ERROR - Error fetching historical data for token 219984645: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:26,227 - __main__ - ERROR - Error fetching historical data for token 220020741: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:26,728 - __main__ - WARNING - No CE data for strike 81000
+2025-09-05 12:00:26,728 - __main__ - WARNING - No PE data for strike 81000
+2025-09-05 12:00:27,111 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-05 12:00:27,490 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-05 12:00:27,672 - __main__ - ERROR - Error fetching historical data for token 220038405: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:28,359 - __main__ - ERROR - Error fetching historical data for token 220077061: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:28,860 - __main__ - WARNING - No CE data for strike 81100
+2025-09-05 12:00:28,860 - __main__ - WARNING - No PE data for strike 81100
+2025-09-05 12:00:29,236 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-05 12:00:29,749 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-05 12:00:29,935 - __main__ - ERROR - Error fetching historical data for token 219995653: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:30,626 - __main__ - ERROR - Error fetching historical data for token 220033797: Already tz-aware, use tz_convert to convert.
+2025-09-05 12:00:31,128 - __main__ - WARNING - No CE data for strike 81200
+2025-09-05 12:00:31,128 - __main__ - WARNING - No PE data for strike 81200
+2025-09-05 12:00:31,128 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-05 12:00:31,128 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-05 12:03:39,383 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 12:03:39,384 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-05 12:03:39,385 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 12:03:40,101 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-05 12:03:40,484 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-05 12:03:40,680 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-05 12:03:41,369 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-05 12:03:41,878 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:41,882 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:42,393 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-05 12:03:42,767 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-05 12:03:42,958 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-05 12:03:43,645 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-05 12:03:44,150 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:44,154 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:44,521 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-05 12:03:44,888 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-05 12:03:45,075 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-05 12:03:45,835 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-05 12:03:46,340 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:46,345 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:46,720 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-05 12:03:47,096 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-05 12:03:47,282 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-05 12:03:47,963 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-05 12:03:48,470 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:48,475 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:48,850 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-05 12:03:49,230 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-05 12:03:49,414 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-05 12:03:50,102 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-05 12:03:50,607 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:50,611 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:50,979 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-05 12:03:51,348 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-05 12:03:51,533 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-05 12:03:52,215 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-05 12:03:52,720 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:52,725 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:53,100 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-05 12:03:53,474 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-05 12:03:53,658 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-05 12:03:54,345 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-05 12:03:54,851 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:54,855 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:55,222 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-05 12:03:55,751 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-05 12:03:55,942 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-05 12:03:56,626 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-05 12:03:57,131 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:57,136 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:57,628 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-05 12:03:58,004 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-05 12:03:58,187 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-05 12:03:58,873 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-05 12:03:59,379 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:59,383 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-05.csv (125 candles)
+2025-09-05 12:03:59,746 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-05 12:04:00,126 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-05 12:04:00,312 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-05 12:04:00,997 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-05 12:04:01,503 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-05.csv (125 candles)
+2025-09-05 12:04:01,507 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-05.csv (125 candles)
+2025-09-05 12:04:01,507 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-05 12:04:01,507 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-05 13:37:38,070 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:37:38,071 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-05 13:37:38,071 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-05 13:37:38,515 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-05 13:37:39,189 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-05 13:37:39,386 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-05 13:37:40,072 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-05 13:37:40,579 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:40,584 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:40,989 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-05 13:37:41,517 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-05 13:37:41,703 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-05 13:37:42,534 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-05 13:37:43,040 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:43,044 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:43,413 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-05 13:37:43,800 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-05 13:37:44,003 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-05 13:37:44,697 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-05 13:37:45,203 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:45,208 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:45,591 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-05 13:37:45,960 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-05 13:37:46,145 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-05 13:37:46,829 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-05 13:37:47,334 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:47,339 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:47,702 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-05 13:37:48,077 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-05 13:37:48,280 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-05 13:37:48,965 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-05 13:37:49,470 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:49,474 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:49,843 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-05 13:37:50,218 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-05 13:37:50,402 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-05 13:37:51,084 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-05 13:37:51,589 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:51,594 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:51,961 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-05 13:37:52,335 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-05 13:37:52,520 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-05 13:37:53,219 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-05 13:37:53,725 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:53,729 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:54,100 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-05 13:37:54,483 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-05 13:37:54,668 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-05 13:37:55,362 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-05 13:37:55,868 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:55,872 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:56,240 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-05 13:37:56,622 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-05 13:37:56,810 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-05 13:37:57,504 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-05 13:37:58,009 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:58,014 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-05.csv (125 candles)
+2025-09-05 13:37:58,381 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-05 13:37:58,764 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-05 13:37:58,967 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-05 13:37:59,667 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-05 13:38:00,173 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-05.csv (125 candles)
+2025-09-05 13:38:00,178 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-05.csv (125 candles)
+2025-09-05 13:38:00,178 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-05 13:38:00,178 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-07 11:36:13,743 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 11:36:13,745 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-07 11:36:13,745 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-07 11:36:14,976 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-07 11:36:15,544 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-07 11:36:16,375 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-07 11:36:17,123 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-07 11:36:17,634 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:17,638 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:18,389 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-07 11:36:18,797 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-07 11:36:19,029 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-07 11:36:19,940 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-07 11:36:20,445 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:20,450 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:20,864 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-07 11:36:21,277 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-07 11:36:21,510 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-07 11:36:22,754 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-07 11:36:23,260 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:23,264 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:23,670 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-07 11:36:24,083 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-07 11:36:24,311 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-07 11:36:25,043 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-07 11:36:25,548 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:25,553 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:26,168 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-07 11:36:26,580 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-07 11:36:27,307 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-07 11:36:28,029 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-07 11:36:28,535 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:28,539 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:29,117 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-07 11:36:29,529 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-07 11:36:29,768 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-07 11:36:30,501 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-07 11:36:31,007 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:31,011 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:31,420 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-07 11:36:31,997 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-07 11:36:32,230 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-07 11:36:32,963 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-07 11:36:33,468 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:33,473 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:34,088 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-07 11:36:34,507 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-07 11:36:34,751 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-07 11:36:35,482 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-07 11:36:35,987 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:35,991 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:36,407 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-07 11:36:36,819 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-07 11:36:37,059 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-07 11:36:37,790 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-07 11:36:38,297 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:38,302 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:38,723 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-07 11:36:39,146 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-07 11:36:39,386 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-07 11:36:40,116 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-07 11:36:40,621 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:40,626 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-05.csv (125 candles)
+2025-09-07 11:36:40,626 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-07 11:36:40,626 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-07 14:56:48,567 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 14:56:48,568 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-07 14:56:48,568 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-07 14:56:49,853 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-07 14:56:50,438 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-07 14:56:50,680 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-07 14:56:51,432 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-07 14:56:51,939 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:51,944 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:52,759 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-07 14:56:53,196 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-07 14:56:53,442 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-07 14:56:54,191 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-07 14:56:54,697 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:54,703 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:55,329 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-07 14:56:55,758 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-07 14:56:55,992 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-07 14:56:56,737 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-07 14:56:57,242 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:57,247 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:57,668 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-07 14:56:58,103 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-07 14:56:58,351 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-07 14:56:59,086 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-07 14:56:59,591 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-05.csv (125 candles)
+2025-09-07 14:56:59,596 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:00,016 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-07 14:57:00,441 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-07 14:57:00,679 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-07 14:57:01,428 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-07 14:57:01,934 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:01,938 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:02,383 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-07 14:57:02,809 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-07 14:57:03,048 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-07 14:57:03,785 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-07 14:57:04,291 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:04,295 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:04,720 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-07 14:57:05,138 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-07 14:57:05,581 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-07 14:57:06,334 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-07 14:57:06,840 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:06,844 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:07,259 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-07 14:57:07,686 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-07 14:57:07,930 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-07 14:57:08,677 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-07 14:57:09,183 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:09,187 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:09,602 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-07 14:57:10,029 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-07 14:57:10,265 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-07 14:57:10,999 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-07 14:57:11,506 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:11,510 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:11,937 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-07 14:57:12,363 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-07 14:57:12,599 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-07 14:57:13,333 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-07 14:57:13,839 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:13,844 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-05.csv (125 candles)
+2025-09-07 14:57:13,844 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-07 14:57:13,844 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-07 14:58:26,906 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 14:58:26,907 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-07 14:58:26,907 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-07 14:58:27,666 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-07 14:58:28,609 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-07 14:58:28,840 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-07 14:58:30,184 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-07 14:58:30,691 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:30,695 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:31,257 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-07 14:58:31,663 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-07 14:58:31,869 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-07 14:58:32,598 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-07 14:58:33,103 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:33,108 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:33,910 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-07 14:58:34,395 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-07 14:58:34,599 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-07 14:58:35,333 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-07 14:58:35,839 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:35,843 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:36,218 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-07 14:58:36,597 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-07 14:58:36,831 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-07 14:58:37,559 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-07 14:58:38,064 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:38,068 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:38,449 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-07 14:58:38,861 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-07 14:58:39,121 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-07 14:58:39,852 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-07 14:58:40,358 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:40,362 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:40,772 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-07 14:58:41,202 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-07 14:58:41,439 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-07 14:58:42,174 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-07 14:58:42,679 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:42,683 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:43,094 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-07 14:58:43,474 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-07 14:58:43,702 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-07 14:58:44,437 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-07 14:58:44,943 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:44,947 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:45,360 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-07 14:58:45,736 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-07 14:58:45,935 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-07 14:58:46,625 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-07 14:58:47,131 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:47,136 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:47,517 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-07 14:58:47,923 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-07 14:58:48,115 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-07 14:58:48,846 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-07 14:58:49,352 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:49,356 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:49,767 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-07 14:58:50,185 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-07 14:58:50,376 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-07 14:58:51,081 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-07 14:58:51,587 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:51,591 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-04.csv (125 candles)
+2025-09-07 14:58:51,591 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-07 14:58:51,591 - __main__ - WARNING - Skipping strike 81300: No symbols found
+2025-09-07 16:08:33,770 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 16:08:33,771 - __main__ - INFO - Loaded weekly options database with expiries: ['2025-09-11', '2025-09-18', '2025-09-25']
+2025-09-07 16:08:33,771 - __main__ - INFO - Fetching data for strikes: [80300, 80400, 80500, 80600, 80700, 80800, 80900, 81000, 81100, 81200, 81300]
+2025-09-07 16:08:34,613 - __main__ - INFO - Found instrument token for SENSEX2591180300CE: 219943429
+2025-09-07 16:08:35,347 - __main__ - INFO - Found instrument token for SENSEX2591180300PE: 219982085
+2025-09-07 16:08:35,575 - __main__ - INFO - Fetched 125 3-minute candles for token 219943429
+2025-09-07 16:08:36,304 - __main__ - INFO - Fetched 125 3-minute candles for token 219982085
+2025-09-07 16:08:36,811 - __main__ - INFO - Saved CE data for strike 80300 to option_data/SENSEX2591180300CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:36,815 - __main__ - INFO - Saved PE data for strike 80300 to option_data/SENSEX2591180300PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:37,433 - __main__ - INFO - Found instrument token for SENSEX2591180400CE: 220079109
+2025-09-07 16:08:38,000 - __main__ - INFO - Found instrument token for SENSEX2591180400PE: 219937541
+2025-09-07 16:08:38,224 - __main__ - INFO - Fetched 125 3-minute candles for token 220079109
+2025-09-07 16:08:38,955 - __main__ - INFO - Fetched 125 3-minute candles for token 219937541
+2025-09-07 16:08:39,460 - __main__ - INFO - Saved CE data for strike 80400 to option_data/SENSEX2591180400CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:39,465 - __main__ - INFO - Saved PE data for strike 80400 to option_data/SENSEX2591180400PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:39,894 - __main__ - INFO - Found instrument token for SENSEX2591180500CE: 219952901
+2025-09-07 16:08:40,314 - __main__ - INFO - Found instrument token for SENSEX2591180500PE: 220073221
+2025-09-07 16:08:40,536 - __main__ - INFO - Fetched 125 3-minute candles for token 219952901
+2025-09-07 16:08:41,274 - __main__ - INFO - Fetched 125 3-minute candles for token 220073221
+2025-09-07 16:08:41,779 - __main__ - INFO - Saved CE data for strike 80500 to option_data/SENSEX2591180500CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:41,784 - __main__ - INFO - Saved PE data for strike 80500 to option_data/SENSEX2591180500PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:42,223 - __main__ - INFO - Found instrument token for SENSEX2591180600CE: 220090117
+2025-09-07 16:08:42,647 - __main__ - INFO - Found instrument token for SENSEX2591180600PE: 219949317
+2025-09-07 16:08:42,884 - __main__ - INFO - Fetched 125 3-minute candles for token 220090117
+2025-09-07 16:08:43,615 - __main__ - INFO - Fetched 125 3-minute candles for token 219949317
+2025-09-07 16:08:44,121 - __main__ - INFO - Saved CE data for strike 80600 to option_data/SENSEX2591180600CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:44,126 - __main__ - INFO - Saved PE data for strike 80600 to option_data/SENSEX2591180600PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:44,536 - __main__ - INFO - Found instrument token for SENSEX2591180700CE: 219964165
+2025-09-07 16:08:44,962 - __main__ - INFO - Found instrument token for SENSEX2591180700PE: 220084485
+2025-09-07 16:08:45,203 - __main__ - INFO - Fetched 125 3-minute candles for token 219964165
+2025-09-07 16:08:45,927 - __main__ - INFO - Fetched 125 3-minute candles for token 220084485
+2025-09-07 16:08:46,433 - __main__ - INFO - Saved CE data for strike 80700 to option_data/SENSEX2591180700CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:46,437 - __main__ - INFO - Saved PE data for strike 80700 to option_data/SENSEX2591180700PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:46,853 - __main__ - INFO - Found instrument token for SENSEX2591180800CE: 219917829
+2025-09-07 16:08:47,270 - __main__ - INFO - Found instrument token for SENSEX2591180800PE: 219957253
+2025-09-07 16:08:47,493 - __main__ - INFO - Fetched 125 3-minute candles for token 219917829
+2025-09-07 16:08:48,224 - __main__ - INFO - Fetched 125 3-minute candles for token 219957253
+2025-09-07 16:08:48,730 - __main__ - INFO - Saved CE data for strike 80800 to option_data/SENSEX2591180800CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:48,734 - __main__ - INFO - Saved PE data for strike 80800 to option_data/SENSEX2591180800PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:49,159 - __main__ - INFO - Found instrument token for SENSEX2591180900CE: 220056069
+2025-09-07 16:08:49,583 - __main__ - INFO - Found instrument token for SENSEX2591180900PE: 219911173
+2025-09-07 16:08:49,813 - __main__ - INFO - Fetched 125 3-minute candles for token 220056069
+2025-09-07 16:08:50,547 - __main__ - INFO - Fetched 125 3-minute candles for token 219911173
+2025-09-07 16:08:51,052 - __main__ - INFO - Saved CE data for strike 80900 to option_data/SENSEX2591180900CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:51,057 - __main__ - INFO - Saved PE data for strike 80900 to option_data/SENSEX2591180900PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:51,469 - __main__ - INFO - Found instrument token for SENSEX2591181000CE: 219984645
+2025-09-07 16:08:51,897 - __main__ - INFO - Found instrument token for SENSEX2591181000PE: 220020741
+2025-09-07 16:08:52,144 - __main__ - INFO - Fetched 125 3-minute candles for token 219984645
+2025-09-07 16:08:52,876 - __main__ - INFO - Fetched 125 3-minute candles for token 220020741
+2025-09-07 16:08:53,382 - __main__ - INFO - Saved CE data for strike 81000 to option_data/SENSEX2591181000CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:53,386 - __main__ - INFO - Saved PE data for strike 81000 to option_data/SENSEX2591181000PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:53,829 - __main__ - INFO - Found instrument token for SENSEX2591181100CE: 220038405
+2025-09-07 16:08:54,247 - __main__ - INFO - Found instrument token for SENSEX2591181100PE: 220077061
+2025-09-07 16:08:54,470 - __main__ - INFO - Fetched 125 3-minute candles for token 220038405
+2025-09-07 16:08:55,210 - __main__ - INFO - Fetched 125 3-minute candles for token 220077061
+2025-09-07 16:08:55,716 - __main__ - INFO - Saved CE data for strike 81100 to option_data/SENSEX2591181100CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:55,721 - __main__ - INFO - Saved PE data for strike 81100 to option_data/SENSEX2591181100PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:56,150 - __main__ - INFO - Found instrument token for SENSEX2591181200CE: 219995653
+2025-09-07 16:08:56,600 - __main__ - INFO - Found instrument token for SENSEX2591181200PE: 220033797
+2025-09-07 16:08:56,838 - __main__ - INFO - Fetched 125 3-minute candles for token 219995653
+2025-09-07 16:08:57,568 - __main__ - INFO - Fetched 125 3-minute candles for token 220033797
+2025-09-07 16:08:58,074 - __main__ - INFO - Saved CE data for strike 81200 to option_data/SENSEX2591181200CE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:58,078 - __main__ - INFO - Saved PE data for strike 81200 to option_data/SENSEX2591181200PE_2025-09-04.csv (125 candles)
+2025-09-07 16:08:58,078 - __main__ - ERROR - No options found for strike 81300 on expiry 2025-09-11
+2025-09-07 16:08:58,078 - __main__ - WARNING - Skipping strike 81300: No symbols found

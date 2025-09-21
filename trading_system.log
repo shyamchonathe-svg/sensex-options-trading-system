@@ -1,0 +1,41 @@
+2025-09-04 16:11:02,321 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 16:11:02 IST
+2025-09-04 16:11:02,349 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x70de006c8eb0>: Failed to establish a new connection: [Errno -5] No address associated with hostname'))
+2025-09-04 16:11:02,351 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x70de006c9030>: Failed to establish a new connection: [Errno -5] No address associated with hostname'))
+2025-09-04 16:11:02,603 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:11:02,611 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x70de006c90f0>: Failed to establish a new connection: [Errno -5] No address associated with hostname'))
+2025-09-04 16:11:02,613 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x70de006c91e0>: Failed to establish a new connection: [Errno -5] No address associated with hostname'))
+2025-09-04 16:11:02,873 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:11:03,866 IST - __main__ - INFO - ✅ Telegram message sent successfully
+2025-09-04 16:24:31,270 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 16:24:31 IST
+2025-09-04 16:24:41,307 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x776d30318dc0>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:24:51,319 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x776d303194e0>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:24:51,582 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:25:01,596 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x776d30319840>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:25:11,608 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x776d30319d80>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:25:11,850 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:25:12,171 IST - __main__ - INFO - ✅ Telegram message sent successfully
+2025-09-04 16:43:07,671 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 16:43:07 IST
+2025-09-04 16:43:17,708 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7c925952d540>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:43:27,720 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7c925952dc60>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:43:27,986 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:43:37,999 IST - __main__ - WARNING - ⚠️ Server https://sensexbot.ddns.net/health not responding: HTTPSConnectionPool(host='sensexbot.ddns.net', port=443): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7c925952dfc0>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:43:48,011 IST - __main__ - WARNING - ⚠️ Server http://sensexbot.ddns.net:8001/health not responding: HTTPConnectionPool(host='sensexbot.ddns.net', port=8001): Max retries exceeded with url: /health (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7c925952e500>, 'Connection to sensexbot.ddns.net timed out. (connect timeout=10)'))
+2025-09-04 16:43:48,268 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 16:43:48,593 IST - __main__ - INFO - ✅ Telegram message sent successfully
+2025-09-04 17:00:56,681 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 17:00:56 IST
+2025-09-04 17:00:57,037 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:00:57,301 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:00:57,624 IST - __main__ - INFO - ✅ Telegram message sent successfully
+2025-09-04 17:18:45,868 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 17:18:45 IST
+2025-09-04 17:18:46,231 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:18:46,491 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:18:46,817 IST - __main__ - INFO - ✅ Telegram message sent successfully
+2025-09-04 17:20:46,148 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 17:20:46 IST
+2025-09-04 17:20:46,148 IST - __main__ - WARNING - ⚠️ Error checking token age: 'created_at'
+2025-09-04 17:20:46,148 IST - __main__ - INFO - 🔐 Starting manual authentication...
+2025-09-04 17:20:46,195 IST - __main__ - ERROR - ❌ No healthy postback server found!
+2025-09-04 17:20:46,195 IST - __main__ - ERROR - ❌ Failed to send auth request
+2025-09-04 17:23:50,628 IST - __main__ - INFO - 🚀 Integrated Trading System initialized at 2025-09-04 17:23:50 IST
+2025-09-04 17:23:51,491 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:23:51,747 IST - __main__ - ERROR - ❌ Token validation failed: Incorrect `api_key` or `access_token`.
+2025-09-04 17:23:52,081 IST - __main__ - INFO - ✅ Telegram message sent successfully

@@ -1,0 +1,78 @@
+2025-09-05 06:35:23,606 IST - __main__ - INFO - RUNNING HTTPS TEST MODE AT 2025-09-05 12:05:23 IST
+2025-09-05 06:35:23,606 IST - __main__ - INFO - All required files found
+2025-09-05 06:35:23,630 IST - __main__ - ERROR - No postback server responding
+2025-09-05 06:35:23,630 IST - __main__ - ERROR - HTTPS Postback server is not running!
+2025-09-05 06:35:23,631 IST - __main__ - ERROR - Start with: sudo python3 postback_server.py
+2025-09-05 06:40:00,726 IST - __main__ - INFO - RUNNING HTTPS TEST MODE AT 2025-09-05 12:10:00 IST
+2025-09-05 06:40:00,726 IST - __main__ - INFO - All required files found
+2025-09-05 06:40:00,746 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:40:00,767 IST - __main__ - INFO - Postback server running on Unknown: Zerodha HTTPS Postback Server
+2025-09-05 06:40:00,767 IST - __main__ - INFO - Starting HTTPS Telegram-based authentication...
+2025-09-05 06:40:00,785 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:40:00,805 IST - __main__ - INFO - Postback server running on Unknown: Zerodha HTTPS Postback Server
+2025-09-05 06:40:00,824 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:40:00,842 IST - __main__ - INFO - Cleared any existing tokens on server
+2025-09-05 06:40:01,172 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:40:01,172 IST - __main__ - INFO - HTTPS Authentication link sent via Telegram
+2025-09-05 06:40:01,173 IST - __main__ - INFO - Waiting for HTTPS authentication response (timeout: 300s)...
+2025-09-05 06:40:01,192 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:45:03,486 IST - __main__ - ERROR - Authentication timeout - no response received
+2025-09-05 06:45:03,870 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:47:15,614 IST - __main__ - INFO - RUNNING HTTPS TEST MODE AT 2025-09-05 12:17:15 IST
+2025-09-05 06:47:15,614 IST - __main__ - INFO - All required files found
+2025-09-05 06:47:15,660 IST - __main__ - ERROR - No postback server responding
+2025-09-05 06:47:15,661 IST - __main__ - ERROR - HTTPS Postback server is not running!
+2025-09-05 06:47:15,661 IST - __main__ - ERROR - Start with: sudo python3 postback_server.py
+2025-09-05 06:48:22,593 IST - __main__ - INFO - RUNNING HTTPS TEST MODE AT 2025-09-05 12:18:22 IST
+2025-09-05 06:48:22,593 IST - __main__ - INFO - All required files found
+2025-09-05 06:48:22,636 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:48:22,657 IST - __main__ - INFO - Postback server running on HTTPS: Zerodha HTTPS Postback Server
+2025-09-05 06:48:22,657 IST - __main__ - INFO - Starting HTTPS Telegram-based authentication...
+2025-09-05 06:48:22,678 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:48:22,698 IST - __main__ - INFO - Postback server running on HTTPS: Zerodha HTTPS Postback Server
+2025-09-05 06:48:22,716 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:48:22,734 IST - __main__ - INFO - Cleared any existing tokens on server
+2025-09-05 06:48:23,060 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:48:23,061 IST - __main__ - INFO - HTTPS Authentication link sent via Telegram
+2025-09-05 06:48:23,061 IST - __main__ - INFO - Waiting for HTTPS authentication response (timeout: 300s)...
+2025-09-05 06:48:23,079 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 06:49:08,418 IST - __main__ - INFO - Token received via HTTPS API (age: 2s)
+2025-09-05 06:49:08,419 IST - __main__ - INFO - Exchanging request token for access token...
+2025-09-05 06:49:09,231 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:49:09,231 IST - __main__ - INFO - HTTPS Authentication completed successfully
+2025-09-05 06:49:09,231 IST - __main__ - INFO - Testing bot functionality...
+2025-09-05 06:49:12,698 IST - __main__ - INFO - Bot test completed successfully
+2025-09-05 06:49:12,698 IST - __main__ - INFO - Test output preview:
+2025-09-05 06:49:12,698 IST - __main__ - INFO -   2025-09-05 06:49:10,993 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 06:49:12,698 IST - __main__ - INFO -   Running test mode - Steps 1, 2, 3...
+2025-09-05 06:49:12,698 IST - __main__ - INFO -   2025-09-05 06:49:10,993 - __main__ - INFO - Starting 3-minute trading cycle
+2025-09-05 06:49:12,698 IST - __main__ - INFO -   2025-09-05 06:49:11,163 - __main__ - INFO - Sensex: 80405.35, Session: Morning, Target Strike: 80400
+2025-09-05 06:49:12,698 IST - __main__ - INFO -   2025-09-05 06:49:11,506 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:49:12,699 IST - __main__ - INFO -   2025-09-05 06:49:12,210 - __main__ - INFO - Found 3404 Sensex options on BFO
+2025-09-05 06:49:12,699 IST - __main__ - INFO -   2025-09-05 06:49:12,214 - __main__ - INFO - Option chain refreshed. Found 3404 Sensex options
+2025-09-05 06:49:12,699 IST - __main__ - INFO -   2025-09-05 06:49:12,538 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 07:07:36,896 IST - telegram_bot_handler - INFO - Starting Telegram bot listener...
+2025-09-05 07:07:36,896 IST - __main__ - INFO - Telegram bot started in background
+2025-09-05 07:07:37,251 IST - telegram_bot_handler - INFO - Telegram message sent successfully
+2025-09-05 07:07:52,451 IST - telegram_bot_handler - INFO - Processing command: /login
+2025-09-05 07:07:52,492 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 07:07:52,513 IST - __main__ - INFO - Postback server running on HTTPS: Zerodha HTTPS Postback Server
+2025-09-05 07:07:52,837 IST - telegram_bot_handler - INFO - Telegram message sent successfully
+2025-09-05 07:07:52,837 IST - __main__ - INFO - Starting HTTPS Telegram-based authentication...
+2025-09-05 07:07:52,856 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 07:07:52,876 IST - __main__ - INFO - Postback server running on HTTPS: Zerodha HTTPS Postback Server
+2025-09-05 07:07:52,897 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 07:07:52,915 IST - __main__ - INFO - Cleared any existing tokens on server
+2025-09-05 07:07:53,263 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 07:07:53,263 IST - __main__ - INFO - HTTPS Authentication link sent via Telegram
+2025-09-05 07:07:53,263 IST - __main__ - INFO - Waiting for HTTPS authentication response (timeout: 300s)...
+2025-09-05 07:07:53,281 IST - __main__ - INFO - Using server: https://sensexbot.ddns.net
+2025-09-05 07:08:14,448 IST - __main__ - INFO - Token received via HTTPS API (age: 1s)
+2025-09-05 07:08:14,449 IST - __main__ - INFO - Exchanging request token for access token...
+2025-09-05 07:08:15,024 IST - __main__ - INFO - Telegram message sent successfully
+2025-09-05 07:08:15,025 IST - __main__ - INFO - HTTPS Authentication completed successfully
+2025-09-05 07:08:15,348 IST - telegram_bot_handler - INFO - Telegram message sent successfully
+2025-09-05 07:09:48,615 IST - telegram_bot_handler - INFO - Telegram message sent successfully
+2025-09-05 07:09:48,615 IST - __main__ - INFO - Telegram bot stopped
+2025-09-05 11:15:40,920 IST - telegram_bot_handler - INFO - Starting Telegram bot listener...
+2025-09-05 11:15:40,920 IST - __main__ - INFO - Telegram bot started in background

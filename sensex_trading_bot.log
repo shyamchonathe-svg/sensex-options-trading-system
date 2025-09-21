@@ -1,0 +1,321 @@
+2025-09-05 12:17:57,433 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 12:17:57,436 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 12:17:57,436 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 12:17:57,437 - __main__ - ERROR - Error in debug mode: OptimizedSensexOptionChain.get_weekly_expiry_symbols() takes 2 positional arguments but 3 were given
+2025-09-05 12:17:57,752 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 12:48:23,942 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 12:48:23,945 - optimized_sensex_option_chain - INFO - ✅ Loaded 1 weekly expiries
+2025-09-05 12:48:23,945 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 12:48:24,270 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 13:02:31,214 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:02:31,217 - optimized_sensex_option_chain - INFO - ✅ Loaded 1 weekly expiries
+2025-09-05 13:02:31,217 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 13:02:31,263 - __main__ - ERROR - Error in debug mode: Cannot compare dtypes datetime64[ns, UTC+05:30] and datetime64[ns]
+2025-09-05 13:02:31,634 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 13:02:41,622 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:02:41,624 - optimized_sensex_option_chain - INFO - ✅ Loaded 1 weekly expiries
+2025-09-05 13:02:41,625 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 13:02:41,671 - __main__ - ERROR - Error in debug mode: Cannot compare dtypes datetime64[ns, UTC+05:30] and datetime64[ns]
+2025-09-05 13:02:42,069 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 13:20:35,636 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:20:35,636 - __main__ - ERROR - Failed to initialize Kite Connect: OptimizedSensexOptionChain.__init__() got an unexpected keyword argument 'expiry_date'
+2025-09-05 13:20:42,256 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:20:42,256 - __main__ - ERROR - Failed to initialize Kite Connect: OptimizedSensexOptionChain.__init__() got an unexpected keyword argument 'expiry_date'
+2025-09-05 13:20:49,184 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:20:49,184 - __main__ - ERROR - Failed to initialize Kite Connect: OptimizedSensexOptionChain.__init__() got an unexpected keyword argument 'expiry_date'
+2025-09-05 13:40:15,437 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:40:15,439 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 13:40:15,440 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 13:40:15,486 - __main__ - ERROR - Error in debug mode: string indices must be integers
+2025-09-05 13:40:15,845 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 13:44:54,644 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 13:44:54,647 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 13:44:54,647 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 13:44:54,690 - __main__ - ERROR - Error in debug mode: string indices must be integers
+2025-09-05 13:44:55,007 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 14:26:44,842 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 14:26:44,844 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 14:26:44,845 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 14:26:44,845 - __main__ - INFO - Fetching symbol for strike 80800, option CE, expiry 2025-09-11
+2025-09-05 14:26:44,845 - __main__ - INFO - Retrieved symbol: SENSEX2591180800CE
+2025-09-05 14:26:44,845 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800CE_2025-09-05.csv
+2025-09-05 14:26:44,883 - __main__ - INFO - Option DataFrame columns: ['timestamp', 'date', 'open', 'high', 'low', 'close', 'volume', 'ema10', 'ema20']
+2025-09-05 14:26:44,883 - __main__ - INFO - Option DataFrame timestamp dtype: datetime64[ns, UTC+05:30]
+2025-09-05 14:26:44,883 - __main__ - INFO - First few timestamps: [Timestamp('2025-09-05 09:15:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:18:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:21:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:24:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:27:00+0530', tz='UTC+05:30')]
+2025-09-05 14:26:44,886 - __main__ - INFO - Option DataFrame index dtype after conversion: datetime64[ns, Asia/Kolkata]
+2025-09-05 14:26:44,886 - __main__ - INFO - Option DataFrame shape: (125, 6)
+2025-09-05 14:26:44,889 - __main__ - INFO - Target datetime: 2025-09-05 09:21:00+05:30
+2025-09-05 14:26:44,890 - __main__ - INFO - Closest index: 2, Timestamp: 2025-09-05 09:21:00+05:30
+2025-09-05 14:26:45,024 - __main__ - ERROR - Failed to send Telegram message: {"ok":false,"error_code":400,"description":"Bad Request: can't parse entities: Unsupported start tag \"=\" at byte offset 425"}
+2025-09-05 14:49:58,695 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 14:49:58,698 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 14:49:58,698 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 14:49:58,698 - __main__ - INFO - Fetching symbol for strike 80800, option CE, expiry 2025-09-11
+2025-09-05 14:49:58,698 - __main__ - INFO - Retrieved symbol: SENSEX2591180800CE
+2025-09-05 14:49:58,698 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800CE_2025-09-05.csv
+2025-09-05 14:49:58,739 - __main__ - INFO - Option DataFrame columns: ['timestamp', 'date', 'open', 'high', 'low', 'close', 'volume', 'ema10', 'ema20']
+2025-09-05 14:49:58,740 - __main__ - INFO - Option DataFrame timestamp dtype: datetime64[ns, UTC+05:30]
+2025-09-05 14:49:58,740 - __main__ - INFO - First few timestamps: [Timestamp('2025-09-05 09:15:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:18:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:21:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:24:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:27:00+0530', tz='UTC+05:30')]
+2025-09-05 14:49:58,742 - __main__ - INFO - Option DataFrame index dtype after conversion: datetime64[ns, Asia/Kolkata]
+2025-09-05 14:49:58,742 - __main__ - INFO - Option DataFrame shape: (125, 6)
+2025-09-05 14:49:58,745 - __main__ - INFO - Target datetime: 2025-09-05 09:21:00+05:30
+2025-09-05 14:49:58,746 - __main__ - INFO - Closest index: 2, Timestamp: 2025-09-05 09:21:00+05:30
+2025-09-05 14:49:58,747 - __main__ - INFO - Telegram message content:
+🐛 <b>Debug Analysis</b>
+
+🎯 <b>Parameters:</b>
+   Strike: 80800
+   Option: CE
+   Symbol: <code>SENSEX2591180800CE</code>
+   Expiry: 2025-09-11
+   Exchange: BFO
+   Date: 2025-09-05
+   Time: 09:21
+
+🔍 <b>Condition Analysis:</b> 🔴 NO MATCH
+   <b>CE Option-based:</b>
+     ❌ Green: Close 380.95 greater than Open 390.65
+     ✅ EMA10 385.49 greater than EMA20 379.95
+     ❌ Min(OHLC) 375.10 greater than EMA10-1 384.49
+     ✅ EMA10-EMA20 5.54 less thanequals 11
+     ✅ Min(Open/Low-EMA10) 5.16 less than 11
+
+2025-09-05 14:49:59,070 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 14:50:12,686 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 14:50:12,689 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 14:50:12,689 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 14:50:12,689 - __main__ - INFO - Fetching symbol for strike 80800, option PE, expiry 2025-09-11
+2025-09-05 14:50:12,689 - __main__ - INFO - Retrieved symbol: SENSEX2591180800PE
+2025-09-05 14:50:12,689 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-05 14:50:12,728 - __main__ - INFO - Option DataFrame columns: ['timestamp', 'date', 'open', 'high', 'low', 'close', 'volume', 'ema10', 'ema20']
+2025-09-05 14:50:12,729 - __main__ - INFO - Option DataFrame timestamp dtype: datetime64[ns, UTC+05:30]
+2025-09-05 14:50:12,729 - __main__ - INFO - First few timestamps: [Timestamp('2025-09-05 09:15:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:18:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:21:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:24:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:27:00+0530', tz='UTC+05:30')]
+2025-09-05 14:50:12,731 - __main__ - INFO - Option DataFrame index dtype after conversion: datetime64[ns, Asia/Kolkata]
+2025-09-05 14:50:12,731 - __main__ - INFO - Option DataFrame shape: (125, 6)
+2025-09-05 14:50:12,734 - __main__ - INFO - Target datetime: 2025-09-05 09:21:00+05:30
+2025-09-05 14:50:12,735 - __main__ - INFO - Closest index: 2, Timestamp: 2025-09-05 09:21:00+05:30
+2025-09-05 14:50:12,736 - __main__ - INFO - Telegram message content:
+🐛 <b>Debug Analysis</b>
+
+🎯 <b>Parameters:</b>
+   Strike: 80800
+   Option: PE
+   Symbol: <code>SENSEX2591180800PE</code>
+   Expiry: 2025-09-11
+   Exchange: BFO
+   Date: 2025-09-05
+   Time: 09:21
+
+🔍 <b>Condition Analysis:</b> 🔴 NO MATCH
+   <b>PE Option-based:</b>
+     ✅ Green: Close 351.25 greater than Open 346.45
+     ❌ EMA10 353.81 greater than EMA20 361.59
+     ❌ Min(OHLC) 346.10 greater than EMA10-1 352.81
+     ✅ EMA10-EMA20 7.78 less thanequals 11
+     ✅ Min(Open/High-EMA10) 5.14 less than 11
+
+2025-09-05 14:50:13,111 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 15:28:29,148 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 15:28:29,150 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 15:28:29,151 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 15:28:29,151 - __main__ - INFO - Fetching symbol for strike 80800, option PE, expiry 2025-09-11
+2025-09-05 15:28:29,151 - __main__ - INFO - Retrieved symbol: SENSEX2591180800PE
+2025-09-05 15:28:29,151 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-05 15:28:29,193 - __main__ - INFO - Option DataFrame columns: ['timestamp', 'date', 'open', 'high', 'low', 'close', 'volume', 'ema10', 'ema20']
+2025-09-05 15:28:29,193 - __main__ - INFO - Option DataFrame timestamp dtype: datetime64[ns, UTC+05:30]
+2025-09-05 15:28:29,193 - __main__ - INFO - First few timestamps: [Timestamp('2025-09-05 09:15:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:18:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:21:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:24:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:27:00+0530', tz='UTC+05:30')]
+2025-09-05 15:28:29,196 - __main__ - INFO - Option DataFrame index dtype after conversion: datetime64[ns, Asia/Kolkata]
+2025-09-05 15:28:29,196 - __main__ - INFO - Option DataFrame shape: (125, 6)
+2025-09-05 15:28:29,199 - __main__ - INFO - Target datetime: 2025-09-05 09:21:00+05:30
+2025-09-05 15:28:29,200 - __main__ - INFO - Closest index: 2, Timestamp: 2025-09-05 09:21:00+05:30
+2025-09-05 15:28:29,200 - __main__ - INFO - Raw debug dictionary: {
+  "timestamp": "2025-09-05 15:27:00",
+  "ce": {
+    "sensex": {},
+    "option": {}
+  },
+  "pe": {
+    "sensex": {},
+    "option": {
+      "green": "\u2705 Green: Close 351.25 greater than Open 346.45",
+      "ema": "\u274c EMA10 353.81 greater than EMA20 361.59",
+      "ohlc_ema10": "\u274c Min(OHLC) 346.10 greater than EMA10-1 352.81",
+      "ema_diff": "\u2705 EMA10-EMA20 7.78 less than or equals 11",
+      "open_high_ema10": "\u2705 Min(Open/High-EMA10) 5.14 less than 11"
+    }
+  }
+}
+2025-09-05 15:28:29,201 - __main__ - INFO - Telegram message content:
+🐛 <b>Debug Analysis</b>
+
+🎯 <b>Parameters:</b>
+   Strike: 80800
+   Option: PE
+   Symbol: <code>SENSEX2591180800PE</code>
+   Expiry: 2025-09-11
+   Exchange: BFO
+   Date: 2025-09-05
+   Time: 09:21
+
+🔍 <b>Condition Analysis:</b> 🔴 NO MATCH
+   <b>PE Option-based:</b>
+     ✅ Green: Close 351.25 greater than Open 346.45
+     ❌ EMA10 353.81 greater than EMA20 361.59
+     ❌ Min(OHLC) 346.10 greater than EMA10-1 352.81
+     ✅ EMA10-EMA20 7.78 less than or equals 11
+     ✅ Min(Open/High-EMA10) 5.14 less than 11
+
+2025-09-05 15:28:29,544 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 16:37:45,399 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 16:37:45,404 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 16:37:45,404 - __main__ - INFO - Debug mode: Strike=80800, Type=CE, Expiry=2025-09-11, Date=2025-09-02, Time=09:21
+2025-09-05 16:37:45,404 - __main__ - INFO - Fetching symbol for strike 80800, option CE, expiry 2025-09-11
+2025-09-05 16:37:45,404 - __main__ - INFO - Retrieved symbol: SENSEX2591180800CE
+2025-09-05 16:37:45,405 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800CE_2025-09-02.csv
+2025-09-05 16:37:45,405 - __main__ - ERROR - ❌ <b>Data file not found for SENSEX2591180800CE on 2025-09-02</b>
+2025-09-05 16:37:45,761 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 16:39:44,781 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 16:39:44,783 - optimized_sensex_option_chain - INFO - ✅ Loaded 3 weekly expiries
+2025-09-05 16:39:44,784 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:21
+2025-09-05 16:39:44,784 - __main__ - INFO - Fetching symbol for strike 80800, option PE, expiry 2025-09-11
+2025-09-05 16:39:44,784 - __main__ - INFO - Retrieved symbol: SENSEX2591180800PE
+2025-09-05 16:39:44,784 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-05 16:39:44,826 - __main__ - INFO - Option DataFrame columns: ['timestamp', 'date', 'open', 'high', 'low', 'close', 'volume', 'ema10', 'ema20']
+2025-09-05 16:39:44,827 - __main__ - INFO - Option DataFrame timestamp dtype: datetime64[ns, UTC+05:30]
+2025-09-05 16:39:44,827 - __main__ - INFO - First few timestamps: [Timestamp('2025-09-05 09:15:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:18:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:21:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:24:00+0530', tz='UTC+05:30'), Timestamp('2025-09-05 09:27:00+0530', tz='UTC+05:30')]
+2025-09-05 16:39:44,830 - __main__ - INFO - Option DataFrame index dtype after conversion: datetime64[ns, Asia/Kolkata]
+2025-09-05 16:39:44,830 - __main__ - INFO - Option DataFrame shape: (125, 6)
+2025-09-05 16:39:44,833 - __main__ - INFO - Target datetime: 2025-09-05 09:21:00+05:30
+2025-09-05 16:39:44,834 - __main__ - INFO - Closest index: 2, Timestamp: 2025-09-05 09:21:00+05:30
+2025-09-05 16:39:44,835 - __main__ - INFO - Raw debug dictionary: {
+  "timestamp": "2025-09-05 15:27:00",
+  "ce": {
+    "sensex": {},
+    "option": {}
+  },
+  "pe": {
+    "sensex": {},
+    "option": {
+      "green": "\u2705 Green: Close 351.25 greater than Open 346.45",
+      "ema": "\u274c EMA10 353.81 greater than EMA20 361.59",
+      "ohlc_ema10": "\u274c Min(OHLC) 346.10 greater than EMA10-1 352.81",
+      "ema_diff": "\u2705 EMA10-EMA20 7.78 less than or equals 11",
+      "open_high_ema10": "\u2705 Min(Open/High-EMA10) 5.14 less than 11"
+    }
+  }
+}
+2025-09-05 16:39:44,835 - __main__ - INFO - Telegram message content:
+🐛 <b>Debug Analysis</b>
+
+🎯 <b>Parameters:</b>
+   Strike: 80800
+   Option: PE
+   Symbol: <code>SENSEX2591180800PE</code>
+   Expiry: 2025-09-11
+   Exchange: BFO
+   Date: 2025-09-05
+   Time: 09:21
+
+🔍 <b>Condition Analysis:</b> 🔴 NO MATCH
+   <b>PE Option-based:</b>
+     ✅ Green: Close 351.25 greater than Open 346.45
+     ❌ EMA10 353.81 greater than EMA20 361.59
+     ❌ Min(OHLC) 346.10 greater than EMA10-1 352.81
+     ✅ EMA10-EMA20 7.78 less than or equals 11
+     ✅ Min(Open/High-EMA10) 5.14 less than 11
+
+2025-09-05 16:39:45,264 - __main__ - INFO - Telegram message sent successfully
+2025-09-06 18:24:17,669 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 18:24:18,552 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 18:24:18,552 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 18:24:18,552 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 18:24:18,552 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 18:24:18,553 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 18:24:18,553 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-06 18:24:18,562 - __main__ - ERROR - Error loading Sensex data: Already tz-aware, use tz_convert to convert.
+2025-09-06 18:24:18,886 - utils - INFO - Telegram message sent successfully
+2025-09-06 18:29:17,062 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 18:29:17,766 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 18:29:17,766 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 18:29:17,766 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 18:29:17,767 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 18:29:17,767 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 18:29:17,768 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-06 18:29:17,776 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-02.csv, expected ~125 (3-minute data)
+2025-09-06 18:29:17,776 - __main__ - INFO - Loading previous trading day data from: option_data/SENSEX_2025-09-01.csv
+2025-09-06 18:29:17,780 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-01.csv, expected ~125 (3-minute data)
+2025-09-06 18:29:17,781 - __main__ - INFO - Combined data: 125 rows from 2025-09-01, 125 rows from 2025-09-02
+2025-09-06 18:29:17,781 - __main__ - INFO - Loaded Sensex data: 250 rows, from 2025-09-01 09:15:00+05:30 to 2025-09-02 15:27:00+05:30
+2025-09-06 18:29:17,782 - __main__ - INFO - EMA10 at 2025-09-01 09:15:00+05:30: 80091.01, EMA20: 80091.01
+2025-09-06 18:29:17,782 - __main__ - INFO - EMA10 at 2025-09-02 15:27:00+05:30: 80171.95, EMA20: 80186.44
+2025-09-06 18:36:13,626 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 18:36:14,425 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 18:36:14,426 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 18:36:14,426 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 18:36:14,426 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 18:36:14,426 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 18:36:14,427 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-06 18:36:14,435 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-02.csv, expected ~125 (3-minute data)
+2025-09-06 18:36:14,435 - __main__ - INFO - Loading previous trading day data from: option_data/SENSEX_2025-09-01.csv
+2025-09-06 18:36:14,439 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-01.csv, expected ~125 (3-minute data)
+2025-09-06 18:36:14,440 - __main__ - INFO - Combined data: 125 rows from 2025-09-01, 125 rows from 2025-09-02
+2025-09-06 18:36:14,441 - __main__ - INFO - Loaded Sensex data: 250 rows, from 2025-09-01 09:15:00+05:30 to 2025-09-02 15:27:00+05:30
+2025-09-06 18:36:14,441 - __main__ - INFO - EMA10 at 2025-09-01 09:15:00+05:30: 80091.01, EMA20: 80091.01
+2025-09-06 18:36:14,441 - __main__ - INFO - EMA10 at 2025-09-02 15:27:00+05:30: 80171.95, EMA20: 80186.44
+2025-09-06 18:36:15,915 - optimized_sensex_option_chain - INFO - Loaded BSE instruments
+2025-09-06 18:36:16,334 - optimized_sensex_option_chain - INFO - Loaded BFO instruments
+2025-09-06 18:36:16,335 - optimized_sensex_option_chain - INFO - Found instrument token for BSE:SENSEX: 265
+2025-09-06 18:36:16,553 - optimized_sensex_option_chain - INFO - Fetched historical Sensex price for 2025-09-02: 80157.88
+2025-09-06 18:36:16,553 - __main__ - INFO - Sensex spot price for 2025-09-02: 80157.88
+2025-09-06 18:36:16,554 - __main__ - INFO - Target datetime: 2025-09-02 09:27:00+05:53
+2025-09-06 18:36:16,914 - utils - INFO - Telegram message sent successfully
+2025-09-06 18:37:45,754 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 18:37:46,638 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 18:37:46,639 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 18:37:46,639 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 18:37:46,639 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 18:37:46,640 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 18:37:46,640 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-06 18:37:46,648 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-02.csv, expected ~125 (3-minute data)
+2025-09-06 18:37:46,649 - __main__ - INFO - Loading previous trading day data from: option_data/SENSEX_2025-09-01.csv
+2025-09-06 18:37:46,653 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-01.csv, expected ~125 (3-minute data)
+2025-09-06 18:37:46,653 - __main__ - INFO - Combined data: 125 rows from 2025-09-01, 125 rows from 2025-09-02
+2025-09-06 18:37:46,654 - __main__ - INFO - Loaded Sensex data: 250 rows, from 2025-09-01 09:15:00+05:30 to 2025-09-02 15:27:00+05:30
+2025-09-06 18:37:46,654 - __main__ - INFO - EMA10 at 2025-09-01 09:15:00+05:30: 80091.01, EMA20: 80091.01
+2025-09-06 18:37:46,655 - __main__ - INFO - EMA10 at 2025-09-02 15:27:00+05:30: 80171.95, EMA20: 80186.44
+2025-09-06 18:37:47,541 - optimized_sensex_option_chain - INFO - Loaded BSE instruments
+2025-09-06 18:37:47,968 - optimized_sensex_option_chain - INFO - Loaded BFO instruments
+2025-09-06 18:37:47,969 - optimized_sensex_option_chain - INFO - Found instrument token for BSE:SENSEX: 265
+2025-09-06 18:37:48,676 - optimized_sensex_option_chain - INFO - Fetched historical Sensex price for 2025-09-02: 80157.88
+2025-09-06 18:37:48,677 - __main__ - INFO - Sensex spot price for 2025-09-02: 80157.88
+2025-09-06 18:37:48,677 - __main__ - INFO - Target datetime: 2025-09-02 09:27:00+05:53
+2025-09-06 18:37:48,998 - utils - INFO - Telegram message sent successfully
+2025-09-06 18:43:53,857 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 18:43:54,753 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 18:43:54,753 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 18:43:54,754 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 18:43:54,754 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 18:43:54,754 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 18:43:54,755 - __main__ - INFO - Loading Sensex data from: option_dataq/SENSEX_2025-09-02.csv
+2025-09-06 18:43:54,756 - __main__ - ERROR - Error loading Sensex data: [Errno 2] No such file or directory: 'option_dataq/SENSEX_2025-09-02.csv'
+2025-09-06 19:15:58,059 - __main__ - INFO - Loaded configuration from /home/ubuntu/main_trading/config.json
+2025-09-06 19:15:58,935 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-06 19:15:58,936 - optimized_sensex_option_chain - INFO - Calculated nearest expiry: 2025-09-11
+2025-09-06 19:15:58,936 - optimized_sensex_option_chain - INFO - Initialized OptimizedSensexOptionChain with expiry_date: 2025-09-11
+2025-09-06 19:15:58,936 - __main__ - INFO - Debug mode: Strike=None, Type=None, Expiry=None, Date=2025-09-02, Time=09:27, DebugData=sensex
+2025-09-06 19:15:58,937 - __main__ - INFO - Sensex-only mode, skipping option symbol retrieval
+2025-09-06 19:15:58,937 - __main__ - INFO - Loading Sensex data from: option_data/SENSEX_2025-09-02.csv
+2025-09-06 19:15:58,946 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-02.csv, expected ~125 (3-minute data)
+2025-09-06 19:15:58,946 - __main__ - INFO - Loading previous trading day data from: option_data/SENSEX_2025-09-01.csv
+2025-09-06 19:15:58,950 - __main__ - INFO - Confirmed 125 rows in option_data/SENSEX_2025-09-01.csv, expected ~125 (3-minute data)
+2025-09-06 19:15:58,950 - __main__ - INFO - Combined data: 125 rows from 2025-09-01, 125 rows from 2025-09-02
+2025-09-06 19:15:58,951 - __main__ - INFO - Loaded Sensex data: 250 rows, from 2025-09-01 09:15:00+05:30 to 2025-09-02 15:27:00+05:30
+2025-09-06 19:15:58,952 - __main__ - INFO - EMA10 at 2025-09-01 09:15:00+05:30: 80091.01, EMA20: 80091.01
+2025-09-06 19:15:58,952 - __main__ - INFO - EMA10 at 2025-09-02 15:27:00+05:30: 80171.95, EMA20: 80186.44
+2025-09-06 19:16:00,308 - optimized_sensex_option_chain - INFO - Loaded BSE instruments
+2025-09-06 19:16:01,123 - optimized_sensex_option_chain - INFO - Loaded BFO instruments
+2025-09-06 19:16:01,125 - optimized_sensex_option_chain - INFO - Found instrument token for BSE:SENSEX: 265
+2025-09-06 19:16:01,354 - optimized_sensex_option_chain - INFO - Fetched historical Sensex price for 2025-09-02: 80157.88
+2025-09-06 19:16:01,355 - __main__ - INFO - Sensex spot price for 2025-09-02: 80157.88
+2025-09-06 19:16:01,355 - __main__ - INFO - Target datetime: 2025-09-02 09:27:00+05:53
+2025-09-06 19:16:01,669 - utils - INFO - Telegram message sent successfully

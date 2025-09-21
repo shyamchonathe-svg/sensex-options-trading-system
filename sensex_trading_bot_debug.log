@@ -1,0 +1,42 @@
+2025-09-07 12:20:46,306 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 12:20:46,306 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:27, DebugData=option
+2025-09-07 12:20:46,306 - __main__ - INFO - Fetched historical Sensex price for 2025-09-05: 80710.76
+2025-09-07 12:20:46,306 - __main__ - INFO - Sensex spot price for 2025-09-05: 80710.76
+2025-09-07 12:20:46,306 - __main__ - ERROR - No instrument found for symbol: BFO:SENSEX2025091180800PE
+2025-09-07 12:20:46,307 - __main__ - INFO - Constructed option symbol: SENSEX2591180800PE for expiry 2025-09-11, strike 80800, type PE
+2025-09-07 12:20:46,307 - __main__ - WARNING - Fallback to constructed symbol: SENSEX2591180800PE
+2025-09-07 12:20:46,307 - __main__ - INFO - Option symbol for strike 80800 (PE): SENSEX2591180800PE
+2025-09-07 12:20:46,307 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-07 12:20:46,316 - __main__ - ERROR - ❌ <b>No data found for SENSEX2591180800PE at 2025-09-05 09:27</b>
+📈 Sensex Spot Price: ₹80,710.76
+🏷️ Option: <code>SENSEX2591180800PE</code>
+2025-09-07 12:20:46,316 - __main__ - INFO - Telegram message sent successfully
+2025-09-07 12:20:52,592 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 12:20:52,592 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:27, DebugData=option
+2025-09-07 12:20:52,593 - __main__ - INFO - Fetched historical Sensex price for 2025-09-05: 80710.76
+2025-09-07 12:20:52,593 - __main__ - INFO - Sensex spot price for 2025-09-05: 80710.76
+2025-09-07 12:20:52,593 - __main__ - ERROR - No instrument found for symbol: BFO:SENSEX2025091180800PE
+2025-09-07 12:20:52,593 - __main__ - INFO - Constructed option symbol: SENSEX2591180800PE for expiry 2025-09-11, strike 80800, type PE
+2025-09-07 12:20:52,593 - __main__ - WARNING - Fallback to constructed symbol: SENSEX2591180800PE
+2025-09-07 12:20:52,593 - __main__ - INFO - Option symbol for strike 80800 (PE): SENSEX2591180800PE
+2025-09-07 12:20:52,593 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-07 12:20:52,601 - __main__ - ERROR - ❌ <b>No data found for SENSEX2591180800PE at 2025-09-05 09:27</b>
+📈 Sensex Spot Price: ₹80,710.76
+🏷️ Option: <code>SENSEX2591180800PE</code>
+2025-09-07 12:20:52,601 - __main__ - INFO - Telegram message sent successfully
+2025-09-07 12:21:20,395 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-07 12:21:20,395 - __main__ - INFO - Debug mode: Strike=80800, Type=PE, Expiry=2025-09-11, Date=2025-09-05, Time=09:27, DebugData=option
+2025-09-07 12:21:20,395 - __main__ - INFO - Fetched historical Sensex price for 2025-09-05: 80710.76
+2025-09-07 12:21:20,395 - __main__ - INFO - Sensex spot price for 2025-09-05: 80710.76
+2025-09-07 12:21:20,395 - __main__ - ERROR - No instrument found for symbol: BFO:SENSEX2025091180800PE
+2025-09-07 12:21:20,396 - __main__ - INFO - Constructed option symbol: SENSEX2591180800PE for expiry 2025-09-11, strike 80800, type PE
+2025-09-07 12:21:20,396 - __main__ - WARNING - Fallback to constructed symbol: SENSEX2591180800PE
+2025-09-07 12:21:20,396 - __main__ - INFO - Option symbol for strike 80800 (PE): SENSEX2591180800PE
+2025-09-07 12:21:20,396 - __main__ - INFO - Loading option data from: option_data/SENSEX2591180800PE_2025-09-05.csv
+2025-09-07 12:21:20,404 - __main__ - ERROR - ❌ <b>No data found for SENSEX2591180800PE at 2025-09-05 09:27</b>
+📈 Sensex Spot Price: ₹80,710.76
+🏷️ Option: <code>SENSEX2591180800PE</code>
+2025-09-07 12:21:20,404 - __main__ - INFO - Telegram message sent successfully
+2025-09-07 16:32:49,127 - __main__ - INFO - Initializing SensexTradingBot
+2025-09-07 16:32:49,127 - __main__ - ERROR - Configuration missing 'kite' section or 'api_key'.
+2025-09-07 16:32:49,127 - __main__ - ERROR - Failed to load configuration. Exiting.

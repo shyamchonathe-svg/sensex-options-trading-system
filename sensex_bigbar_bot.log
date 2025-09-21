@@ -1,0 +1,7 @@
+2025-09-05 06:49:10,993 - __main__ - INFO - Kite Connect initialized for user: Shyam Chonat
+2025-09-05 06:49:10,993 - __main__ - INFO - Starting 3-minute trading cycle
+2025-09-05 06:49:11,163 - __main__ - INFO - Sensex: 80405.35, Session: Morning, Target Strike: 80400
+2025-09-05 06:49:11,506 - __main__ - INFO - Telegram message sent successfully
+2025-09-05 06:49:12,210 - __main__ - INFO - Found 3404 Sensex options on BFO
+2025-09-05 06:49:12,214 - __main__ - INFO - Option chain refreshed. Found 3404 Sensex options
+2025-09-05 06:49:12,538 - __main__ - INFO - Telegram message sent successfully

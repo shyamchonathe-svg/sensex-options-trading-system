@@ -1,17 +1,7 @@
-# Security - NEVER commit credentials
+# Environment variables
 .env
 .env.local
-.env.*.local
-
-# Sensitive data
-trades.db
-trades.db-wal
-trades.db-shm
-*.log
-logs/
-data_raw/
-archives/
-paper_trading_sessions/
+*.env.*.local
 
 # Python
 __pycache__/
@@ -34,7 +24,17 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
@@ -45,24 +45,14 @@ MANIFEST
 ehthumbs.db
 Thumbs.db
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Trading data
+auth_data/
+logs/
+data_raw/
+archives/
+trades.db
+ssl/
 
-# Testing
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.pytest_cache/
-
-# Deployment
-*.zip
-*.tar.gz
+# Temporary files
+*.tmp
+*.temp
