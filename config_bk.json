@@ -1,26 +1,28 @@
 {
-  "api_key": "xpft4r4qmsoq0p9b",
-  "api_secret": "6c96tog8pgp8wiqti9ox7b7nx4hej8g9",
-  "telegram_token": "8427480734:AAFjkFwNbM9iUo0wa1Biwg8UHmJCvLs5vho",
-  "chat_id": "1639045622",
-  "server_host": "sensexbot.ddns.net",
-  "postback_server_host": "sensexbot.ddns.net",
-  "postback_server_port": 443,
-  "use_https": true,
-  "auth_timeout_seconds": 300,
-  "market_holidays": [
-    "2025-10-02",
-    "2025-10-21",
-    "2025-10-22",
-    "2025-11-05",
-    "2025-12-25"
-  ],
-  "postback_urls": {
-    "primary": "https://sensexbot.ddns.net/postback",
-    "secondary": "https://sensexbot.ddns.net/redirect"
-  },
   "position_size": 100,
   "lot_size": 20,
-  "instrument_tokens": {"SENSEX": "256265", "NIFTY": "260105"},
-  "data_dir": "option_data"
+  "max_daily_trades": 3,
+  "max_consecutive_losses": 2,
+  "max_daily_loss": -25000,
+  "max_exposure": 100000,
+  "data_dir": "option_data",
+  "instruments": ["SENSEX"],
+  "market_holidays": [
+    "2025-10-02", 
+    "2025-10-21", 
+    "2025-10-22", 
+    "2025-11-05", 
+    "2025-12-25"
+  ],
+  "signal_config": {
+    "min_confidence": 0.8,
+    "sensex": {
+      "ema_diff_threshold": 51,
+      "proximity_threshold": 21
+    },
+    "option": {
+      "ema_diff_threshold": 15,
+      "proximity_threshold": 21
+    }
+  }
 }

@@ -1,0 +1,26 @@
+[Unit]
+Description=Sensex Trading Telegram Bot
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/sensex-options-trading-system
+Environment=PROJECT_PATH=/home/ubuntu/sensex-options-trading-system
+EnvironmentFile=/home/ubuntu/sensex-options-trading-system/.env
+
+ExecStart=/usr/bin/python3 telegram_bot.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Resource limits
+MemoryLimit=128M
+CPUQuota=25%
+
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

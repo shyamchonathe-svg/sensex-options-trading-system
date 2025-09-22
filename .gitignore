@@ -1,7 +1,42 @@
-# Environment variables
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment & Secrets
 .env
 .env.local
-*.env.*.local
+.env.*.local
+
+# Logs & Runtime Data (auto-managed)
+logs/
+data_raw/
+archives/
+live_dumps/
+*.log
+*.csv
+*.zip
+*.json
+trades.db
+trades.db-journal
+trades.db-wal
+trades.db-shm
+
+# Runtime flags
+.trading_mode
+.trading_disabled
+*.pid
 
 # Python
 __pycache__/
@@ -21,38 +56,36 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual environments
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Virtual Environment
 venv/
 env/
 ENV/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Trading data
-auth_data/
-logs/
-data_raw/
-archives/
-trades.db
-ssl/
-
-# Temporary files
-*.tmp
-*.temp
+# Dependencies
+.pipenv
+Pipfile.lock
+poetry.lock

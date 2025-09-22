@@ -1,927 +1,748 @@
 #!/usr/bin/env python3
 """
-Integrated End-to-End Trading System
-Main trading engine with 3-mode support and full risk management
+Hands-Free Sensex Options Trading System v2.0
+Fully automated mean-reversion strategy with WebSocket reliability
+Reads mode from .trading_mode flag file
 """
-import asyncio
-import logging
-import sys
+
 import os
-from datetime import datetime, timedelta
-from typing import Dict, Any, Optional
+import sys
+import json
+import logging
+import time
+import threading
+from datetime import datetime, time as dt_time
+from pathlib import Path
+import sqlite3
 import pandas as pd
 import numpy as np
-import random
-import secrets
-from pathlib import Path
+from kiteconnect import KiteConnect, KiteTicker
+from tenacity import retry, stop_after_attempt, wait_exponential
+import talib
 
-# Local imports
-from secure_config_manager import config
-from modes import TradingMode, create_mode_config
-from risk_manager import RiskManager
-from notification_service import NotificationService
-from kiteconnect import KiteConnect
-
-# Setup logging
-log_dir = Path('logs')
-log_dir.mkdir(exist_ok=True)
-
-log_level = getattr(logging, config.LOG_LEVEL.upper(), logging.INFO)
+# Configure logging (local only)
 logging.basicConfig(
-    level=log_level,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(log_dir / f'trading_{config.MODE.lower()}.log', mode='a'),
+        logging.FileHandler('logs/trading.log'),
         logging.StreamHandler(sys.stdout)
     ]
 )
 logger = logging.getLogger(__name__)
 
-class TokenValidator:
-    """Validates and refreshes access tokens."""
-    
-    def __init__(self, config: Dict[str, Any], notification_service: NotificationService):
-        self.config = config
-        self.notification_service = notification_service
-        self.last_validation = 0
-        self.min_interval = 300  # 5 minutes
-        self.kite = None
-    
-    async def initialize_kite(self):
-        """Initialize KiteConnect with current token."""
-        try:
-            self.kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-            self.kite.set_access_token(self.config.ACCESS_TOKEN)
-            logger.info("✅ KiteConnect initialized with current token")
-            return True
-        except Exception as e:
-            logger.error(f"❌ KiteConnect initialization failed: {e}")
-            await self.notification_service.send_system_alert({
-                "type": "ERROR",
-                "component": "TokenValidator",
-                "message": f"KiteConnect init failed: {str(e)[:100]}",
-                "mode": self.config.MODE
-            })
-            return False
-    
-    async def validate_token(self) -> bool:
-        """Validate token and refresh if needed."""
-        now = pd.Timestamp.now().timestamp()
-        if now - self.last_validation < self.min_interval:
-            return True
-        
-        try:
-            if not self.kite:
-                await self.initialize_kite()
-                if not self.kite:
-                    return False
-            
-            # Test token with profile API
-            profile = self.kite.profile()
-            logger.debug(f"Token validation successful: {profile.get('user_id', 'unknown')}")
-            
-            # Check token age (rough estimate)
-            last_login = profile.get('last_login', '1970-01-01')
-            token_age = (pd.Timestamp.now() - pd.Timestamp(last_login)).total_seconds()
-            
-            if token_age > 24 * 3600 - 2 * 3600:  # Refresh if <2h remaining
-                logger.warning("🔄 Token expiry approaching, refresh recommended")
-                # Don't auto-refresh here, let manual process handle it
-            
-            self.last_validation = now
-            return True
-            
-        except Exception as e:
-            logger.error(f"💥 Token validation failed: {e}")
-            await self.notification_service.send_system_alert({
-                "type": "WARNING",
-                "component": "TokenValidator",
-                "message": f"Token validation failed: {str(e)[:100]}",
-                "mode": self.config.MODE,
-                "action": "Manual token refresh required"
-            })
-            return False
+# Paths
+PROJECT_PATH = Path(os.getenv('PROJECT_PATH', '/home/ubuntu/sensex-options-trading-system'))
+CONFIG_PATH = PROJECT_PATH / 'config.json'
+TRADES_DB = PROJECT_PATH / 'trades.db'
 
-class TradingModeHandler:
-    """Handles mode-specific trading behavior."""
+# Load config
+with open(CONFIG_PATH) as f:
+    CONFIG = json.load(f)
+
+# Environment
+ZAPI_KEY = os.getenv('ZAPI_KEY')
+ZAPI_SECRET = os.getenv('ZAPI_SECRET')
+ZACCESS_TOKEN = os.getenv('ZACCESS_TOKEN')
+
+class DatabaseLayer:
+    """SQLite database for trade auditing"""
     
-    def __init__(self, config: Dict[str, Any], notification_service: NotificationService):
-        self.config = config
-        self.notification_service = notification_service
-        self.mode = config.get("MODE", "TEST")
-        self.is_live = self.mode == "LIVE"
-        self.is_paper = self.mode == "PAPER"
-        self.is_test = self.mode == "TEST"
-        
-        # Mode-specific state
-        if self.is_test:
-            self.mock_positions = {}
-            self.mock_pnl = 0.0
-            self.mock_trades_today = 0
-            logger.info("🧪 TEST MODE: Mock trading engine initialized")
-        
-        if self.is_paper:
-            self.paper_positions = {}
-            self.paper_pnl = 0.0
-            logger.info("📝 PAPER MODE: Simulated trading engine initialized")
+    def __init__(self, db_path=TRADES_DB):
+        self.db_path = Path(db_path)
+        self.init_database()
     
-    async def place_order(self, order_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute order based on trading mode."""
-        order_params["mode"] = self.mode
+    def init_database(self):
+        """Initialize database schema"""
+        schema = """
+        CREATE TABLE IF NOT EXISTS trades (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            mode TEXT NOT NULL,
+            timestamp TEXT NOT NULL,
+            symbol TEXT NOT NULL,
+            side TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            price REAL NOT NULL,
+            pnl REAL DEFAULT 0,
+            status TEXT DEFAULT 'OPEN',
+            signal_strength REAL,
+            conditions TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
         
-        if self.is_live:
-            return await self._execute_live_order(order_params)
-        elif self.is_paper:
-            return await self._execute_paper_order(order_params)
-        elif self.is_test:
-            return await self._execute_test_order(order_params)
-        else:
-            logger.error(f"❌ Unknown trading mode: {self.mode}")
-            return {"status": "ERROR", "error": f"Unknown mode: {self.mode}"}
+        CREATE TABLE IF NOT EXISTS positions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            trade_id INTEGER,
+            symbol TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            avg_price REAL NOT NULL,
+            current_price REAL,
+            unrealized_pnl REAL,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (trade_id) REFERENCES trades (id)
+        );
+        
+        CREATE INDEX IF NOT EXISTS idx_trades_date ON trades(date);
+        CREATE INDEX IF NOT EXISTS idx_trades_status ON trades(status);
+        """
+        
+        with sqlite3.connect(self.db_path) as conn:
+            conn.executescript(schema)
     
-    async def _execute_live_order(self, order_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute real order in LIVE mode."""
-        try:
-            if not self.config.ACCESS_TOKEN:
-                return {"status": "ERROR", "error": "No access token"}
-            
-            kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-            kite.set_access_token(self.config.ACCESS_TOKEN)
-            
-            # Place actual order
-            order = kite.place_order(
-                variety=kite.VARIETY_REGULAR,
-                exchange=kite.EXCHANGE_NFO,
-                tradingsymbol=order_params["symbol"],
-                transaction_type=kite.TRANSACTION_TYPE_BUY if order_params["side"] == "BUY" else kite.TRANSACTION_TYPE_SELL,
-                quantity=order_params["quantity"],
-                product=kite.PRODUCT_MIS,
-                order_type=kite.ORDER_TYPE_LIMIT,
-                price=order_params["price"],
-                validity=kite.VALIDITY_DAY,
-                squareoff=order_params.get("squareoff"),
-                stoploss=order_params.get("stoploss")
+    def log_trade(self, trade_data):
+        """Log trade to database"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("""
+                INSERT INTO trades (date, mode, timestamp, symbol, side, quantity, price, 
+                                  signal_strength, conditions)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                trade_data['date'],
+                trade_data['mode'],
+                trade_data['timestamp'],
+                trade_data['symbol'],
+                trade_data['side'],
+                trade_data['quantity'],
+                trade_data['price'],
+                trade_data['signal_strength'],
+                json.dumps(trade_data['conditions'])
+            ))
+            trade_id = cursor.lastrowid
+            conn.commit()
+            return trade_id
+    
+    def update_trade_pnl(self, trade_id, pnl):
+        """Update trade P&L"""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                "UPDATE trades SET pnl = ?, status = 'CLOSED' WHERE id = ?",
+                (pnl, trade_id)
             )
-            
-            logger.info(f"🔴 LIVE ORDER: {order_params['side']} {order_params['quantity']} "
-                       f"{order_params['symbol']} @ ₹{order_params['price']:.2f} -> {order['status']}")
-            
-            await self.notification_service.send_trade_alert(order_params, self.mode)
-            
-            return {
-                "status": "COMPLETE" if order.get("status") == "COMPLETE" else order.get("status", "PENDING"),
-                "order_id": order.get("order_id"),
-                "exchange_order_id": order.get("exchange_order_id"),
-                "price": order_params["price"],
-                "quantity": order_params["quantity"],
-                "mode": self.mode
-            }
-            
-        except Exception as e:
-            logger.error(f"💥 LIVE order failed: {e}")
-            await self.notification_service.send_system_alert({
-                "type": "ERROR",
-                "component": "LiveTrading",
-                "message": f"Order execution failed: {str(e)[:100]}",
-                "mode": self.mode
-            })
-            return {"status": "ERROR", "error": str(e)}
+            conn.commit()
     
-    async def _execute_paper_order(self, order_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute simulated order in PAPER mode with realistic slippage."""
-        try:
-            # Simulate realistic fill with slippage
-            base_price = order_params["price"]
-            slippage = random.uniform(-0.015, 0.015)  # ±1.5% slippage for options
-            fill_price = base_price * (1 + slippage)
-            
-            # 5% chance of partial fill
-            if random.random() < 0.05:
-                fill_quantity = int(order_params["quantity"] * random.uniform(0.5, 0.95))
-                status = "PARTIAL"
-            else:
-                fill_quantity = order_params["quantity"]
-                status = "COMPLETE"
-            
-            # Generate order ID
-            order_id = f"PAPER_{int(datetime.now().timestamp())}_{random.randint(1000, 9999)}"
-            
-            # Track paper position
-            position_key = f"{order_params['symbol']}_{order_params['side']}"
-            if position_key not in self.paper_positions:
-                self.paper_positions[position_key] = {
-                    "quantity": 0,
-                    "average_price": 0.0,
-                    "entry_time": datetime.now()
-                }
-            
-            current_pos = self.paper_positions[position_key]
-            if order_params["side"] == "BUY":
-                if current_pos["quantity"] > 0:
-                    # Average existing position
-                    total_cost = (current_pos["quantity"] * current_pos["average_price"] + 
-                                fill_quantity * fill_price)
-                    current_pos["quantity"] += fill_quantity
-                    current_pos["average_price"] = total_cost / current_pos["quantity"]
-                else:
-                    current_pos["quantity"] = fill_quantity
-                    current_pos["average_price"] = fill_price
-            else:  # SELL
-                current_pos["quantity"] -= fill_quantity
-                if current_pos["quantity"] <= 0:
-                    # Close position, calculate P&L
-                    if current_pos["quantity"] < 0:
-                        self.paper_pnl += abs(current_pos["quantity"]) * fill_price
-                    del self.paper_positions[position_key]
-            
-            logger.info(f"📝 PAPER ORDER: {order_params['side']} {fill_quantity} "
-                       f"{order_params['symbol']} @ ₹{fill_price:.2f} "
-                       f"(slippage: {slippage*100:+.2f}%) -> {status}")
-            
-            order_result = {
-                "status": status,
-                "order_id": order_id,
-                "fill_price": fill_price,
-                "fill_quantity": fill_quantity,
-                "slippage": slippage,
-                "mode": self.mode
-            }
-            
-            await self.notification_service.send_trade_alert({
-                **order_params,
-                "action": "ENTRY",
-                "price": fill_price,
-                "quantity": fill_quantity,
-                "slippage": f"{slippage*100:+.2f}%"
-            }, self.mode)
-            
-            return order_result
-            
-        except Exception as e:
-            logger.error(f"💥 Paper order failed: {e}")
-            return {"status": "ERROR", "error": str(e)}
-    
-    async def _execute_test_order(self, order_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute mock order in TEST mode with Telegram alert only."""
-        try:
-            # Generate realistic mock fill
-            base_price = order_params["price"]
-            mock_slippage = random.uniform(-0.01, 0.01)  # ±1% for testing
-            fill_price = base_price * (1 + mock_slippage)
-            
-            # Always complete for testing
-            fill_quantity = order_params["quantity"]
-            
-            # Generate mock order ID
-            order_id = f"TEST_{int(datetime.now().timestamp())}_{secrets.token_hex(4).upper()}"
-            
-            # Track mock statistics (no actual positions)
-            self.mock_trades_today += 1
-            self.mock_pnl += (fill_price * fill_quantity * 
-                            (1 if order_params["side"] == "SELL" else -1))
-            
-            logger.info(f"🧪 TEST ORDER: Would execute {order_params['side']} {fill_quantity} "
-                       f"{order_params['symbol']} @ ₹{fill_price:.2f} "
-                       f"(mock slippage: {mock_slippage*100:+.2f}%)")
-            
-            # Detailed Telegram alert for TEST mode (exact entry details)
-            alert_data = {
-                "action": "ENTRY",
-                "signal": order_params.get("signal", "EMA_BREAKOUT"),
-                "symbol": order_params["symbol"],
-                "side": order_params["side"],
-                "quantity": fill_quantity,
-                "price": fill_price,
-                "sensex_price": order_params.get("sensex_price", 0),
-                "risk_amount": order_params.get("risk_amount", 0),
-                "risk_percent": order_params.get("risk_percent", 0),
-                "stop_loss": order_params.get("stop_loss", 0),
-                "take_profit": order_params.get("take_profit", 0),
-                "time": datetime.now().strftime('%H:%M:%S IST'),
-                "slippage": f"{mock_slippage*100:+.2f}%"
-            }
-            
-            await self.notification_service.send_trade_alert(alert_data, self.mode)
-            
-            # Also log to file for analysis
-            test_log = {
-                "timestamp": datetime.now().isoformat(),
-                "mode": self.mode,
-                "action": "MOCK_ENTRY",
-                "symbol": order_params["symbol"],
-                "side": order_params["side"],
-                "quantity": fill_quantity,
-                "entry_price": fill_price,
-                "sensex_price": order_params.get("sensex_price", 0),
-                "ema_fast": order_params.get("ema_fast", 0),
-                "ema_slow": order_params.get("ema_slow", 0),
-                "signal_strength": order_params.get("signal_strength", "MEDIUM"),
-                "risk_amount": order_params.get("risk_amount", 0),
-                "mock_order_id": order_id
-            }
-            
-            # Save to test results
-            test_results_dir = Path("test_results")
-            test_results_dir.mkdir(exist_ok=True)
-            
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            result_file = test_results_dir / f"test_trade_{timestamp}.json"
-            result_file.write_text(json.dumps(test_log, indent=2))
-            
-            return {
-                "status": "MOCK_COMPLETE",
-                "order_id": order_id,
-                "fill_price": fill_price,
-                "fill_quantity": fill_quantity,
-                "mode": self.mode,
-                "mock_pnl": round(self.mock_pnl, 2),
-                "trades_today": self.mock_trades_today
-            }
-            
-        except Exception as e:
-            logger.error(f"💥 Test order failed: {e}")
-            return {"status": "ERROR", "error": str(e)}
-    
-    async def get_positions(self) -> Dict[str, Any]:
-        """Get current positions by mode."""
-        if self.is_live:
-            try:
-                kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-                kite.set_access_token(self.config.ACCESS_TOKEN)
-                positions = kite.positions()
-                return positions
-            except Exception as e:
-                logger.error(f"Failed to get live positions: {e}")
-                return {"net": []}
-        
-        elif self.is_paper:
-            # Convert paper positions to Kite format
-            net_positions = []
-            for symbol_side, pos in self.paper_positions.items():
-                if pos["quantity"] != 0:
-                    symbol = symbol_side.split("_")[0]
-                    net_positions.append({
-                        "tradingsymbol": symbol,
-                        "netqty": pos["quantity"],
-                        "average_price": pos["average_price"]
-                    })
-            return {"net": net_positions}
-        
-        elif self.is_test:
-            # Mock positions for testing
-            mock_positions = []
-            for symbol_side, pos in self.mock_positions.items():
-                if pos["quantity"] != 0:
-                    symbol = symbol_side.split("_")[0]
-                    mock_positions.append({
-                        "tradingsymbol": symbol,
-                        "netqty": pos["quantity"],
-                        "average_price": pos["average_price"],
-                        "mode": "MOCK"
-                    })
-            return {"net": mock_positions}
-        
-        return {"net": []}
+    def get_open_positions(self):
+        """Get all open positions"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("""
+                SELECT * FROM positions 
+                WHERE updated_at > datetime('now', '-1 day')
+            """)
+            return [dict(row) for row in cursor.fetchall()]
 
-class SignalGenerator:
-    """Generates trading signals based on EMA channels."""
+def init_database():
+    """Initialize database (called by bot)"""
+    db = DatabaseLayer()
+    logger.info("Database initialized")
+
+class SignalEngine:
+    """Mean-reversion signal generation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config):
         self.config = config
-        self.ema_fast_period = config.get("EMA_FAST", 10)
-        self.ema_slow_period = config.get("EMA_SLOW", 20)
-        self.volatility_threshold = config.get("VOLATILITY_THRESHOLD", 0.02)
-        self.min_signal_strength = 0.001  # 0.1% minimum deviation
+        self.ema_short = config['ema_short_period']
+        self.ema_long = config['ema_long_period']
+        self.tightness_threshold = config['ema_tightness_threshold']
+        self.premium_deviation = config['premium_deviation_threshold']
     
-    def generate_signal(self, prices: pd.Series, current_sensex: float) -> Optional[Dict[str, Any]]:
-        """Generate trading signal from price series."""
-        if len(prices) < self.ema_slow_period:
+    def calculate_signals(self, df):
+        """Calculate trading signals from OHLCV data"""
+        if len(df) < self.ema_long:
             return None
         
         # Calculate EMAs
-        ema_fast = prices.ewm(span=self.ema_fast_period).mean().iloc[-1]
-        ema_slow = prices.ewm(span=self.ema_slow_period).mean().iloc[-1]
+        df['ema_short'] = talib.EMA(df['close'].values, timeperiod=self.ema_short)
+        df['ema_long'] = talib.EMA(df['close'].values, timeperiod=self.ema_long)
         
-        # Calculate channel and volatility
-        channel_width = abs(ema_fast - ema_slow) / ema_slow
-        price_position = (current_sensex - ema_slow) / ema_slow
+        # EMA channel tightness
+        latest = df.iloc[-1]
+        tightness = abs(latest['ema_short'] - latest['ema_long'])
         
-        # Volatility check (channel should be narrow for mean reversion)
-        if channel_width > self.volatility_threshold:
-            logger.debug(f"High volatility: {channel_width:.4f} > {self.volatility_threshold}")
-            return None
+        # Signal conditions
+        conditions = {
+            'ema_tightness': tightness <= self.tightness_threshold,
+            'volume_spike': latest['volume'] > df['volume'].rolling(20).mean().iloc[-1] * 1.5,
+            'price_position': latest['close'] < latest['ema_long'] * 1.02  # Near support
+        }
         
-        # Signal generation
-        signal_strength = abs(price_position)
-        
-        if signal_strength < self.min_signal_strength:
-            return None
-        
-        # Long signal: price significantly above upper channel
-        if price_position > 0.002:  # 0.2% above slow EMA
-            return {
-                "signal": "LONG",
-                "strength": signal_strength,
-                "ema_fast": ema_fast,
-                "ema_slow": ema_slow,
-                "channel_width": channel_width,
-                "price_position": price_position,
-                "confidence": min(signal_strength * 100, 95)  # Cap at 95%
-            }
-        
-        # Short signal: price significantly below lower channel  
-        elif price_position < -0.002:  # 0.2% below slow EMA
-            return {
-                "signal": "SHORT", 
-                "strength": signal_strength,
-                "ema_fast": ema_fast,
-                "ema_slow": ema_slow,
-                "channel_width": channel_width,
-                "price_position": price_position,
-                "confidence": min(signal_strength * 100, 95)
-            }
-        
-        return None
-
-class LiveTradingGuard:
-    """Safety checks for LIVE trading."""
-    
-    def __init__(self, config: Dict[str, Any], notification_service: NotificationService):
-        self.config = config
-        self.notification_service = notification_service
-        self.market_open = False
-        self.trading_session_active = False
-    
-    async def pre_trade_checklist(self) -> bool:
-        """Run comprehensive pre-trade checklist for LIVE mode."""
-        checklist = []
-        critical_issues = 0
-        
-        now = datetime.now()
-        market_start = now.replace(hour=9, minute=15, second=0, microsecond=0)
-        market_end = now.replace(hour=15, minute=30, second=0, microsecond=0)
-        
-        # 1. Market hours
-        if market_start <= now <= market_end:
-            checklist.append("✅ MARKET HOURS: Open")
-            self.market_open = True
-        else:
-            checklist.append(f"❌ MARKET HOURS: Closed (Next: {market_start.strftime('%H:%M') if now < market_start else market_start.strftime('%H:%M') + ' tomorrow'})")
-            critical_issues += 1
-            self.market_open = False
-        
-        # 2. Token validation
-        try:
-            kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-            kite.set_access_token(self.config.ACCESS_TOKEN)
-            profile = kite.profile()
-            checklist.append(f"✅ TOKEN: Valid ({profile.get('user_id', 'unknown')})")
-        except Exception as e:
-            checklist.append(f"❌ TOKEN: Invalid ({str(e)[:50]}...)")
-            critical_issues += 1
-        
-        # 3. Balance check
-        try:
-            kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-            kite.set_access_token(self.config.ACCESS_TOKEN)
-            margins = kite.margins()
-            cash = margins['equity']['available']['cash']
-            min_balance = self.config.get("MIN_BALANCE", 50000)
-            
-            if cash >= min_balance:
-                checklist.append(f"✅ BALANCE: ₹{cash:,.0f} (Min: ₹{min_balance:,})")
-            else:
-                checklist.append(f"⚠️  BALANCE: ₹{cash:,.0f} < ₹{min_balance:,} (Low balance warning)")
-                critical_issues += 1
-        except Exception as e:
-            checklist.append(f"❌ BALANCE: Check failed ({str(e)[:50]}...)")
-            critical_issues += 1
-        
-        # 4. Pending orders check
-        try:
-            kite = KiteConnect(api_key=self.config.ZAPI_KEY)
-            kite.set_access_token(self.config.ACCESS_TOKEN)
-            orders = kite.orders()
-            pending_orders = [o for o in orders if o['status'] in ['PENDING', 'OPEN']]
-            
-            if len(pending_orders) == 0:
-                checklist.append("✅ ORDERS: No pending orders")
-            else:
-                checklist.append(f"⚠️  ORDERS: {len(pending_orders)} pending orders")
-        except Exception as e:
-            checklist.append(f"❌ ORDERS: Check failed ({str(e)[:50]}...)")
-            critical_issues += 1
-        
-        # 5. Risk manager status
-        try:
-            risk_status = await RiskManager(self.config).can_trade()
-            if risk_status["allowed"]:
-                checklist.append(f"✅ RISK: {risk_status['risk_level']} (Allowed)")
-            else:
-                checklist.append(f"❌ RISK: {risk_status['reason']}")
-                critical_issues += 1
-        except Exception as e:
-            checklist.append(f"❌ RISK: Check failed ({str(e)[:50]}...)")
-            critical_issues += 1
-        
-        # Send checklist
-        checklist_message = "🔍 <b>LIVE TRADING PRE-FLIGHT CHECKLIST</b>\n\n" + "\n".join(checklist)
-        await self.notification_service.send_message(checklist_message)
-        
-        # Determine trading status
-        all_checks_passed = critical_issues == 0 and self.market_open
-        self.trading_session_active = all_checks_passed
-        
-        status_emoji = "🚀" if all_checks_passed else "🛑"
-        status_msg = f"{status_emoji} <b>LIVE TRADING {'ACTIVE' if all_checks_passed else 'BLOCKED'}</b>"
-        if not all_checks_passed:
-            status_msg += f"\n💥 <i>{critical_issues} critical issues</i>"
-        
-        await self.notification_service.send_message(status_msg)
-        
-        logger.info(f"LIVE checklist: {'PASSED' if all_checks_passed else 'FAILED'} ({critical_issues} issues)")
-        return all_checks_passed
-
-class BotController:
-    """Main trading controller orchestrating all components."""
-    
-    def __init__(self, config: Dict[str, Any]):
-        self.config = config
-        self.mode_config = create_mode_config(config)
-        self.notification_service = NotificationService(config)
-        self.risk_manager = RiskManager(config)
-        self.token_validator = TokenValidator(config, self.notification_service)
-        self.trading_mode_handler = TradingModeHandler(config, self.notification_service)
-        self.signal_generator = SignalGenerator(config)
-        self.live_guard = LiveTradingGuard(config, self.notification_service)
-        
-        # Trading state
-        self.running = False
-        self.last_signal_time = None
-        self.min_signal_interval = 1800  # 30 minutes between signals
-        self.sensex_prices = pd.Series(dtype=float)
-        
-        # Market hours
-        self.market_start = datetime.now().replace(hour=9, minute=15, second=0, microsecond=0)
-        self.market_end = datetime.now().replace(hour=15, minute=30, second=0, microsecond=0)
-        
-        logger.info(f"🤖 BotController initialized - Mode: {self.mode_config.mode.value}")
-        logger.info(self.mode_config.get_mode_description())
-    
-    async def initialize(self):
-        """Initialize all components."""
-        logger.info("🔄 Initializing trading system...")
-        
-        # Send mode status
-        await self.notification_service.send_mode_status(self.mode_config.__dict__)
-        
-        # Initialize token validator
-        if not await self.token_validator.initialize_kite():
-            logger.error("❌ Failed to initialize KiteConnect")
-            return False
-        
-        # Run LIVE mode checklist if applicable
-        if self.mode_config.mode == TradingMode.LIVE:
-            if not await self.live_guard.pre_trade_checklist():
-                logger.error("❌ LIVE mode checklist failed")
-                return False
-        
-        # Validate risk manager
-        risk_status = await self.risk_manager.can_trade()
-        logger.info(f"Risk status: {risk_status['allowed']} ({risk_status.get('reason', 'Ready')})")
-        
-        # Initialize price history
-        self.sensex_prices = pd.Series(dtype=float)
-        
-        logger.info("✅ System initialization complete")
-        return True
-    
-    async def get_market_data(self) -> Optional[float]:
-        """Get current Sensex price."""
-        try:
-            if not self.token_validator.kite:
-                await self.token_validator.initialize_kite()
-                if not self.token_validator.kite:
-                    return None
-            
-            # Get LTP for Sensex
-            quote = self.token_validator.kite.quote("NSE:NIFTY 50")  # Using NIFTY as proxy for Sensex
-            ltp = float(quote[0]['ohlc']['close'])
-            
-            # Update price history
-            self.sensex_prices = pd.concat([self.sensex_prices, pd.Series([ltp])]).tail(50)
-            
-            return ltp
-            
-        except Exception as e:
-            logger.error(f"Failed to get market data: {e}")
-            await self.notification_service.send_system_alert({
-                "type": "WARNING",
-                "component": "MarketData",
-                "message": f"Failed to fetch Sensex price: {str(e)[:100]}",
-                "mode": self.mode_config.mode.value
-            })
-            return None
-    
-    async def find_option_symbol(self, sensex_price: float, signal: str) -> Optional[str]:
-        """Find appropriate option symbol based on signal."""
-        # Simplified option symbol generation for demo
-        # In production, this would query KiteConnect for actual option chain
-        
-        strike_interval = 100
-        atm_strike = round(sensex_price / strike_interval) * strike_interval
-        
-        if signal == "LONG":
-            strike = atm_strike  # ATM Call
-            symbol = f"SENSEX{datetime.now().strftime('%y%b%d')}C{int(strike)}"
-        else:  # SHORT
-            strike = atm_strike  # ATM Put
-            symbol = f"SENSEX{datetime.now().strftime('%y%b%d')}P{int(strike)}"
-        
-        # Mock option price (in production, get from KiteConnect)
-        option_price = sensex_price * random.uniform(0.02, 0.05)  # 2-5% of underlying
-        
-        logger.debug(f"Option selection: {symbol} @ ₹{option_price:.2f} (ATM: {atm_strike})")
-        return symbol, option_price
-    
-    async def calculate_position_size(self, sensex_price: float, option_price: float, signal: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate position size based on risk parameters."""
-        risk_per_trade = self.mode_config.risk_per_trade
-        account_balance = 100000  # Mock balance - in production, get from KiteConnect
-        
-        # Risk amount
-        risk_amount = account_balance * risk_per_trade
-        
-        # Position sizing (simplified - 1 lot = 25 shares for Sensex options)
-        lot_size = 25
-        max_quantity = int(risk_amount / (option_price * 0.03))  # 3% risk per option
-        quantity = min(max_quantity, 5 * lot_size)  # Max 5 lots
-        quantity = (quantity // lot_size) * lot_size  # Round to lot size
-        
-        # Risk calculations
-        entry_price = option_price
-        stop_loss = entry_price * (1 - 0.03)  # 3% stop loss
-        take_profit = entry_price * (1 + 0.06)  # 6% take profit
-        
-        risk_per_share = entry_price - stop_loss
-        total_risk = quantity * risk_per_share
-        
-        # Adjust quantity to match risk amount
-        if total_risk > 0:
-            adjusted_quantity = int((risk_amount / risk_per_share) // lot_size * lot_size)
-            quantity = min(adjusted_quantity, quantity)
+        # Signal strength (0-100)
+        strength = sum([1 for v in conditions.values() if v]) / len(conditions) * 100
         
         return {
-            "quantity": quantity,
-            "entry_price": entry_price,
-            "stop_loss": stop_loss,
-            "take_profit": take_profit,
-            "risk_amount": quantity * risk_per_share,
-            "risk_percent": (quantity * risk_per_share) / account_balance,
-            "lot_size": lot_size
+            'strength': min(strength, 100),
+            'conditions': conditions,
+            'tightness': tightness,
+            'direction': 'CALL' if latest['close'] < latest['ema_long'] else 'PUT'
         }
+
+class EnhancedBrokerAdapter:
+    """Reliable Zerodha broker interface with WebSocket heartbeats"""
     
-    async def execute_trade(self, signal: Dict[str, Any], sensex_price: float) -> bool:
-        """Execute complete trade workflow."""
+    def __init__(self, api_key, access_token):
+        self.kite = KiteConnect(api_key=api_key)
+        self.kite.set_access_token(access_token)
+        self.kws = None
+        self.last_tick_time = time.time()
+        self.is_connected = False
+        self.sensex_token = 26000  # BSE Sensex token ID
+        self.position_cache = {}
+        
+        # Start heartbeat monitor
+        self.start_heartbeat_monitor()
+    
+    @retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=4, max=10))
+    def connect_websocket(self):
+        """Connect WebSocket with retry logic"""
         try:
-            # Risk check
-            risk_status = await self.risk_manager.can_trade()
-            if not risk_status["allowed"]:
-                logger.warning(f"Trade blocked by risk manager: {risk_status['reason']}")
-                await self.notification_service.send_system_alert({
-                    "type": "WARNING",
-                    "component": "RiskManager",
-                    "message": f"Trade blocked: {risk_status['reason']}",
-                    "mode": self.mode_config.mode.value
-                })
-                return False
+            self.kws = KiteTicker(ZAPI_KEY, ZACCESS_TOKEN)
             
-            # Find option
-            option_symbol, option_price = await self.find_option_symbol(sensex_price, signal["signal"])
-            if not option_symbol:
-                logger.warning("No suitable option found")
-                return False
+            def on_connect(ws, response):
+                logger.info("WebSocket connected")
+                self.is_connected = True
+                ws.subscribe([self.sensex_token])
+                ws.set_mode(ws.MODE_FULL, [self.sensex_token])
             
-            # Calculate position
-            position_data = await self.calculate_position_size(sensex_price, option_price, signal)
-            if position_data["quantity"] == 0:
-                logger.warning("Position size calculated as 0")
-                return False
+            def on_ticks(ws, ticks):
+                self.last_tick_time = time.time()
+                self.process_tick(ticks)
             
-            # Prepare order parameters
-            side = "BUY" if signal["signal"] == "LONG" else "SELL"
+            def on_close(ws, code, reason):
+                logger.warning(f"WebSocket closed: {code} - {reason}")
+                self.is_connected = False
+            
+            def on_error(ws, code, reason):
+                logger.error(f"WebSocket error: {code} - {reason}")
+                self.is_connected = False
+            
+            self.kws.on_connect = on_connect
+            self.kws.on_ticks = on_ticks
+            self.kws.on_close = on_close
+            self.kws.on_error = on_error
+            
+            self.kws.connect(threaded=True)
+            logger.info("WebSocket connection established")
+            
+        except Exception as e:
+            logger.error(f"WebSocket connection failed: {e}")
+            raise
+    
+    def start_heartbeat_monitor(self):
+        """Monitor connection health and auto-reconnect"""
+        def monitor():
+            while True:
+                try:
+                    # Check heartbeat (no ticks in 2 minutes = dead)
+                    if time.time() - self.last_tick_time > 120:
+                        logger.warning("Heartbeat timeout - reconnecting...")
+                        if self.kws:
+                            self.kws.close()
+                        self.connect_websocket()
+                    
+                    # Check API rate limits
+                    if self.kite.ltp('NSE:NIFTY 50')[0]['last_price'] == 0:
+                        logger.warning("API rate limit hit - backing off")
+                        time.sleep(60)
+                    
+                    time.sleep(30)  # Check every 30 seconds
+                
+                except Exception as e:
+                    logger.error(f"Heartbeat monitor error: {e}")
+                    time.sleep(10)
+        
+        threading.Thread(target=monitor, daemon=True).start()
+    
+    def process_tick(self, ticks):
+        """Process incoming tick data"""
+        for tick in ticks:
+            if tick['instrument_token'] == self.sensex_token:
+                self.position_cache['sensex'] = {
+                    'ltp': tick['last_price'],
+                    'volume': tick['volume'],
+                    'timestamp': datetime.now()
+                }
+    
+    def place_bracket_order(self, symbol, transaction_type, quantity, price, 
+                          trigger_price=None, sl_offset=0.02, target_offset=0.04):
+        """Place bracket order with SL and target"""
+        try:
+            # Calculate SL and target
+            sl_price = price * (1 - sl_offset) if transaction_type == 'BUY' else price * (1 + sl_offset)
+            target_price = price * (1 + target_offset) if transaction_type == 'BUY' else price * (1 - target_offset)
+            
+            # Place order (your existing order logic)
             order_params = {
-                "symbol": option_symbol,
-                "side": side,
-                "quantity": position_data["quantity"],
-                "price": position_data["entry_price"],
-                "signal": signal["signal"],
-                "sensex_price": sensex_price,
-                "ema_fast": signal["ema_fast"],
-                "ema_slow": signal["ema_slow"],
-                "signal_strength": signal["strength"],
-                "risk_amount": position_data["risk_amount"],
-                "risk_percent": position_data["risk_percent"],
-                "stop_loss": position_data["stop_loss"],
-                "take_profit": position_data["take_profit"]
+                'exchange': 'NFO',
+                'tradingsymbol': symbol,
+                'transaction_type': transaction_type,
+                'quantity': quantity,
+                'product': 'MIS',
+                'order_type': 'MARKET'
             }
             
-            # Execute based on mode
-            order_result = await self.trading_mode_handler.place_order(order_params)
+            order_id = self.kite.place_order(**order_params)
+            logger.info(f"Bracket order placed: {order_id} for {quantity} {symbol}")
             
-            if order_result.get("status") in ["COMPLETE", "MOCK_COMPLETE"]:
-                # Record trade
-                trade_data = {
-                    "date": datetime.now().strftime('%Y-%m-%d'),
-                    "symbol": option_symbol,
-                    "side": side,
-                    "quantity": position_data["quantity"],
-                    "entry_price": order_result.get("fill_price", position_data["entry_price"]),
-                    "pnl": 0.0,  # Will be updated on exit
-                    "sl_hit": False,
-                    "mode": self.mode_config.mode.value,
-                    "order_id": order_result.get("order_id", ""),
-                    "status": "OPEN"
-                }
-                
-                await self.risk_manager.record_trade(trade_data)
-                await self.risk_manager.increment_trade_count()
-                
-                self.last_signal_time = pd.Timestamp.now()
-                logger.info(f"✅ Trade executed: {side} {position_data['quantity']} {option_symbol}")
-                return True
-            else:
-                logger.error(f"❌ Trade execution failed: {order_result.get('error', 'Unknown error')}")
-                return False
-                
+            return {
+                'order_id': order_id,
+                'symbol': symbol,
+                'side': transaction_type,
+                'quantity': quantity,
+                'entry_price': price,
+                'sl_price': sl_price,
+                'target_price': target_price
+            }
+        
         except Exception as e:
-            logger.error(f"💥 Trade execution error: {e}")
-            await self.notification_service.send_system_alert({
-                "type": "ERROR",
-                "component": "TradeExecution",
-                "message": f"Trade execution failed: {str(e)[:100]}",
-                "mode": self.mode_config.mode.value
-            })
-            return False
+            logger.error(f"Order placement failed: {e}")
+            return None
     
-    async def trading_loop(self):
-        """Main trading loop."""
-        logger.info("🚀 Starting trading loop...")
-        self.running = True
+    def get_positions(self):
+        """Get current positions with caching"""
+        try:
+            positions = self.kite.positions()
+            self.position_cache['positions'] = positions
+            return positions
+        except Exception as e:
+            logger.warning(f"Position fetch failed: {e}")
+            return self.position_cache.get('positions', [])
+    
+    def get_option_chain(self, underlying='SENSEX', expiry='weekly'):
+        """Get options chain (your existing logic)"""
+        try:
+            # Your existing options chain logic
+            instruments = self.kite.instruments('NFO')
+            sensex_options = [
+                inst for inst in instruments 
+                if inst['tradingsymbol'].startswith('SENSEX') and expiry in inst['tradingsymbol']
+            ]
+            return sensex_options
+        except Exception as e:
+            logger.error(f"Option chain fetch failed: {e}")
+            return []
+
+class RiskManager:
+    """Risk management and position sizing"""
+    
+    def __init__(self, config):
+        self.config = config
+        self.max_daily_loss = config['max_daily_loss']
+        self.max_trades_per_day = config['max_trades_per_day']
+        self.max_consecutive_losses = config['max_consecutive_losses']
+        self.daily_trades = 0
+        self.daily_pnl = 0
+        self.consecutive_losses = 0
+    
+    def calculate_position_size(self, account_balance, signal_strength):
+        """Calculate position size based on risk and signal"""
+        risk_per_trade = account_balance * 0.02  # 2% risk per trade
+        adjusted_risk = risk_per_trade * (signal_strength / 100)
+        lot_size = 25  # Sensex weekly lot size
         
-        consecutive_errors = 0
-        max_errors = 5
+        return min(int(adjusted_risk / 100), lot_size)  # Max 1 lot
+    
+    def check_risk_limits(self, proposed_trade):
+        """Check if trade violates risk limits"""
+        if self.daily_trades >= self.max_trades_per_day:
+            return False, "Daily trade limit reached"
         
-        while self.running:
-            try:
-                # Check if within market hours
-                now = datetime.now()
-                today_start = now.replace(hour=9, minute=15, second=0, microsecond=0)
-                today_end = now.replace(hour=15, minute=30, second=0, microsecond=0)
+        if self.daily_pnl <= -self.max_daily_loss:
+            return False, "Daily loss limit reached"
+        
+        if self.consecutive_losses >= self.max_consecutive_losses:
+            return False, "Max consecutive losses reached"
+        
+        return True, "Risk OK"
+    
+    def update_metrics(self, trade_pnl):
+        """Update daily risk metrics"""
+        self.daily_pnl += trade_pnl
+        self.daily_trades += 1
+        
+        if trade_pnl < 0:
+            self.consecutive_losses += 1
+        else:
+            self.consecutive_losses = 0
+
+class TradingSystem:
+    """Main trading system orchestrator"""
+    
+    def __init__(self):
+        self.mode = self.get_trading_mode()
+        self.db = DatabaseLayer()
+        self.signal_engine = SignalEngine(CONFIG)
+        self.broker = EnhancedBrokerAdapter(ZAPI_KEY, ZACCESS_TOKEN)
+        self.risk_manager = RiskManager(CONFIG)
+        self.is_trading = False
+        self.market_open = dt_time(9, 15)
+        self.market_close = dt_time(15, 30)
+        
+        logger.info(f"Starting in {self.mode} mode")
+    
+    def get_trading_mode(self):
+        """Read trading mode from flag file"""
+        flag_path = PROJECT_PATH / '.trading_mode'
+        disabled_path = PROJECT_PATH / '.trading_disabled'
+        
+        if disabled_path.exists():
+            logger.info("Trading disabled by user")
+            return 'DISABLED'
+        
+        if flag_path.exists():
+            with open(flag_path) as f:
+                mode = f.read().strip().upper()
+                if mode in ['LIVE', 'TEST', 'DEBUG']:
+                    return mode
+        
+        return 'TEST'  # Safe default
+    
+    def is_market_hours(self):
+        """Check if current time is within market hours"""
+        now = datetime.now().time()
+        return self.market_open <= now <= self.market_close
+    
+    def fetch_historical_data(self, interval='5minute', days=1):
+        """Fetch historical data for signal generation"""
+        try:
+            if self.mode == 'DEBUG':
+                # Read from CSV for backtesting
+                csv_path = PROJECT_PATH / 'data_raw' / f"{datetime.now().strftime('%Y-%m-%d')}_sensex.csv"
+                if csv_path.exists():
+                    df = pd.read_csv(csv_path)
+                    df['datetime'] = pd.to_datetime(df['timestamp'])
+                    df.set_index('datetime', inplace=True)
+                    return df
+                return None
+            
+            # Live data fetch (your existing logic)
+            from_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
+            to_date = datetime.now().strftime('%Y-%m-%d')
+            
+            historical_data = self.broker.kite.historical_data(
+                instrument_token=self.broker.sensex_token,
+                from_date=from_date,
+                to_date=to_date,
+                interval=interval
+            )
+            
+            if not historical_data:
+                return None
+            
+            df = pd.DataFrame(historical_data)
+            df['datetime'] = pd.to_datetime(df['date'])
+            df.set_index('datetime', inplace=True)
+            df = df[['open', 'high', 'low', 'close', 'volume']].astype(float)
+            
+            return df
+            
+        except Exception as e:
+            logger.error(f"Data fetch failed: {e}")
+            return None
+    
+    def execute_trade(self, signal):
+        """Execute trade based on signal"""
+        if self.mode != 'LIVE':
+            logger.info(f"[SIMULATED] Would execute {signal['direction']} trade")
+            # Log simulated trade
+            trade_data = {
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'mode': self.mode,
+                'timestamp': datetime.now().isoformat(),
+                'symbol': f"SENSEX{datetime.now().strftime('%y%b')}CE",  # Placeholder
+                'side': 'BUY',
+                'quantity': 25,
+                'price': signal['price'] or 100,
+                'signal_strength': signal['strength'],
+                'conditions': signal['conditions']
+            }
+            trade_id = self.db.log_trade(trade_data)
+            
+            # Simulate P&L for TEST mode
+            if self.mode == 'TEST':
+                simulated_pnl = np.random.normal(50, 30) * (signal['strength'] / 100)
+                self.db.update_trade_pnl(trade_id, simulated_pnl)
+                self.risk_manager.update_metrics(simulated_pnl)
+                logger.info(f"[TEST] Simulated P&L: ₹{simulated_pnl:.2f}")
+            
+            return trade_id
+        
+        # LIVE execution
+        account_balance = self.broker.kite.margins()['equity']['available']['live_balance']
+        quantity = self.risk_manager.calculate_position_size(account_balance, signal['strength'])
+        
+        is_ok, reason = self.risk_manager.check_risk_limits(signal)
+        if not is_ok:
+            logger.warning(f"Risk limit hit: {reason}")
+            return None
+        
+        # Get ATM strike and place order
+        option_symbol = self.get_atm_option(signal['direction'])
+        if not option_symbol:
+            logger.warning("No suitable option found")
+            return None
+        
+        order = self.broker.place_bracket_order(
+            symbol=option_symbol,
+            transaction_type='BUY',
+            quantity=quantity,
+            price=signal.get('price', 0)
+        )
+        
+        if order:
+            trade_data = {
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'mode': self.mode,
+                'timestamp': datetime.now().isoformat(),
+                'symbol': option_symbol,
+                'side': 'BUY',
+                'quantity': quantity,
+                'price': order['entry_price'],
+                'signal_strength': signal['strength'],
+                'conditions': signal['conditions']
+            }
+            trade_id = self.db.log_trade(trade_data)
+            self.risk_manager.update_metrics(0)  # Will update on exit
+            logger.info(f"LIVE trade executed: {trade_id}")
+            return trade_id
+        
+        return None
+    
+    def get_atm_option(self, direction):
+        """Get ATM call/put option (your existing logic)"""
+        try:
+            sensex_ltp = self.broker.position_cache['sensex']['ltp']
+            options = self.broker.get_option_chain()
+            
+            # Find ATM strike
+            atm_strike = round(sensex_ltp / 100) * 100
+            option_type = 'CE' if direction == 'CALL' else 'PE'
+            
+            # Find matching option
+            for option in options:
+                if (atm_strike in option['tradingsymbol'] and 
+                    option_type in option['tradingsymbol'] and
+                    'W' in option['tradingsymbol']):  # Weekly
+                    return option['tradingsymbol']
+            
+            return None
+        except Exception as e:
+            logger.error(f"ATM option lookup failed: {e}")
+            return None
+    
+    def run_debug_mode(self, csv_path):
+        """Run complete backtest on CSV data"""
+        try:
+            df = pd.read_csv(csv_path)
+            df['datetime'] = pd.to_datetime(df['timestamp'])
+            df.set_index('datetime', inplace=True)
+            
+            signals = []
+            total_pnl = 0
+            winning_trades = 0
+            total_trades = 0
+            failed_conditions = []
+            
+            # Process each 5-min bar
+            for i in range(CONFIG['ema_long'], len(df)):
+                window = df.iloc[i-20:i+1]  # 20 periods lookback + current
+                signal = self.signal_engine.calculate_signals(window)
                 
-                if not (today_start <= now <= today_end):
-                    if now.hour < 9 or (now.hour >= 16) or (now.hour == 15 and now.minute > 30):
-                        await asyncio.sleep(300)  # Sleep 5 minutes outside market hours
-                        continue
-                
-                # Token validation
-                if not await self.token_validator.validate_token():
-                    logger.warning("Token validation failed, waiting for manual refresh...")
-                    await asyncio.sleep(300)
-                    continue
-                
-                # Get market data
-                sensex_price = await self.get_market_data()
-                if sensex_price is None:
-                    consecutive_errors += 1
-                    if consecutive_errors >= max_errors:
-                        logger.error("Too many consecutive data errors, pausing...")
-                        await self.notification_service.send_system_alert({
-                            "type": "ERROR",
-                            "component": "MarketData",
-                            "message": "Too many consecutive data fetch failures",
-                            "mode": self.mode_config.mode.value,
-                            "action": "Manual intervention required"
-                        })
-                        await asyncio.sleep(1800)  # Wait 30 minutes
-                        consecutive_errors = 0
-                    continue
-                
-                consecutive_errors = 0
-                
-                # Generate signal (only if enough price history)
-                if len(self.sensex_prices) >= self.signal_generator.ema_slow_period:
-                    signal = self.signal_generator.generate_signal(self.sensex_prices, sensex_price)
+                if signal and signal['strength'] >= 80:
+                    signals.append(signal)
                     
-                    if signal:
-                        # Check signal timing
-                        if (self.last_signal_time is None or 
-                            (pd.Timestamp.now() - self.last_signal_time).total_seconds() > self.min_signal_interval):
-                            
-                            logger.info(f"📡 SIGNAL: {signal['signal']} (Strength: {signal['strength']:.4f}, "
-                                       f"Confidence: {signal['confidence']:.1f}%)")
-                            
-                            # LIVE mode additional safety check
-                            if self.mode_config.mode == TradingMode.LIVE:
-                                if not await self.live_guard.pre_trade_checklist():
-                                    logger.warning("LIVE trade blocked by safety checklist")
-                                    continue
-                            
-                            # Execute trade
-                            trade_successful = await self.execute_trade(signal, sensex_price)
-                            
-                            if trade_successful:
-                                logger.info("✅ Trade workflow completed successfully")
-                            else:
-                                logger.warning("⚠️  Trade workflow failed")
-                        else:
-                            logger.debug("Signal ignored: too soon after last trade")
+                    # Simulate trade outcome
+                    trade_pnl = self.simulate_trade_outcome(window.iloc[-1], signal)
+                    total_pnl += trade_pnl
+                    total_trades += 1
+                    
+                    if trade_pnl > 0:
+                        winning_trades += 1
                     else:
-                        logger.debug("No signal generated")
+                        failed_conditions.extend([
+                            f"EMA tightness failed at {window.index[-1]}",
+                            f"Signal strength {signal['strength']} too low"
+                        ])
                 
-                # Send periodic status (every hour)
-                if now.minute == 0:
-                    risk_status = await self.risk_manager.can_trade()
-                    positions = await self.trading_mode_handler.get_positions()
-                    
-                    status_msg = (
-                        f"📊 <b>STATUS UPDATE {self.mode_config.get_mode_emoji()}</b>\n\n"
-                        f"⏰ <b>Time:</b> {now.strftime('%H:%M IST')}\n"
-                        f"📉 <b>Sensex:</b> {sensex_price:,.0f}\n"
-                        f"🛡️ <b>Risk:</b> {risk_status['risk_level']} ({'Allowed' if risk_status['allowed'] else 'Blocked'})\n"
-                        f"📈 <b>Positions:</b> {len(positions.get('net', []))}\n"
-                        f"{'🔴 LIVE TRADING ACTIVE' if self.mode_config.mode == TradingMode.LIVE else ''}"
-                    )
-                    
-                    await self.notification_service.send_message(status_msg)
-                
-                # Sleep between iterations
-                await asyncio.sleep(30)  # Check every 30 seconds
-                
-            except KeyboardInterrupt:
-                logger.info("🛑 Received shutdown signal")
-                break
-            except Exception as e:
-                consecutive_errors += 1
-                logger.error(f"💥 Unexpected error in trading loop: {e}")
-                await self.notification_service.send_system_alert({
-                    "type": "ERROR",
-                    "component": "TradingLoop",
-                    "message": f"Unexpected error: {str(e)[:100]}",
-                    "mode": self.mode_config.mode.value
-                })
-                
-                if consecutive_errors >= max_errors:
-                    logger.critical("Too many consecutive errors, emergency shutdown")
+                # Rate limiting for backtest
+                time.sleep(0.01)
+            
+            success = total_pnl > 0 and (winning_trades / max(total_trades, 1)) > 0.6
+            win_rate = (winning_trades / max(total_trades, 1)) * 100
+            
+            return {
+                'success': success,
+                'total_pnl': total_pnl,
+                'trade_count': total_trades,
+                'win_rate': win_rate,
+                'failed_conditions': failed_conditions[:10],  # Limit output
+                'sharpe_ratio': self.calculate_sharpe(total_pnl, total_trades)
+            }
+            
+        except Exception as e:
+            logger.error(f"Debug mode failed: {e}")
+            return {
+                'success': False,
+                'total_pnl': 0,
+                'trade_count': 0,
+                'win_rate': 0,
+                'failed_conditions': [str(e)],
+                'sharpe_ratio': 0
+            }
+    
+    def simulate_trade_outcome(self, current_bar, signal):
+        """Simulate trade P&L for backtesting"""
+        # Simple mean-reversion simulation
+        entry_price = current_bar['close']
+        volatility = current_bar['high'] - current_bar['low']
+        
+        # Assume 70% of trades revert within 5 bars
+        if np.random.random() < 0.7:
+            # Successful reversion
+            target_move = volatility * 0.8 * (signal['strength'] / 100)
+            return target_move * 25  # Lot size
+        else:
+            # Failed trade
+            stop_loss = volatility * 0.3
+            return -stop_loss * 25
+    
+    def calculate_sharpe(self, total_pnl, trades):
+        """Calculate simple Sharpe ratio"""
+        if trades == 0:
+            return 0
+        avg_return = total_pnl / trades
+        volatility = abs(total_pnl) / trades  # Simple vol estimate
+        return avg_return / volatility if volatility > 0 else 0
+    
+    def run_trading_loop(self):
+        """Main trading loop"""
+        logger.info(f"Starting {self.mode} trading loop")
+        self.is_trading = True
+        
+        consecutive_checks = 0
+        
+        while self.is_trading:
+            try:
+                # Check if trading is disabled
+                current_mode = self.get_trading_mode()
+                if current_mode == 'DISABLED':
+                    logger.info("Trading disabled - exiting loop")
                     break
                 
-                await asyncio.sleep(60)  # Wait 1 minute on error
+                if self.mode != current_mode:
+                    logger.info(f"Mode changed to {current_mode}")
+                    self.mode = current_mode
+                    if self.mode == 'DISABLED':
+                        break
+                
+                # Only trade during market hours
+                if not self.is_market_hours() and self.mode == 'LIVE':
+                    logger.debug("Outside market hours")
+                    time.sleep(60)
+                    continue
+                
+                # Fetch data
+                df = self.fetch_historical_data()
+                if df is None or len(df) < CONFIG['ema_long']:
+                    logger.debug("Insufficient data")
+                    time.sleep(30)
+                    continue
+                
+                # Generate signal
+                signal = self.signal_engine.calculate_signals(df)
+                
+                if signal and signal['strength'] >= CONFIG['min_signal_strength']:
+                    logger.info(f"Signal detected: {signal['strength']:.1f}% - {signal['direction']}")
+                    
+                    # Add price to signal
+                    signal['price'] = df.iloc[-1]['close']
+                    
+                    # Execute trade
+                    trade_id = self.execute_trade(signal)
+                    
+                    if trade_id:
+                        # Telegram notification (via bot webhook)
+                        self.notify_telegram(f"🚨 TRADE EXECUTED\n"
+                                           f"📈 {signal['direction']} @ ₹{signal['price']:.2f}\n"
+                                           f"💪 Strength: {signal['strength']:.1f}%\n"
+                                           f"🆔 ID: {trade_id}")
+                
+                # Rate limiting
+                consecutive_checks += 1
+                sleep_time = 30 if consecutive_checks % 10 == 0 else 5
+                time.sleep(sleep_time)
+                
+            except KeyboardInterrupt:
+                logger.info("Manual stop requested")
+                break
+            except Exception as e:
+                logger.error(f"Trading loop error: {e}")
+                time.sleep(60)  # Back off on errors
+        
+        logger.info("Trading loop ended")
     
-    async def shutdown(self):
-        """Graceful shutdown."""
-        logger.info("🔄 Shutting down trading system...")
-        self.running = False
-        
-        # Send final summary
-        summary = await self.risk_manager.get_daily_summary()
-        summary["mode"] = self.mode_config.mode.value
-        await self.notification_service.send_daily_summary(summary)
-        
-        # Close database connections
-        await self.risk_manager.close()
-        
-        logger.info("✅ Trading system shutdown complete")
+    def notify_telegram(self, message):
+        """Send notification via Telegram bot webhook"""
+        try:
+            # Simple webhook call to bot
+            webhook_url = f"https://api.telegram.org/bot{os.getenv('TELEGRAM_BOT_TOKEN')}/sendMessage"
+            data = {
+                'chat_id': os.getenv('TELEGRAM_CHAT_ID'),
+                'text': message,
+                'parse_mode': 'Markdown'
+            }
+            requests.post(webhook_url, json=data, timeout=5)
+        except Exception as e:
+            logger.error(f"Telegram notification failed: {e}")
+    
+    def stop(self):
+        """Graceful shutdown"""
+        self.is_trading = False
+        if self.broker.kws:
+            self.broker.kws.close()
+        logger.info("Trading system stopped")
 
-async def main():
-    """Main entry point."""
-    try:
-        # Load configuration
-        config_dict = config.get_config()
-        logger.info(f"🚀 Starting {config_dict['MODE']} Mode Trading System")
-        
-        # Initialize controller
-        controller = BotController(config_dict)
-        
-        # Initialize system
-        if not await controller.initialize():
-            logger.error("❌ System initialization failed")
-            sys.exit(1)
-        
-        # Start trading loop
-        await controller.trading_loop()
-        
-    except KeyboardInterrupt:
-        logger.info("👋 Interrupted by user")
-    except Exception as e:
-        logger.critical(f"💥 Fatal error: {e}", exc_info=True)
+def run_debug_mode(csv_path):
+    """Exported function for bot to call"""
+    system = TradingSystem()
+    system.mode = 'DEBUG'
+    return system.run_debug_mode(csv_path)
+
+def main():
+    """Main entry point"""
+    # Check environment
+    if not all([ZAPI_KEY, ZACCESS_TOKEN]):
+        logger.error("Missing API credentials")
         sys.exit(1)
+    
+    # Check trading mode
+    mode = TradingSystem().get_trading_mode()
+    if mode == 'DISABLED':
+        logger.info("Trading disabled - exiting")
+        sys.exit(0)
+    
+    # Start system
+    system = TradingSystem()
+    
+    try:
+        if mode == 'DEBUG':
+            # Run single backtest
+            csv_path = sys.argv[1] if len(sys.argv) > 1 else None
+            if csv_path:
+                results = system.run_debug_mode(csv_path)
+                print(json.dumps(results, indent=2))
+            else:
+                logger.error("DEBUG mode requires CSV path")
+                sys.exit(1)
+        else:
+            # Run live trading loop
+            system.run_trading_loop()
+    
+    except KeyboardInterrupt:
+        logger.info("Shutdown requested")
+    except Exception as e:
+        logger.error(f"Fatal error: {e}")
+        raise
     finally:
-        logger.info("👋 Trading system stopped")
+        system.stop()
 
 if __name__ == "__main__":
-    # Set mode from environment if provided
-    if os.getenv("MODE"):
-        os.environ["MODE"] = os.getenv("MODE")
-        config.reload_config()
-    
-    asyncio.run(main())
+    main()

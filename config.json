@@ -1,28 +1,38 @@
 {
-  "position_size": 100,
-  "lot_size": 20,
-  "max_daily_trades": 3,
-  "max_consecutive_losses": 2,
-  "max_daily_loss": -25000,
-  "max_exposure": 100000,
-  "data_dir": "option_data",
-  "instruments": ["SENSEX"],
-  "market_holidays": [
-    "2025-10-02", 
-    "2025-10-21", 
-    "2025-10-22", 
-    "2025-11-05", 
-    "2025-12-25"
-  ],
-  "signal_config": {
-    "min_confidence": 0.8,
-    "sensex": {
-      "ema_diff_threshold": 51,
-      "proximity_threshold": 21
-    },
-    "option": {
-      "ema_diff_threshold": 15,
-      "proximity_threshold": 21
-    }
+  "strategy": {
+    "name": "EMA_Mean_Reversion",
+    "version": "2.0",
+    "description": "EMA 10/20 crossover with tightness filter"
+  },
+  "indicators": {
+    "ema_short_period": 10,
+    "ema_long_period": 20,
+    "ema_tightness_threshold": 51,
+    "premium_deviation_threshold": 15,
+    "min_signal_strength": 80
+  },
+  "risk_management": {
+    "max_daily_loss": 25000,
+    "max_trades_per_day": 3,
+    "max_consecutive_losses": 2,
+    "risk_per_trade_percent": 2,
+    "lot_size": 25,
+    "stop_loss_percent": 2,
+    "target_percent": 4
+  },
+  "market_timing": {
+    "market_open": "09:15",
+    "market_close": "15:30",
+    "data_collection_time": "15:30"
+  },
+  "data_retention": {
+    "hot_storage_days": 1,
+    "archive_retention_days": 90,
+    "log_retention_days": 7
+  },
+  "notifications": {
+    "telegram_enabled": true,
+    "health_check_interval_minutes": 15,
+    "eod_summary_enabled": true
   }
 }
