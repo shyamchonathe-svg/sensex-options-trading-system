@@ -136,3 +136,19 @@ kite_tokens/
 instrument_cache/
 option_data/
 test_results/
+# Sensitive files
+*.log
+debug_token*.txt
+*.broken
+kite_tokens/
+.env
+config.json
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
