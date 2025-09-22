@@ -1,0 +1,56 @@
+[Unit]
+Description=Sensex Options Trading Bot - Persistent Telegram-Controlled Orchestrator
+Documentation=https://github.com/your-repo/sensex-trading-system
+After=network.target network-online.target
+Wants=network-online.target
+Requires=data_collector.service
+After=data_collector.service
+
+[Service]
+# Service definition
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/main_trading
+Environment=PATH=/usr/bin:/usr/local/bin:/home/ubuntu/.local/bin
+Environment=PYTHONPATH=/home/ubuntu/main_trading
+
+# Main executable
+ExecStart=/usr/bin/python3 /home/ubuntu/main_trading/persistent_bot.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+# Resource limits
+MemoryLimit=512M
+CPUQuota=50%
+LimitNOFILE=65536
+
+# Standard I/O
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=sensex-persistent-bot
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/ubuntu/main_trading /home/ubuntu/main_trading/logs /home/ubuntu/main_trading/trades.db
+ReadWritePaths=/home/ubuntu/main_trading/data_raw /home/ubuntu/main_trading/archives
+ReadOnlyPaths=/etc/letsencrypt
+
+# Timeouts
+TimeoutStartSec=120
+TimeoutStopSec=30
+KillMode=mixed
+KillSignal=SIGINT
+
+# Environment
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=multi-user.target
