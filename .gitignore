@@ -152,3 +152,6 @@ config.json
 # IDE files
 .vscode/
 .idea/
+.env
+*.pyc
+__pycache__/
