@@ -1,1 +1,1 @@
-# Core trading system modules
+# Core trading modules

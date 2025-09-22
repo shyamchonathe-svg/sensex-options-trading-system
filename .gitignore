@@ -109,3 +109,30 @@ trades.db
 
 # Legacy
 original/
+# Data
+data/
+logs/
+trades.db
+
+# Temporary
+*.log
+*.txt
+*.tmp
+
+# Runtime
+.trading_mode
+.trading_disabled
+
+# Legacy
+original/
+
+# Python
+__pycache__/
+*.pyc
+
+# Other dirs (preserve your working dirs)
+auth_data/
+kite_tokens/
+instrument_cache/
+option_data/
+test_results/
