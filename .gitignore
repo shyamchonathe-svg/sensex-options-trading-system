@@ -89,3 +89,23 @@ ENV/
 .pipenv
 Pipfile.lock
 poetry.lock
+# Logs
+*.log
+postback_server.log
+
+# Data directories
+data/
+logs/
+
+# Database
+trades.db
+
+# Environment
+.env
+
+# Runtime flags
+.trading_mode
+.trading_disabled
+
+# Legacy
+original/

@@ -44,3 +44,9 @@ black==23.7.0
 # ========================================
 # Installation: pip install -r requirements.txt
 # ========================================
+
+# Hands-free additions
+APScheduler==3.10.4
+psutil==5.9.6
+openpyxl==3.1.2
+python-dotenv==1.0.0
