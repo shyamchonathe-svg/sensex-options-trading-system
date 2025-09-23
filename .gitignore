@@ -1,6 +1,5 @@
 # OS generated files
 .DS_Store
-.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
@@ -14,53 +13,19 @@ Thumbs.db
 *.swo
 *~
 
-# Environment & Secrets
-.env
-.env.local
-.env.*.local
-
-# Logs & Runtime Data (auto-managed)
-logs/
-data_raw/
-archives/
-live_dumps/
-*.log
-*.csv
-*.zip
-*.json
-trades.db
-trades.db-journal
-trades.db-wal
-trades.db-shm
-
-# Runtime flags
-.trading_mode
-.trading_disabled
-*.pid
-
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
-MANIFEST
+build/
+dist/
+venv/
+env/
+ENV/
+.pipenv
+Pipfile.lock
+poetry.lock
 
 # Testing
 .pytest_cache/
@@ -72,86 +37,36 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
 
 # Jupyter
 .ipynb_checkpoints
 
-# Virtual Environment
-venv/
-env/
-ENV/
-
-# Dependencies
-.pipenv
-Pipfile.lock
-poetry.lock
-# Logs
-*.log
-postback_server.log
-
-# Data directories
-data/
+# Sensitive files and directories
 logs/
-
-# Database
+config.json
+kite_tokens/
+data/live_dumps/
+data/zipped/
+*.log
+*.csv
+*.zip
+*.json
 trades.db
-
-# Environment
+trades.db-journal
+trades.db-wal
+trades.db-shm
+*.tmp
+*.temp
 .env
+*.broken
+debug_token*.txt
+postback_server.log
 
 # Runtime flags
 .trading_mode
 .trading_disabled
+*.pid
 
 # Legacy
 original/
-# Data
-data/
-logs/
-trades.db
-
-# Temporary
-*.log
-*.txt
-*.tmp
-
-# Runtime
-.trading_mode
-.trading_disabled
-
-# Legacy
-original/
-
-# Python
-__pycache__/
-*.pyc
-
-# Other dirs (preserve your working dirs)
-auth_data/
-kite_tokens/
-instrument_cache/
-option_data/
-test_results/
-# Sensitive files
-*.log
-debug_token*.txt
-*.broken
-kite_tokens/
-.env
-config.json
-
-# Temporary files
-*.tmp
-*.temp
-.DS_Store
-
-# IDE files
-.vscode/
-.idea/
-.env
-*.pyc
-__pycache__/
+backup/

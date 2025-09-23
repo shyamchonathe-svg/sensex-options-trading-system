@@ -1,27 +1,12 @@
 [Unit]
-Description=Sensex Options Trading System
-After=network.target data_collector.service
-Wants=network.target
+Description=Sensex Trading System
+After=network.target
 
 [Service]
-Type=simple
+ExecStart=/usr/bin/python3 /home/ubuntu/main_trading/main.py --mode test
+Restart=always
 User=ubuntu
-WorkingDirectory=/home/ubuntu/sensex-options-trading-system
-Environment=PROJECT_PATH=/home/ubuntu/sensex-options-trading-system
-EnvironmentFile=/home/ubuntu/sensex-options-trading-system/.env
-
-# Read mode from flag file, default to TEST
-ExecStart=/bin/bash -c 'MODE=$$(cat .trading_mode 2>/dev/null || echo "TEST"); if [ "$$MODE" != "DISABLED" ]; then python3 integrated_e2e_trading_system.py; else echo "Trading disabled"; sleep infinity; fi'
-ExecStopPost=/bin/bash -c 'if [ -f .trading_disabled ]; then rm -f .trading_disabled; fi'
-
-# Resource limits for EC2 free tier
-MemoryLimit=256M
-CPUQuota=50%
-
-Restart=on-failure
-RestartSec=30
-StartLimitIntervalSec=300
-StartLimitBurst=3
+WorkingDirectory=/home/ubuntu/main_trading
 
 [Install]
 WantedBy=multi-user.target
