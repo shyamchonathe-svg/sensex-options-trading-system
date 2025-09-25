@@ -1302,6 +1302,17 @@ External Data Sources:
 - Volatility surface modeling
 - Alternative data feeds
 ```
+# Start HTTPS postback server (in separate terminal)
+sudo python3 postback_server.py
+
+# Run in test mode (paper trading)
+python3 main.py --mode test
+
+# Run in live mode (real trading)
+python3 main.py --mode live
+
+# Run Telegram bot interface
+python3 main.py --mode bot
 
 ## Conclusion
 
