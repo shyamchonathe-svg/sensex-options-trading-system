@@ -10,10 +10,11 @@ import threading
 import asyncio
 from datetime import datetime
 import pytz
+import os
 
 try:
     from utils.secure_config_manager import SecureConfigManager
-    from telegram_handler import TelegramBotHandler  # Use our simple telegram handler
+    from telegram_handler import TelegramBotHandler
     from utils.health_monitor import HealthMonitor
     from utils.data_manager import DataManager
     from integrated_e2e_trading_system import TradingSystem
@@ -25,7 +26,7 @@ try:
     from utils.enums import TradingMode
     from sensex_trading_bot_debug import SensexTradingBot as DebugBot
     from sensex_trading_bot_live import SensexTradingBot as LiveBot
-    from notifications import send_telegram_message  # Use our simple notifications
+    from notifications import send_telegram_message
 except ImportError as e:
     logging.error(f"Failed to import dependencies: {e}")
     exit(1)
@@ -39,7 +40,6 @@ class RedactingFilter(logging.Filter):
         if hasattr(record, 'msg') and isinstance(record.msg, str):
             for key in self.sensitive_keys:
                 if key in record.msg.lower():
-                    # Simple redaction - replace sensitive patterns
                     words = record.msg.split()
                     for i, word in enumerate(words):
                         if any(sensitive in word.lower() for sensitive in self.sensitive_keys):
@@ -50,10 +50,7 @@ class RedactingFilter(logging.Filter):
         return True
 
 def setup_logging():
-    # Ensure logs directory exists
-    import os
     os.makedirs('logs', exist_ok=True)
-    
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     handler = logging.handlers.RotatingFileHandler('logs/trading.log', maxBytes=10485760, backupCount=5)
@@ -64,6 +61,7 @@ def setup_logging():
     console = logging.StreamHandler()
     console.setFormatter(formatter)
     logger.addHandler(console)
+    return logger
 
 async def main():
     parser = argparse.ArgumentParser(description='Sensex Options Trading System')
@@ -79,19 +77,18 @@ async def main():
     parser.add_argument('--csv-path', help='CSV path for debug mode backtest')
     args = parser.parse_args()
 
-    setup_logging()
-    logger = logging.getLogger(__name__)
+    logger = setup_logging()
     
     try:
         config_manager = SecureConfigManager()
-        config = config_manager.get_all()  # Use get_all() method as shown in your SecureConfigManager
+        config = config_manager.get_all()
     except Exception as e:
         logger.error(f"Failed to load config: {e}")
         exit(1)
     
-    # Initialize services - wrap in try-catch to handle missing components gracefully
+    # Initialize services
     try:
-        notification_service = NotificationService(config)
+        notification_service = NotificationService()
     except Exception as e:
         logger.warning(f"Could not initialize notification service: {e}")
         notification_service = None
@@ -103,7 +100,7 @@ async def main():
         data_manager = None
     
     try:
-        broker_adapter = BrokerAdapter(config)
+        broker_adapter = BrokerAdapter(config_manager, logger, notification_service)
     except Exception as e:
         logger.warning(f"Could not initialize broker adapter: {e}")
         broker_adapter = None
@@ -127,19 +124,18 @@ async def main():
         trading_system = None
     
     try:
-        zipper = Zipper(config_manager.get_all(), telegram_bot)
+        zipper = Zipper(config_manager)
     except Exception as e:
         logger.warning(f"Could not initialize zipper: {e}")
         zipper = None
 
     # Create trading mode file
-    import os
     os.makedirs(os.path.dirname('/home/ubuntu/main_trading/.trading_mode'), exist_ok=True)
     with open('/home/ubuntu/main_trading/.trading_mode', 'w') as f:
         f.write(args.mode.upper())
 
     try:
-        mode = TradingMode(args.mode.upper())
+        mode = TradingMode.TEST if args.mode == 'test' else TradingMode.LIVE if args.mode == 'live' else TradingMode.DEBUG
         if trading_service:
             await trading_service.start_session(mode)
     except Exception as e:
@@ -152,8 +148,8 @@ async def main():
                 logger.error("Debug mode requires --csv-path or --date, --time, --access-token")
                 if notification_service:
                     await notification_service.send_system_alert({
-                        'type': 'ERROR', 'component': 'Main', 
-                        'message': 'Debug mode requires --csv-path or --date, --time, --access-token', 
+                        'type': 'ERROR', 'component': 'Main',
+                        'message': 'Debug mode requires --csv-path or --date, --time, --access-token',
                         'mode': args.mode
                     })
                 return
@@ -195,12 +191,11 @@ async def main():
             
             if zipper:
                 await zipper.unzip_data(args.date or datetime.now().strftime('%Y-%m-%d'))
-                await zipper.check_disk_space()
+                await zipper.check_disk_usage()
 
         elif args.mode == 'test':
             logger.info("Starting test mode")
             
-            # Send test message
             send_telegram_message(f"""
 🧪 <b>Test Mode Started</b>
 
@@ -211,30 +206,27 @@ async def main():
 System is now in test mode. Monitoring all components.
             """)
             
-            # Start telegram bot handler
             if trading_system:
                 bot_handler = TelegramBotHandler(config, trading_system)
                 threading.Thread(target=bot_handler.start_bot, daemon=True).start()
             
-            # Start health monitor if available
             try:
-                if data_manager:
-                    health_monitor = HealthMonitor(config_manager, data_manager, logger)
+                if data_manager and trading_system:
+                    health_monitor = HealthMonitor(config_manager, data_manager, logger, notification_service)
                     threading.Thread(target=lambda: asyncio.run(health_monitor.monitor_system()), daemon=True).start()
             except Exception as e:
                 logger.warning(f"Could not start health monitor: {e}")
             
-            # Start data collector if available
             try:
+                from core.telegram_bot import TelegramBot
                 from data.data_collector import DataCollector
                 collector = DataCollector()
                 await collector.start()
             except Exception as e:
                 logger.warning(f"Could not start data collector: {e}")
-                # Keep the program running for telegram bot
                 logger.info("Test mode running with basic functionality...")
                 while True:
-                    await asyncio.sleep(60)  # Keep alive
+                    await asyncio.sleep(60)
 
         elif args.mode == 'live':
             logger.info("Starting live mode")
@@ -242,8 +234,8 @@ System is now in test mode. Monitoring all components.
                 logger.error("Live mode requires --access-token")
                 if notification_service:
                     await notification_service.send_system_alert({
-                        'type': 'ERROR', 'component': 'Main', 
-                        'message': 'Live mode requires --access-token', 
+                        'type': 'ERROR', 'component': 'Main',
+                        'message': 'Live mode requires --access-token',
                         'mode': args.mode
                     })
                 return
@@ -259,7 +251,7 @@ System is now in test mode. Monitoring all components.
                 threading.Thread(target=trading_system.run_trading_loop, daemon=True).start()
             
             if zipper:
-                await zipper.check_disk_space()
+                await zipper.check_disk_usage()
 
     except Exception as e:
         logger.error(f"Error in main execution: {e}")
