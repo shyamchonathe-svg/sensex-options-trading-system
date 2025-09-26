@@ -18,7 +18,7 @@ import sys
 import argparse
 import os
 from optimized_sensex_option_chain import OptimizedSensexOptionChain
-from utils import TradingHoursValidator, TelegramNotifier, TradingStrategy
+from utils.utils import TradingHoursValidator, TelegramNotifier, TradingStrategy
 
 # Configure logging
 logging.basicConfig(

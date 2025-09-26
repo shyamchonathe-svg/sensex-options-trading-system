@@ -32,7 +32,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Paths
-PROJECT_PATH = Path(os.getenv('PROJECT_PATH', '/home/ubuntu/sensex-options-trading-system'))
+PROJECT_PATH = Path(os.getenv('PROJECT_PATH', '/home/ubuntu/main_trading'))
 CONFIG_PATH = PROJECT_PATH / 'config.json'
 TRADES_DB = PROJECT_PATH / 'trades.db'
 

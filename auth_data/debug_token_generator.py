@@ -2,7 +2,7 @@ import json
 import datetime
 import requests
 from kiteconnect import KiteConnect
-from telegram.telegram_bot import sync_send_message
+from .telegram_bot import sync_send_message
 from utils.secure_config_manager import load_config
 import logging
 

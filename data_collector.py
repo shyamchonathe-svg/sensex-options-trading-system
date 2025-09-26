@@ -12,7 +12,7 @@ import json
 import pandas as pd
 import pytz
 from kiteconnect import KiteConnect
-from config_manager import SecureConfigManager as ConfigManager
+from utils.secure_config_manager import SecureConfigManager as ConfigManager
 from optimized_sensex_option_chain import OptimizedSensexOptionChain
 from notification_service import EnhancedNotificationService
 class MarketCloseDataCollector:

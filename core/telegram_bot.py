@@ -27,7 +27,7 @@ load_dotenv(PROJECT_PATH / '.env')  # Explicitly load .env from project path
 import psutil  # For system monitoring
 import requests
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from .ext import Application, CommandHandler, ContextTypes
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # Configure logging (local only, never to git)

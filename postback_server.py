@@ -2,6 +2,7 @@
 """
 Production HTTPS Postback Server for Kite Connect
 Runs on port 443 (HTTPS) and 8001 (HTTP fallback)
+Updated to handle Nginx conflicts
 """
 
 import os
@@ -11,7 +12,10 @@ import ssl
 import time
 import logging
 import threading
-from config_manager import SecureConfigManager as ConfigManager
+import socket
+import subprocess
+# FIXED: Import from the correct module
+from utils.secure_config_manager import SecureConfigManager
 from datetime import datetime
 from flask import Flask, request, jsonify
 from werkzeug.serving import make_server
@@ -35,36 +39,126 @@ class ProductionPostbackServer:
         self.app = Flask(__name__)
         self.request_token = None
         self.token_timestamp = None
-        self.config = self.load_config()
+        # FIXED: Use SecureConfigManager instead of manual config loading
+        self.config_manager = SecureConfigManager()
+        self.config = self._get_config()
         self.ist_tz = pytz.timezone('Asia/Kolkata')
         self.setup_routes()
         
         # SSL paths
         self.cert_path = "/etc/letsencrypt/live/sensexbot.ddns.net/fullchain.pem"
         self.key_path = "/etc/letsencrypt/live/sensexbot.ddns.net/privkey.pem"
-        
-    def load_config(self):
-        """Load configuration"""
-        try:
-            with open('config.json', 'r') as f:
-                config = json.load(f)
-            return {
-                "api_key": config.get("api_key"),
-                "telegram_token": config.get("telegram_token"),
-                "chat_id": config.get("chat_id"),
-                "server_host": config.get("server_host", "sensexbot.ddns.net"),
-                "auth_timeout_seconds": config.get("auth_timeout_seconds", 300)
-            }
-        except Exception as e:
-            logger.error(f"Config error: {e}")
-            return {
-                "api_key": null,
-                "telegram_token": null,
-                "chat_id": null,
-                "server_host": "sensexbot.ddns.net",
-                "auth_timeout_seconds": 300
-            }
     
+    def _get_config(self):
+        """Get configuration using SecureConfigManager."""
+        return {
+            "api_key": self.config_manager.get("api_key"),
+            "telegram_token": self.config_manager.get("telegram_token"),
+            "chat_id": self.config_manager.get("chat_id"),
+            "server_host": self.config_manager.get("server_host", "sensexbot.ddns.net"),
+            "auth_timeout_seconds": self.config_manager.get("auth_timeout_seconds", 300)
+        }
+    
+    def check_nginx_running(self):
+        """Check if Nginx is running and using port 443"""
+        try:
+            result = subprocess.run(['sudo', 'systemctl', 'is-active', 'nginx'], 
+                                  capture_output=True, text=True)
+            nginx_active = result.returncode == 0 and result.stdout.strip() == 'active'
+            
+            # Also check if something is listening on port 443
+            result = subprocess.run(['sudo', 'lsof', '-i', ':443'], 
+                                  capture_output=True, text=True)
+            port_443_used = result.returncode == 0 and 'nginx' in result.stdout.lower()
+            
+            return nginx_active, port_443_used
+        except Exception as e:
+            logger.warning(f"Could not check nginx status: {e}")
+            return False, False
+    
+    def setup_nginx_proxy(self):
+        """Setup Nginx as reverse proxy for our postback server"""
+        logger.info("Setting up Nginx reverse proxy configuration...")
+        
+        nginx_config = f"""
+# Nginx configuration for Zerodha postback server
+server {{
+    listen 443 ssl http2;
+    server_name {self.config['server_host']};
+    
+    # SSL certificates
+    ssl_certificate /etc/letsencrypt/live/{self.config['server_host']}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{self.config['server_host']}/privkey.pem;
+    
+    # SSL security settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    
+    # Proxy all requests to our Flask app on port 8001
+    location / {{
+        proxy_pass http://localhost:8001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+        proxy_read_timeout 300;
+    }}
+    
+    # Specific handling for postback endpoint
+    location /postback {{
+        proxy_pass http://localhost:8001/postback;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }}
+    
+    # Health check endpoint
+    location /health {{
+        proxy_pass http://localhost:8001/health;
+        proxy_set_header Host $host;
+    }}
+}}
+
+# Optional: Redirect HTTP to HTTPS
+server {{
+    listen 80;
+    server_name {self.config['server_host']};
+    return 301 https://$server_name$request_uri;
+}}
+"""
+        
+        config_path = f"/etc/nginx/sites-available/{self.config['server_host']}"
+        
+        try:
+            # Write the config
+            with open(config_path, 'w') as f:
+                f.write(nginx_config)
+            
+            # Enable the site
+            link_path = f"/etc/nginx/sites-enabled/{self.config['server_host']}"
+            if os.path.exists(link_path):
+                os.remove(link_path)
+            os.symlink(config_path, link_path)
+            
+            # Test nginx config
+            result = subprocess.run(['sudo', 'nginx', '-t'], capture_output=True, text=True)
+            if result.returncode != 0:
+                logger.error(f"Nginx config test failed: {result.stderr}")
+                return False
+            
+            # Reload nginx
+            subprocess.run(['sudo', 'systemctl', 'reload', 'nginx'], check=True)
+            logger.info("Nginx reverse proxy configured successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to setup Nginx proxy: {e}")
+            return False
+        
     def check_ssl_certificates(self):
         """Check if SSL certificates are accessible"""
         try:
@@ -113,9 +207,16 @@ class ProductionPostbackServer:
             action = request.args.get('action', 'login')
             status = request.args.get('status', 'success')
             
+            # Log the forwarded headers from Nginx
+            real_ip = request.headers.get('X-Real-IP', 'Unknown')
+            forwarded_for = request.headers.get('X-Forwarded-For', 'Unknown')
+            forwarded_proto = request.headers.get('X-Forwarded-Proto', 'Unknown')
+            
             logger.info(f"Postback received at {ist_time}")
             logger.info(f"   Action: {action}, Status: {status}")
             logger.info(f"   Token: {request_token[:20]}..." if request_token else "   No token")
+            logger.info(f"   Real IP: {real_ip}")
+            logger.info(f"   Protocol: {forwarded_proto}")
             logger.info(f"   User Agent: {request.headers.get('User-Agent', 'Unknown')}")
             
             if request_token and status == 'success':
@@ -137,8 +238,9 @@ class ProductionPostbackServer:
 
 Time: {ist_time}
 Token: <code>{request_token[:20]}...</code>
-Protocol: HTTPS
+Protocol: HTTPS (via Nginx)
 Server: {self.config['server_host']}
+Real IP: {real_ip}
 
 Your trading system is authenticated!
 Token expires in {self.config['auth_timeout_seconds']} seconds
@@ -195,7 +297,7 @@ Token expires in {self.config['auth_timeout_seconds']} seconds
                         
                         <div class="info">
                             <p><strong>Time:</strong> {ist_time}</p>
-                            <p><strong>Protocol:</strong> HTTPS</p>
+                            <p><strong>Protocol:</strong> HTTPS (Nginx)</p>
                             <div class="token-box">
                                 <strong>Token:</strong><br>
                                 {request_token[:20]}...
@@ -239,7 +341,7 @@ Token expires in {self.config['auth_timeout_seconds']} seconds
 
 Time: {ist_time}
 Reason: {error_reason}
-Protocol: HTTPS
+Protocol: HTTPS (via Nginx)
 Server: {self.config['server_host']}
 
 Please try again or check your Zerodha credentials.
@@ -285,6 +387,7 @@ Please try again or check your Zerodha credentials.
         @self.app.route('/')
         def health_check():
             ist_time = datetime.now(self.ist_tz).strftime("%Y-%m-%d %H:%M:%S IST")
+            nginx_active, port_443_used = self.check_nginx_running()
             
             return f"""
             <!DOCTYPE html>
@@ -298,6 +401,7 @@ Please try again or check your Zerodha credentials.
                     .status {{ padding: 15px; margin: 10px 0; border-radius: 5px; }}
                     .success {{ background: #d4edda; border-left: 4px solid #28a745; }}
                     .info {{ background: #d1ecf1; border-left: 4px solid #17a2b8; }}
+                    .warning {{ background: #fff3cd; border-left: 4px solid #ffc107; }}
                     h1 {{ color: #007bff; margin-top: 0; }}
                     .endpoint {{ font-family: monospace; background: #f8f9fa; padding: 5px; border-radius: 3px; }}
                 </style>
@@ -310,8 +414,16 @@ Please try again or check your Zerodha credentials.
                         <h3>Server Status: RUNNING</h3>
                         <p><strong>Time:</strong> {ist_time}</p>
                         <p><strong>Host:</strong> {self.config['server_host']}</p>
-                        <p><strong>Protocol:</strong> HTTPS + HTTP</p>
-                        <p><strong>SSL:</strong> {'Active' if self.check_ssl_certificates() else 'Issues'}</p>
+                        <p><strong>Protocol:</strong> HTTP (Backend) + HTTPS (Nginx Proxy)</p>
+                        <p><strong>SSL:</strong> {'Active via Nginx' if nginx_active else 'Direct SSL Available' if self.check_ssl_certificates() else 'Issues'}</p>
+                        <p><strong>Nginx:</strong> {'Running' if nginx_active else 'Not Running'}</p>
+                    </div>
+                    
+                    <div class="status info">
+                        <h3>Architecture</h3>
+                        <p><strong>Setup:</strong> Nginx (Port 443) → Flask (Port 8001)</p>
+                        <p><strong>HTTPS:</strong> Handled by Nginx with SSL certificates</p>
+                        <p><strong>Backend:</strong> Flask app on HTTP port 8001</p>
                     </div>
                     
                     <div class="status info">
@@ -320,7 +432,7 @@ Please try again or check your Zerodha credentials.
                         <p><strong>HTTPS Status:</strong> <span class="endpoint">https://sensexbot.ddns.net/status</span></p>
                         <p><strong>Health Check:</strong> <span class="endpoint">https://sensexbot.ddns.net/health</span></p>
                         <p><strong>Postback:</strong> <span class="endpoint">https://sensexbot.ddns.net/postback</span></p>
-                        <p><strong>HTTP Fallback:</strong> <span class="endpoint">http://sensexbot.ddns.net:8001/</span></p>
+                        <p><strong>Direct Backend:</strong> <span class="endpoint">http://localhost:8001/</span></p>
                     </div>
                     
                     <div class="status info">
@@ -347,17 +459,20 @@ Please try again or check your Zerodha credentials.
         @self.app.route('/status')
         def status_api():
             ist_time = datetime.now(self.ist_tz).strftime("%Y-%m-%d %H:%M:%S IST")
+            nginx_active, port_443_used = self.check_nginx_running()
             
             return jsonify({
                 "status": "running",
                 "server": "Zerodha HTTPS Postback Server",
                 "time": ist_time,
                 "host": self.config['server_host'],
-                "ssl_active": self.check_ssl_certificates(),
-                "protocol": "HTTPS",
+                "ssl_active": nginx_active or self.check_ssl_certificates(),
+                "protocol": "HTTP Backend + HTTPS Nginx Proxy" if nginx_active else "Direct HTTPS",
+                "nginx_running": nginx_active,
+                "port_443_used": port_443_used,
                 "endpoints": {
                     "https": f"https://{self.config['server_host']}/",
-                    "http": f"http://{self.config['server_host']}:8001/",
+                    "http_backend": f"http://localhost:8001/",
                     "postback": f"https://{self.config['server_host']}/postback",
                     "health": f"https://{self.config['server_host']}/health"
                 },
@@ -454,24 +569,28 @@ Please try again or check your Zerodha credentials.
         """Run HTTP server on port 8001"""
         try:
             logger.info("Starting HTTP server on port 8001...")
+            
+            # Check if port 8001 is available
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                    sock.bind(('0.0.0.0', 8001))
+                logger.info("Port 8001 is available")
+            except OSError:
+                logger.error("Port 8001 is already in use!")
+                # Try to kill what's using it
+                try:
+                    subprocess.run(['sudo', 'fuser', '-k', '8001/tcp'], check=True)
+                    logger.info("Killed process using port 8001")
+                    time.sleep(2)
+                except:
+                    logger.error("Could not kill process on port 8001")
+                    return
+            
             http_server = make_server('0.0.0.0', 8001, self.app)
+            logger.info("HTTP server started successfully on port 8001")
             http_server.serve_forever()
         except Exception as e:
             logger.error(f"HTTP server error: {e}")
-    
-    def run_https_server(self):
-        """Run HTTPS server on port 443"""
-        try:
-            ssl_context = self.create_ssl_context()
-            if not ssl_context:
-                logger.error("Cannot start HTTPS server - SSL context failed")
-                return
-            
-            logger.info("Starting HTTPS server on port 443...")
-            https_server = make_server('0.0.0.0', 443, self.app, ssl_context=ssl_context)
-            https_server.serve_forever()
-        except Exception as e:
-            logger.error(f"HTTPS server error: {e}")
     
     def run(self):
         """Run the server"""
@@ -482,48 +601,96 @@ Please try again or check your Zerodha credentials.
         logger.info(f"   Time: {ist_time}")
         logger.info("=" * 60)
         
+        # Check if Nginx is running
+        nginx_active, port_443_used = self.check_nginx_running()
+        
+        if nginx_active and port_443_used:
+            logger.info("NGINX DETECTED: Running with Nginx reverse proxy")
+            logger.info("   Nginx handles HTTPS on port 443")
+            logger.info("   Flask handles HTTP backend on port 8001")
+            
+            # Setup nginx configuration if needed
+            config_exists = os.path.exists(f"/etc/nginx/sites-enabled/{self.config['server_host']}")
+            if not config_exists:
+                logger.info("Setting up Nginx reverse proxy configuration...")
+                if self.setup_nginx_proxy():
+                    logger.info("Nginx configuration created successfully")
+                else:
+                    logger.warning("Failed to create Nginx configuration")
+            else:
+                logger.info("Nginx configuration already exists")
+                
+        elif port_443_used:
+            logger.warning("Port 443 is used by another service (not Nginx)")
+            logger.warning("   Will run HTTP-only on port 8001")
+        else:
+            logger.info("No service using port 443 - could run direct HTTPS")
+        
         # Check SSL certificates
         ssl_ok = self.check_ssl_certificates()
         
-        if not ssl_ok:
-            logger.error("SSL certificate issues detected!")
-            logger.error("   Please run the SSL setup commands first:")
-            logger.error("   sudo certbot certonly --standalone --domains sensexbot.ddns.net")
-            logger.error("   sudo chown root:ssl-cert /etc/letsencrypt/live/sensexbot.ddns.net/privkey.pem")
-            logger.error("   sudo chmod 640 /etc/letsencrypt/live/sensexbot.ddns.net/privkey.pem")
-            sys.exit(1)
-        
         logger.info(f"Host: {self.config['server_host']}")
-        logger.info(f"SSL: Active")
+        logger.info(f"SSL: {'Nginx handles SSL' if nginx_active else 'Direct SSL available' if ssl_ok else 'SSL issues detected'}")
         logger.info("=" * 60)
         
-        # Start servers in threads
-        threads = []
+        # Start HTTP server (port 8001) - this is our main server now
+        logger.info("Starting HTTP backend server...")
         
-        # HTTP server (port 8001) - for fallback and testing
-        http_thread = threading.Thread(target=self.run_http_server, daemon=True)
-        http_thread.start()
-        threads.append(http_thread)
+        try:
+            # Start server in thread
+            http_thread = threading.Thread(target=self.run_http_server, daemon=True)
+            http_thread.start()
+            
+            # Give it time to start
+            time.sleep(3)
+            
+            # Test if it's working
+            try:
+                response = requests.get('http://localhost:8001/health', timeout=5)
+                if response.status_code == 200:
+                    logger.info("✓ HTTP backend server is responding")
+                    backend_ok = True
+                else:
+                    logger.error("✗ HTTP backend server returned error")
+                    backend_ok = False
+            except:
+                logger.error("✗ HTTP backend server is not responding")
+                backend_ok = False
+            
+            if not backend_ok:
+                logger.error("CRITICAL: Backend server failed to start!")
+                sys.exit(1)
         
-        # HTTPS server (port 443) - main production server
-        https_thread = threading.Thread(target=self.run_https_server, daemon=True)
-        https_thread.start()
-        threads.append(https_thread)
+        except Exception as e:
+            logger.error(f"Failed to start HTTP server: {e}")
+            sys.exit(1)
         
-        # Give servers time to start
-        time.sleep(2)
-        
+        # Final status
+        logger.info("=" * 60)
         logger.info("SERVERS STARTED SUCCESSFULLY!")
         logger.info("")
+        logger.info("ARCHITECTURE:")
+        if nginx_active:
+            logger.info("   Internet → Nginx (443/HTTPS) → Flask (8001/HTTP)")
+            logger.info("   ✓ HTTPS handled by Nginx with SSL certificates")
+            logger.info("   ✓ Flask backend running on HTTP port 8001")
+        else:
+            logger.info("   Internet → Flask (8001/HTTP only)")
+            logger.info("   ⚠ No HTTPS - only HTTP on port 8001")
+        
+        logger.info("")
         logger.info("ENDPOINTS:")
-        logger.info(f"   HTTPS Production: https://{self.config['server_host']}/")
-        logger.info(f"   HTTP Testing:     http://{self.config['server_host']}:8001/")
-        logger.info(f"   Health Check:     https://{self.config['server_host']}/health")
-        logger.info(f"   Kite Postback:    https://{self.config['server_host']}/postback")
+        if nginx_active:
+            logger.info(f"   ✓ HTTPS Production: https://{self.config['server_host']}/")
+            logger.info(f"   ✓ Kite Postback:    https://{self.config['server_host']}/postback")
+        logger.info(f"   ✓ HTTP Backend:     http://{self.config['server_host']}:8001/")
+        logger.info(f"   ✓ Local Health:     http://localhost:8001/health")
         logger.info("")
         logger.info("TEST COMMANDS:")
-        logger.info(f"   curl https://{self.config['server_host']}/status")
+        logger.info(f"   curl http://localhost:8001/status")
         logger.info(f"   curl http://localhost:8001/health")
+        if nginx_active:
+            logger.info(f"   curl https://{self.config['server_host']}/status")
         logger.info("=" * 60)
         
         try:
@@ -533,7 +700,7 @@ Please try again or check your Zerodha credentials.
                 # Heartbeat every 10 minutes
                 if int(time.time()) % 600 == 0:
                     current_time = datetime.now(self.ist_tz).strftime("%H:%M:%S IST")
-                    logger.info(f"Server heartbeat: {current_time}")
+                    logger.info(f"Server heartbeat: {current_time} - Backend: ✓")
         
         except KeyboardInterrupt:
             logger.info("Server stopped by user")

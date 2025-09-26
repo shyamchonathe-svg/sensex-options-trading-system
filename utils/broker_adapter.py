@@ -7,7 +7,7 @@ Handles order placement and market data
 import logging
 from typing import Dict, Any, Optional
 from kiteconnect import KiteConnect
-from config_manager import SecureConfigManager as ConfigManager
+from utils.secure_config_manager import SecureConfigManager as ConfigManager
 
 
 class BrokerAdapter:
@@ -23,7 +23,7 @@ class BrokerAdapter:
             notification_service: Notification service for alerts
         """
         self.logger = logger
-        self.config = config_manager.get_config()
+        self.config = config_manager.get_all()
         self.notification_service = notification_service
         self.kite = KiteConnect(
             api_key=self.config.get('api_key'),

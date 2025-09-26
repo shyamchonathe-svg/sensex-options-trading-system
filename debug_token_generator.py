@@ -38,37 +38,39 @@ class DebugTokenGenerator:
         )
         self.logger = logging.getLogger(__name__)
     
-    def load_config(self, config_file):
-        """Load configuration from JSON file"""
-        try:
-            with open(config_file, 'r') as f:
-                config = json.load(f)
-            
-            required_keys = ['api_key', 'api_secret']
-            for key in required_keys:
-                if key not in config:
-                    raise ValueError(f"Missing required config key: {key}")
-            
-            # Add default postback URLs if not present
-            if 'postback_urls' not in config:
-                config['postback_urls'] = {
-                    "primary": "https://sensexbot.ddns.net/postback",
-                    "secondary": "https://sensexbot.ddns.net/redirect"
-                }
-            
-            if 'server_host' not in config:
-                config['server_host'] = 'sensexbot.ddns.net'
-                
-            self.logger.info("Configuration loaded successfully")
-            return config
-            
-        except FileNotFoundError:
-            self.logger.error(f"Config file {config_file} not found")
-            # Return minimal config for manual entry
+    def load_config(self, config_file='config.json'):
+        """Load configuration from .env file"""
+        from dotenv import load_dotenv
+        import os
+        env_path = os.path.join(os.path.dirname(__file__), '.env')
+        self.logger.info(f"Attempting to load .env from: {env_path}")
+        if not os.path.exists(env_path):
+            self.logger.error(f".env file not found at: {env_path}")
             return self.get_manual_config()
-        except Exception as e:
-            self.logger.error(f"Error loading config: {e}")
-            return self.get_manual_config()
+        
+        load_dotenv(dotenv_path=env_path)
+        config = {
+            "api_key": os.getenv("ZAPI_KEY"),
+            "api_secret": os.getenv("ZAPI_SECRET"),
+            "telegram_token": os.getenv("TELEGRAM_TOKEN"),
+            "chat_id": os.getenv("TELEGRAM_CHAT_ID"),
+            "postback_urls": {
+                "primary": "https://sensexbot.ddns.net/postback",
+                "secondary": "https://sensexbot.ddns.net/redirect"
+            },
+            "server_host": "sensexbot.ddns.net"
+        }
+        
+        self.logger.info(f"Loaded config: ZAPI_KEY={config['api_key'][:4] if config['api_key'] else None}..., ZAPI_SECRET={config['api_secret'][:4] if config['api_secret'] else None}..., TELEGRAM_TOKEN={config['telegram_token'][:4] if config['telegram_token'] else None}..., CHAT_ID={config['chat_id']}")
+        
+        required_keys = ['api_key', 'api_secret']
+        for key in required_keys:
+            if not config[key]:
+                self.logger.error(f"Missing required config key: {key}")
+                return self.get_manual_config()
+        
+        self.logger.info("Configuration loaded from .env")
+        return config
     
     def get_manual_config(self):
         """Get configuration manually from user input"""

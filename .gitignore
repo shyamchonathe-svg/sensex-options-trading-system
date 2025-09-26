@@ -70,3 +70,11 @@ postback_server.log
 # Legacy
 original/
 backup/
+main.py.backup
+main.py.old
+request_token.txt
+sensex_weekly_options.csv.gz
+test_config.py
+test_config_load.py
+test_import.py
+test_telegram_import.py

@@ -11,12 +11,12 @@ import pytz
 import os
 from typing import Dict, Any, Optional
 from telegram import Bot
-from telegram.ext import Application, CommandHandler
+from .ext import Application, CommandHandler
 from config_manager import SecureConfigManager as ConfigManager
 from notification_service import NotificationService
 from trading_service import EnhancedTradingService
 from risk_manager import RiskManager
-from data_manager import DataManager
+from utils.data_manager import DataManager
 from database_layer import DatabaseLayer
 from data_archive_manager import DataArchiveManager
 from signal_detection_system import SignalOrchestrator

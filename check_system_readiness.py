@@ -9,7 +9,7 @@ from datetime import datetime
 import subprocess
 import os
 
-from secure_config_manager import config
+from utils.secure_config_manager import SecureConfigManager
 from modes import create_mode_config
 from risk_manager import RiskManager
 from notification_service import NotificationService

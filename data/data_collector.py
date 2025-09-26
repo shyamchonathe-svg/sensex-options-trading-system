@@ -11,7 +11,7 @@ import pytz
 from kiteconnect import KiteConnect, KiteTicker
 from tenacity import retry, stop_after_attempt, wait_exponential
 from utils.secure_config_manager import SecureConfigManager
-from telegram.telegram_bot import TelegramBot
+from .telegram_bot import TelegramBot
 from utils.data_manager import DataManager
 import pandas as pd
 

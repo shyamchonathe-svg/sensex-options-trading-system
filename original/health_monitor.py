@@ -9,7 +9,7 @@ import logging
 import psutil
 from typing import Dict, Any
 from config_manager import SecureConfigManager as ConfigManager
-from data_manager import DataManager
+from utils.data_manager import DataManager
 from notification_service import NotificationService
 from datetime import datetime
 import json

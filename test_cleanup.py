@@ -42,9 +42,9 @@ def test_security_cleanup():
     # Test 3: ConfigManager loads correctly
     try:
         print("\n🔑 TESTING CONFIG LOADING...")
-        from config_manager import SecureConfigManager as ConfigManager
+        from utils.secure_config_manager import SecureConfigManager as ConfigManager
         config_manager = ConfigManager()
-        config = config_manager.get_config()
+        config = config_manager.get_all()
         
         required_keys = ['api_key', 'api_secret', 'telegram_token', 'chat_id']
         missing_keys = [key for key in required_keys if not config.get(key)]

@@ -10,7 +10,7 @@ from typing import Dict, Optional
 from datetime import datetime, timedelta
 import logging
 from kiteconnect import KiteTicker
-from config_manager import SecureConfigManager as ConfigManager
+from utils.secure_config_manager import SecureConfigManager as ConfigManager
 import pytz
 
 
@@ -18,7 +18,7 @@ class DataManager:
     def __init__(self, config_manager: ConfigManager):
         self.logger = logging.getLogger(__name__)
         self.config_manager = config_manager
-        self.config = config_manager.get_config()
+        self.config = config_manager.get_all()
         self.data_dir = self.config.get('data_dir', 'option_data')
         os.makedirs(self.data_dir, exist_ok=True)
         self.instruments = self.config.get('instruments', ['SENSEX'])

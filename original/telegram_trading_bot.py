@@ -17,8 +17,8 @@ import sys
 
 # Telegram imports
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
-from telegram.constants import ParseMode
+from .ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+from .constants import ParseMode
 
 # Local imports
 from secure_config_manager import config

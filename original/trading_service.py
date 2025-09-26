@@ -10,7 +10,7 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 import pytz
 from config_manager import SecureConfigManager as ConfigManager
-from data_manager import DataManager
+from utils.data_manager import DataManager
 from broker_adapter import BrokerAdapter
 from notification_service import NotificationService
 from database_layer import DatabaseLayer

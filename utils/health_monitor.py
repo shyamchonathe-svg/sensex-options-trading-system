@@ -8,9 +8,9 @@ import asyncio
 import logging
 import psutil
 from typing import Dict, Any
-from config_manager import SecureConfigManager as ConfigManager
-from data_manager import DataManager
-from notification_service import NotificationService
+from utils.secure_config_manager import SecureConfigManager as ConfigManager
+from utils.data_manager import DataManager
+from utils.notification_service import NotificationService
 from datetime import datetime
 import json
 import os
@@ -23,7 +23,7 @@ class HealthMonitor:
         self.data_manager = data_manager
         self.logger = logger
         self.notification_service = notification_service
-        self.config = config_manager.get_config()
+        self.config = config_manager.get_all()
         self.logger.info("HealthMonitor initialized")
 
     async def monitor_system(self):
