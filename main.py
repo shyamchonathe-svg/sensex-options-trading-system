@@ -87,11 +87,11 @@ async def main():
         exit(1)
     
     # Initialize services
+    notification_service = None
     try:
         notification_service = NotificationService()
     except Exception as e:
         logger.warning(f"Could not initialize notification service: {e}")
-        notification_service = None
     
     try:
         data_manager = DataManager(config_manager)
@@ -218,7 +218,6 @@ System is now in test mode. Monitoring all components.
                 logger.warning(f"Could not start health monitor: {e}")
             
             try:
-                from core.telegram_bot import TelegramBot
                 from data.data_collector import DataCollector
                 collector = DataCollector()
                 await collector.start()

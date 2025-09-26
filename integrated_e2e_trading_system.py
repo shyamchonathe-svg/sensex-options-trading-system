@@ -13,12 +13,13 @@ import time
 import threading
 from datetime import datetime, time as dt_time
 from pathlib import Path
-import sqlite3
 import pandas as pd
 import numpy as np
 from kiteconnect import KiteConnect, KiteTicker
 from tenacity import retry, stop_after_attempt, wait_exponential
 import talib
+from utils.database_layer import DatabaseLayer  # Import from utils
+from datetime import timedelta
 
 # Configure logging (local only)
 logging.basicConfig(
@@ -41,109 +42,19 @@ with open(CONFIG_PATH) as f:
     CONFIG = json.load(f)
 
 # Environment
-ZAPI_KEY = os.getenv('ZAPI_KEY')
-ZAPI_SECRET = os.getenv('ZAPI_SECRET')
-ZACCESS_TOKEN = os.getenv('ZACCESS_TOKEN')
-
-class DatabaseLayer:
-    """SQLite database for trade auditing"""
-    
-    def __init__(self, db_path=TRADES_DB):
-        self.db_path = Path(db_path)
-        self.init_database()
-    
-    def init_database(self):
-        """Initialize database schema"""
-        schema = """
-        CREATE TABLE IF NOT EXISTS trades (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            date TEXT NOT NULL,
-            mode TEXT NOT NULL,
-            timestamp TEXT NOT NULL,
-            symbol TEXT NOT NULL,
-            side TEXT NOT NULL,
-            quantity INTEGER NOT NULL,
-            price REAL NOT NULL,
-            pnl REAL DEFAULT 0,
-            status TEXT DEFAULT 'OPEN',
-            signal_strength REAL,
-            conditions TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-        
-        CREATE TABLE IF NOT EXISTS positions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            trade_id INTEGER,
-            symbol TEXT NOT NULL,
-            quantity INTEGER NOT NULL,
-            avg_price REAL NOT NULL,
-            current_price REAL,
-            unrealized_pnl REAL,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (trade_id) REFERENCES trades (id)
-        );
-        
-        CREATE INDEX IF NOT EXISTS idx_trades_date ON trades(date);
-        CREATE INDEX IF NOT EXISTS idx_trades_status ON trades(status);
-        """
-        
-        with sqlite3.connect(self.db_path) as conn:
-            conn.executescript(schema)
-    
-    def log_trade(self, trade_data):
-        """Log trade to database"""
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.execute("""
-                INSERT INTO trades (date, mode, timestamp, symbol, side, quantity, price, 
-                                  signal_strength, conditions)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                trade_data['date'],
-                trade_data['mode'],
-                trade_data['timestamp'],
-                trade_data['symbol'],
-                trade_data['side'],
-                trade_data['quantity'],
-                trade_data['price'],
-                trade_data['signal_strength'],
-                json.dumps(trade_data['conditions'])
-            ))
-            trade_id = cursor.lastrowid
-            conn.commit()
-            return trade_id
-    
-    def update_trade_pnl(self, trade_id, pnl):
-        """Update trade P&L"""
-        with sqlite3.connect(self.db_path) as conn:
-            conn.execute(
-                "UPDATE trades SET pnl = ?, status = 'CLOSED' WHERE id = ?",
-                (pnl, trade_id)
-            )
-            conn.commit()
-    
-    def get_open_positions(self):
-        """Get all open positions"""
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.execute("""
-                SELECT * FROM positions 
-                WHERE updated_at > datetime('now', '-1 day')
-            """)
-            return [dict(row) for row in cursor.fetchall()]
-
-def init_database():
-    """Initialize database (called by bot)"""
-    db = DatabaseLayer()
-    logger.info("Database initialized")
+ZAPI_KEY = os.getenv('ZAPI_KEY', CONFIG.get('api_key'))
+ZAPI_SECRET = os.getenv('ZAPI_SECRET', CONFIG.get('api_secret'))
+ZACCESS_TOKEN = os.getenv('ZACCESS_TOKEN', CONFIG.get('access_token'))
 
 class SignalEngine:
     """Mean-reversion signal generation"""
     
     def __init__(self, config):
         self.config = config
-        self.ema_short = config['ema_short_period']
-        self.ema_long = config['ema_long_period']
-        self.tightness_threshold = config['ema_tightness_threshold']
-        self.premium_deviation = config['premium_deviation_threshold']
+        self.ema_short = config['strategy']['ema_short_period']
+        self.ema_long = config['strategy']['ema_long_period']
+        self.tightness_threshold = config['strategy']['ema_tightness_threshold']
+        self.premium_deviation = config.get('premium_deviation_threshold', 0.02)
     
     def calculate_signals(self, df):
         """Calculate trading signals from OHLCV data"""
@@ -269,7 +180,7 @@ class EnhancedBrokerAdapter:
             sl_price = price * (1 - sl_offset) if transaction_type == 'BUY' else price * (1 + sl_offset)
             target_price = price * (1 + target_offset) if transaction_type == 'BUY' else price * (1 - target_offset)
             
-            # Place order (your existing order logic)
+            # Place order
             order_params = {
                 'exchange': 'NFO',
                 'tradingsymbol': symbol,
@@ -307,9 +218,8 @@ class EnhancedBrokerAdapter:
             return self.position_cache.get('positions', [])
     
     def get_option_chain(self, underlying='SENSEX', expiry='weekly'):
-        """Get options chain (your existing logic)"""
+        """Get options chain"""
         try:
-            # Your existing options chain logic
             instruments = self.kite.instruments('NFO')
             sensex_options = [
                 inst for inst in instruments 
@@ -325,16 +235,16 @@ class RiskManager:
     
     def __init__(self, config):
         self.config = config
-        self.max_daily_loss = config['max_daily_loss']
-        self.max_trades_per_day = config['max_trades_per_day']
-        self.max_consecutive_losses = config['max_consecutive_losses']
+        self.max_daily_loss = config['risk_management']['max_daily_loss']
+        self.max_trades_per_day = config['risk_management']['max_trades_per_day']
+        self.max_consecutive_losses = config.get('max_consecutive_losses', 3)
         self.daily_trades = 0
         self.daily_pnl = 0
         self.consecutive_losses = 0
     
     def calculate_position_size(self, account_balance, signal_strength):
         """Calculate position size based on risk and signal"""
-        risk_per_trade = account_balance * 0.02  # 2% risk per trade
+        risk_per_trade = account_balance * self.config['risk_management']['risk_per_trade_percent'] / 100
         adjusted_risk = risk_per_trade * (signal_strength / 100)
         lot_size = 25  # Sensex weekly lot size
         
@@ -413,7 +323,7 @@ class TradingSystem:
                     return df
                 return None
             
-            # Live data fetch (your existing logic)
+            # Live data fetch
             from_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
             to_date = datetime.now().strftime('%Y-%m-%d')
             
@@ -445,21 +355,22 @@ class TradingSystem:
             # Log simulated trade
             trade_data = {
                 'date': datetime.now().strftime('%Y-%m-%d'),
+                'session_id': 'SIM-' + datetime.now().strftime('%Y%m%d%H%M%S'),
                 'mode': self.mode,
                 'timestamp': datetime.now().isoformat(),
-                'symbol': f"SENSEX{datetime.now().strftime('%y%b')}CE",  # Placeholder
                 'side': 'BUY',
+                'strike': signal.get('strike', 0),
                 'quantity': 25,
-                'price': signal['price'] or 100,
+                'entry_price': signal['price'] or 100,
                 'signal_strength': signal['strength'],
-                'conditions': signal['conditions']
+                'status': 'OPEN'
             }
-            trade_id = self.db.log_trade(trade_data)
+            trade_id = self.db.record_trade(trade_data)
             
             # Simulate P&L for TEST mode
             if self.mode == 'TEST':
                 simulated_pnl = np.random.normal(50, 30) * (signal['strength'] / 100)
-                self.db.update_trade_pnl(trade_id, simulated_pnl)
+                self.db.update_trade_outcome(trade_id, 'CLOSED', pnl=simulated_pnl, status='CLOSED')
                 self.risk_manager.update_metrics(simulated_pnl)
                 logger.info(f"[TEST] Simulated P&L: ₹{simulated_pnl:.2f}")
             
@@ -490,16 +401,17 @@ class TradingSystem:
         if order:
             trade_data = {
                 'date': datetime.now().strftime('%Y-%m-%d'),
+                'session_id': 'LIVE-' + datetime.now().strftime('%Y%m%d%H%M%S'),
                 'mode': self.mode,
                 'timestamp': datetime.now().isoformat(),
-                'symbol': option_symbol,
                 'side': 'BUY',
+                'strike': signal.get('strike', 0),
                 'quantity': quantity,
-                'price': order['entry_price'],
+                'entry_price': order['entry_price'],
                 'signal_strength': signal['strength'],
-                'conditions': signal['conditions']
+                'status': 'OPEN'
             }
-            trade_id = self.db.log_trade(trade_data)
+            trade_id = self.db.record_trade(trade_data)
             self.risk_manager.update_metrics(0)  # Will update on exit
             logger.info(f"LIVE trade executed: {trade_id}")
             return trade_id
@@ -507,7 +419,7 @@ class TradingSystem:
         return None
     
     def get_atm_option(self, direction):
-        """Get ATM call/put option (your existing logic)"""
+        """Get ATM call/put option"""
         try:
             sensex_ltp = self.broker.position_cache['sensex']['ltp']
             options = self.broker.get_option_chain()
@@ -542,25 +454,21 @@ class TradingSystem:
             failed_conditions = []
             
             # Process each 5-min bar
-            for i in range(CONFIG['ema_long'], len(df)):
+            for i in range(CONFIG['strategy']['ema_long'], len(df)):
                 window = df.iloc[i-20:i+1]  # 20 periods lookback + current
                 signal = self.signal_engine.calculate_signals(window)
                 
-                if signal and signal['strength'] >= 80:
+                if signal and signal['strength'] >= CONFIG.get('min_signal_strength', 80):
                     signals.append(signal)
-                    
-                    # Simulate trade outcome
-                    trade_pnl = self.simulate_trade_outcome(window.iloc[-1], signal)
-                    total_pnl += trade_pnl
-                    total_trades += 1
-                    
-                    if trade_pnl > 0:
-                        winning_trades += 1
-                    else:
-                        failed_conditions.extend([
-                            f"EMA tightness failed at {window.index[-1]}",
-                            f"Signal strength {signal['strength']} too low"
-                        ])
+                    signal['price'] = window.iloc[-1]['close']  # Add price for trade
+                    trade_id = self.execute_trade(signal)
+                    if trade_id:
+                        total_trades += 1
+                        trade = self.db.get_recent_trades(limit=1)[0]
+                        if trade['pnl'] and trade['pnl'] > 0:
+                            winning_trades += 1
+                        elif trade['pnl'] is not None:
+                            failed_conditions.append(f"Trade {trade_id} at {window.index[-1]}: Loss")
                 
                 # Rate limiting for backtest
                 time.sleep(0.01)
@@ -641,7 +549,7 @@ class TradingSystem:
                 
                 # Fetch data
                 df = self.fetch_historical_data()
-                if df is None or len(df) < CONFIG['ema_long']:
+                if df is None or len(df) < CONFIG['strategy']['ema_long']:
                     logger.debug("Insufficient data")
                     time.sleep(30)
                     continue
@@ -649,7 +557,7 @@ class TradingSystem:
                 # Generate signal
                 signal = self.signal_engine.calculate_signals(df)
                 
-                if signal and signal['strength'] >= CONFIG['min_signal_strength']:
+                if signal and signal['strength'] >= CONFIG.get('min_signal_strength', 80):
                     logger.info(f"Signal detected: {signal['strength']:.1f}% - {signal['direction']}")
                     
                     # Add price to signal
@@ -659,7 +567,7 @@ class TradingSystem:
                     trade_id = self.execute_trade(signal)
                     
                     if trade_id:
-                        # Telegram notification (via bot webhook)
+                        # Telegram notification
                         self.notify_telegram(f"🚨 TRADE EXECUTED\n"
                                            f"📈 {signal['direction']} @ ₹{signal['price']:.2f}\n"
                                            f"💪 Strength: {signal['strength']:.1f}%\n"
@@ -682,10 +590,9 @@ class TradingSystem:
     def notify_telegram(self, message):
         """Send notification via Telegram bot webhook"""
         try:
-            # Simple webhook call to bot
-            webhook_url = f"https://api.telegram.org/bot{os.getenv('TELEGRAM_BOT_TOKEN')}/sendMessage"
+            webhook_url = f"https://api.telegram.org/bot{CONFIG['telegram_token']}/sendMessage"
             data = {
-                'chat_id': os.getenv('TELEGRAM_CHAT_ID'),
+                'chat_id': CONFIG['telegram_chat_id'],
                 'text': message,
                 'parse_mode': 'Markdown'
             }

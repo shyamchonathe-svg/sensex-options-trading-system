@@ -15,8 +15,10 @@ class NotificationService:
         try:
             config_manager = SecureConfigManager()
             config = config_manager.get_all()
-            self.token = config['telegram_token']
-            self.chat_id = config['telegram_chat_id']
+            self.token = config.get('telegram_token')
+            self.chat_id = config.get('telegram_chat_id')
+            if not self.token or not self.chat_id:
+                raise ValueError("Missing telegram_token or telegram_chat_id in config")
             self.bot = TelegramBotHandler(config)
         except Exception as e:
             logger.error(f"Failed to initialize notification service: {e}")
@@ -25,9 +27,10 @@ class NotificationService:
     def send(self, message):
         """Send message synchronously"""
         try:
-            self.bot.send_telegram_message(message)
-            logger.info("Notification sent successfully")
-            return True
+            success = self.bot.send_telegram_message(message)
+            if success:
+                logger.info("Notification sent successfully")
+            return success
         except Exception as e:
             logger.error(f"Failed to send notification: {e}")
             return False
@@ -35,9 +38,10 @@ class NotificationService:
     async def send_async(self, message):
         """Send message asynchronously"""
         try:
-            self.bot.send_telegram_message(message)
-            logger.info("Notification sent successfully")
-            return True
+            success = self.bot.send_telegram_message(message)
+            if success:
+                logger.info("Notification sent successfully")
+            return success
         except Exception as e:
             logger.error(f"Failed to send notification: {e}")
             return False
@@ -50,9 +54,9 @@ class NotificationService:
         """Send session start notification"""
         message = f"""
 📈 <b>Trading Session Started</b>
-Session ID: {session['session_id']}
+Session ID: {session.get('session_id', 'N/A')}
 Mode: {mode.value}
-Time: {session['start_time'].strftime('%Y-%m-%d %H:%M:%S')}
+Time: {session.get('start_time', datetime.now()).strftime('%Y-%m-%d %H:%M:%S')}
         """
         return await self.send_async(message)
     
@@ -60,14 +64,14 @@ Time: {session['start_time'].strftime('%Y-%m-%d %H:%M:%S')}
         """Send session end notification"""
         message = f"""
 🛑 <b>Trading Session Ended</b>
-Session ID: {session['session_id']}
-Date: {summary['date']}
-Duration: {str(summary['duration'])}
-Total Signals: {summary['total_signals']}
-Positions Opened: {summary['positions_opened']}
-Positions Closed: {summary['positions_closed']}
-Total P&L: ₹{summary['total_pnl']:.2f}
-Success Rate: {summary['success_rate']:.2f}%
+Session ID: {session.get('session_id', 'N/A')}
+Date: {summary.get('date', 'N/A')}
+Duration: {str(summary.get('duration', 'N/A'))}
+Total Signals: {summary.get('total_signals', 0)}
+Positions Opened: {summary.get('positions_opened', 0)}
+Positions Closed: {summary.get('positions_closed', 0)}
+Total P&L: ₹{summary.get('total_pnl', 0):.2f}
+Success Rate: {summary.get('success_rate', 0):.2f}%
         """
         return await self.send_async(message)
     
@@ -75,12 +79,12 @@ Success Rate: {summary['success_rate']:.2f}%
         """Send position opened notification"""
         message = f"""
 📊 <b>Position Opened</b>
-Symbol: {position['symbol']}
-Strike: {position['strike']}
-Entry Price: ₹{position['entry_price']:.2f}
-Quantity: {position['quantity']}
+Symbol: {position.get('symbol', 'N/A')}
+Strike: {position.get('strike', 0)}
+Entry Price: ₹{position.get('entry_price', 0):.2f}
+Quantity: {position.get('quantity', 0)}
 Mode: {mode.value}
-Time: {position['entry_time'].strftime('%Y-%m-%d %H:%M:%S')}
+Time: {position.get('entry_time', datetime.now()).strftime('%Y-%m-%d %H:%M:%S')}
         """
         return await self.send_async(message)
     

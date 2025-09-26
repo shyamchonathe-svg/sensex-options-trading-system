@@ -15,11 +15,11 @@ from utils.broker_adapter import BrokerAdapter
 from utils.notification_service import NotificationService
 from utils.database_layer import DatabaseLayer
 from utils.enums import TradingMode
-
+import uuid
 
 class TradingService:
     def __init__(self, data_manager: DataManager, broker_adapter: BrokerAdapter,
-                 notification_service: NotificationService, config: Dict[str, Any],
+                 notification_service: Optional[NotificationService], config: Dict[str, Any],
                  database_layer: DatabaseLayer):
         self.data_manager = data_manager
         self.broker_adapter = broker_adapter
@@ -28,7 +28,7 @@ class TradingService:
         self.database_layer = database_layer
         self.logger = logging.getLogger(__name__)
         self.current_session = None
-        self.mode = TradingMode(config.get('mode', 'test'))
+        self.mode = TradingMode(config.get('trading_mode', 'test'))
         self.logger.info(f"TradingService initialized in {self.mode.value} mode")
 
     async def start_session(self, mode: TradingMode):
@@ -36,21 +36,25 @@ class TradingService:
         try:
             self.mode = mode
             session_date = datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d')
+            session_id = str(uuid.uuid4())
             self.current_session = {
+                'session_id': session_id,
                 'date': session_date,
                 'start_time': datetime.now(pytz.timezone('Asia/Kolkata')),
-                'sensex_entry_price': 0.0,  # Placeholder; update with actual data
+                'sensex_entry_price': 0.0,
                 'positions_opened': 0,
                 'positions_closed': 0,
                 'total_pnl': 0.0,
                 'total_signals': 0
             }
             self.database_layer.save_session(self.current_session)
-            await self.notification_service.send_session_start(self.current_session, self.mode)
-            self.logger.info(f"Trading session started for {session_date}")
+            if self.notification_service:
+                await self.notification_service.send_session_start(self.current_session, self.mode)
+            self.logger.info(f"Trading session started for {session_date} with ID {session_id}")
         except Exception as e:
             self.logger.error(f"Error starting trading session: {e}")
-            await self.notification_service.send_message(f"❌ Trading session error: {str(e)[:200]}")
+            if self.notification_service:
+                await self.notification_service.send_message(f"❌ Trading session error: {str(e)[:200]}")
             raise
 
     async def stop_session(self):
@@ -69,15 +73,17 @@ class TradingService:
                     'success_rate': (self.current_session['positions_closed'] / max(self.current_session['positions_opened'], 1)) * 100
                 }
                 self.database_layer.update_session(self.current_session)
-                await self.notification_service.send_session_end(self.current_session, summary)
+                if self.notification_service:
+                    await self.notification_service.send_session_end(self.current_session, summary)
                 self.logger.info(f"Trading session ended: {summary}")
                 self.current_session = None
         except Exception as e:
             self.logger.error(f"Error stopping trading session: {e}")
-            await self.notification_service.send_message(f"❌ Trading session stop error: {str(e)[:200]}")
+            if self.notification_service:
+                await self.notification_service.send_message(f"❌ Trading session stop error: {str(e)[:200]}")
 
     async def execute_trade(self, signal: Dict[str, Any]):
-        """Execute a trade based on a signal (placeholder)."""
+        """Execute a trade based on a signal."""
         try:
             if self.mode == TradingMode.TEST:
                 self.logger.info(f"Test mode: Simulating trade for signal {signal}")
@@ -91,7 +97,9 @@ class TradingService:
                 }
                 self.database_layer.save_position(position)
                 self.current_session['positions_opened'] += 1
-                await self.notification_service.send_position_opened(position, self.mode)
+                if self.notification_service:
+                    await self.notification_service.send_position_opened(position, self.mode)
         except Exception as e:
             self.logger.error(f"Error executing trade: {e}")
-            await self.notification_service.send_message(f"❌ Trade execution error: {str(e)[:200]}")
+            if self.notification_service:
+                await self.notification_service.send_message(f"❌ Trade execution error: {str(e)[:200]}")
