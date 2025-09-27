@@ -1,11 +1,15 @@
 {
     "api_key": "xpft4r4qmsoq0p9b",
     "api_secret": "6c96tog8pgp8wiqti9ox7b7nx4hej8g9",
+    "access_token": "",
     "telegram_token": "8427480734:AAFjkFwNbM9iUo0wa1Biwg8UHmJCvLs5vho",
-    "chat_id": "1639045622",
-    "trading_mode": "paper",
+    "telegram_chat_id": "1639045622",
+    "trading_mode": "test",
     "server_host": "sensexbot.ddns.net",
     "auth_timeout_seconds": 300,
+    "market_start": "09:15",
+    "market_end": "15:30",
+    "enable_notifications": true,
     "risk_management": {
         "max_daily_loss": 25000,
         "max_trades_per_day": 3,
@@ -15,5 +19,18 @@
         "ema_short_period": 10,
         "ema_long_period": 20,
         "ema_tightness_threshold": 51
-    }
+    },
+    "output_dir": "archives",
+    "trading_holidays": [
+        "2025-01-26",
+        "2025-02-12",
+        "2025-03-14",
+        "2025-04-10",
+        "2025-04-14",
+        "2025-05-01",
+        "2025-08-15",
+        "2025-10-02",
+        "2025-10-29",
+        "2025-11-14"
+    ]
 }

@@ -1,3 +1,178 @@
+#!/bin/bash
+# Complete system fix script designed to work properly with virtual environment
+# Run this INSIDE the activated virtual environment
+
+set -e  # Exit on any error
+
+echo "SENSEX TRADING SYSTEM - VENV FIX"
+echo "================================"
+
+# Check if we're in a virtual environment
+if [[ -z "$VIRTUAL_ENV" ]]; then
+    echo "ERROR: This script must be run inside the virtual environment"
+    echo "Please run: source venv/bin/activate"
+    echo "Then run this script again"
+    exit 1
+fi
+
+echo "Virtual environment detected: $VIRTUAL_ENV"
+echo "Working directory: $(pwd)"
+
+# Verify we're in the correct directory
+if [[ ! -f "config.json" ]] || [[ ! -f "postback_server.py" ]]; then
+    echo "ERROR: Please run this script from /home/ubuntu/main_trading"
+    exit 1
+fi
+
+# 1. Fix permissions with proper error handling
+echo "1. Fixing file permissions..."
+sudo chown -R ubuntu:ubuntu /home/ubuntu/main_trading/data/ 2>/dev/null || echo "Some permission fixes failed (non-critical)"
+sudo chmod -R 755 /home/ubuntu/main_trading/data/ 2>/dev/null || echo "Some chmod operations failed (non-critical)"
+
+# Create directories safely
+mkdir -p data/tokens data/temp logs/services archives/daily 2>/dev/null || true
+echo "Directory structure created"
+
+# 2. Install required Python packages in venv
+echo "2. Installing/updating Python packages in virtual environment..."
+pip install --upgrade pip
+pip install flask requests kiteconnect pytz python-dotenv
+
+# Verify installations
+python3 -c "import flask, requests, kiteconnect, pytz; print('All required packages available')"
+echo "Python dependencies verified"
+
+# 3. Stop any existing processes
+echo "3. Stopping existing processes..."
+sudo pkill -f "postback_server.py" 2>/dev/null || true
+sleep 2
+echo "Existing processes stopped"
+
+# 4. Create proper systemd services
+echo "4. Creating systemd service files..."
+
+mkdir -p services
+
+# Postback server service
+cat > services/postback_server.service << EOF
+[Unit]
+Description=Zerodha Postback Server (Venv)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/main_trading
+Environment=PATH=$VIRTUAL_ENV/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONPATH=/home/ubuntu/main_trading
+Environment=VIRTUAL_ENV=$VIRTUAL_ENV
+ExecStart=$VIRTUAL_ENV/bin/python3 /home/ubuntu/main_trading/postback_server.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=postback-server
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/ubuntu/main_trading
+
+# Process limits for free tier
+TimeoutStartSec=30
+TimeoutStopSec=30
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Trading system service
+cat > services/trading_system.service << EOF
+[Unit]
+Description=Sensex Options Trading System (Venv)
+After=network-online.target postback_server.service
+Wants=network-online.target
+Requires=postback_server.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/main_trading
+Environment=PATH=$VIRTUAL_ENV/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONPATH=/home/ubuntu/main_trading
+Environment=VIRTUAL_ENV=$VIRTUAL_ENV
+EnvironmentFile=/home/ubuntu/main_trading/.env
+
+# Dynamic mode reading and execution
+ExecStart=/bin/bash -c 'MODE=\$(cat /home/ubuntu/main_trading/.trading_mode 2>/dev/null || echo "TEST"); if [ "\$MODE" != "DISABLED" ]; then $VIRTUAL_ENV/bin/python3 /home/ubuntu/main_trading/main.py --mode \$(echo \$MODE | tr A-Z a-z); else echo "Trading disabled, sleeping..."; sleep infinity; fi'
+
+ExecStop=/bin/bash -c 'echo "DISABLED" > /home/ubuntu/main_trading/.trading_mode'
+ExecStopPost=/bin/bash -c 'if [ -f /home/ubuntu/main_trading/.trading_disabled ]; then rm -f /home/ubuntu/main_trading/.trading_disabled; fi'
+
+Restart=on-failure
+RestartSec=30
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+# Resource limits for EC2 free tier
+MemoryLimit=512M
+CPUQuota=70%
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=trading-system
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo "Service files created with venv paths"
+
+# 5. Install systemd services
+echo "5. Installing systemd services..."
+sudo cp services/postback_server.service /etc/systemd/system/
+sudo cp services/trading_system.service /etc/systemd/system/
+sudo chmod 644 /etc/systemd/system/postback_server.service
+sudo chmod 644 /etc/systemd/system/trading_system.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable postback_server.service
+sudo systemctl enable trading_system.service
+echo "Services installed and enabled"
+
+# 6. Create token configuration
+echo "6. Creating token management configuration..."
+
+cat > data/token_config.json << 'EOF'
+{
+    "request_token_file": "/home/ubuntu/main_trading/data/request_token.txt",
+    "access_token_file": "/home/ubuntu/main_trading/data/access_token.txt",
+    "token_backup_dir": "/home/ubuntu/main_trading/data/tokens",
+    "token_timeout_seconds": 300,
+    "backup_tokens": true,
+    "max_token_age_hours": 6,
+    "auto_cleanup_old_tokens": true
+}
+EOF
+
+echo "Token configuration created"
+
+# 7. Enhance the existing postback server
+echo "7. Enhancing postback server..."
+
+# Backup original if not already backed up
+if [ ! -f postback_server.py.original ]; then
+    cp postback_server.py postback_server.py.original
+    echo "Original postback server backed up"
+fi
+
+# Create enhanced postback server
+cat > postback_server.py << 'EOF'
 #!/usr/bin/env python3
 """
 Enhanced Postback Server for Zerodha Authentication
@@ -211,12 +386,6 @@ class EnhancedPostbackServer:
                 logger.error(f"Postback processing error: {e}")
                 return jsonify({'status': 'error', 'message': str(e)}), 500
 
-        @self.app.route('/redirect', methods=['GET', 'POST'])
-        def redirect_handler():
-            """Handle redirect endpoint (alias for postback)"""
-            logger.info("Request received on /redirect, routing to postback handler")
-            return postback()
-
         @self.app.route('/get_token')
         def get_token():
             """Get current token for token generator"""
@@ -314,3 +483,196 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"Server error: {e}")
         raise
+EOF
+
+chmod +x postback_server.py
+echo "Enhanced postback server created"
+
+# 8. Create management utilities
+echo "8. Creating management utilities..."
+
+cat > manage_system.sh << 'EOF'
+#!/bin/bash
+# System management script for venv-based trading system
+
+VENV_PATH="/home/ubuntu/main_trading/venv"
+PROJECT_PATH="/home/ubuntu/main_trading"
+
+case "$1" in
+    start)
+        echo "Starting trading system services..."
+        sudo systemctl start postback_server
+        sleep 2
+        sudo systemctl start trading_system
+        echo "Services started"
+        ;;
+    stop)
+        echo "Stopping trading system services..."
+        sudo systemctl stop trading_system
+        sudo systemctl stop postback_server
+        echo "Services stopped"
+        ;;
+    restart)
+        echo "Restarting trading system services..."
+        sudo systemctl restart postback_server
+        sleep 2
+        sudo systemctl restart trading_system
+        echo "Services restarted"
+        ;;
+    status)
+        echo "=== SERVICE STATUS ==="
+        sudo systemctl status postback_server --no-pager -l
+        echo
+        sudo systemctl status trading_system --no-pager -l
+        echo
+        echo "=== PROCESS STATUS ==="
+        ps aux | grep -E "(postback|main.py)" | grep -v grep || echo "No trading processes found"
+        ;;
+    logs)
+        echo "=== RECENT LOGS ==="
+        echo "Postback Server:"
+        sudo journalctl -u postback_server --no-pager -n 10
+        echo
+        echo "Trading System:"
+        sudo journalctl -u trading_system --no-pager -n 10
+        ;;
+    test-postback)
+        echo "=== TESTING POSTBACK SERVER ==="
+        
+        echo "1. Testing local HTTP endpoint:"
+        if curl -s --max-time 5 http://localhost:8001/health; then
+            echo -e "\n✅ Local HTTP: SUCCESS"
+        else
+            echo -e "\n❌ Local HTTP: FAILED"
+        fi
+        
+        echo -e "\n2. Testing HTTPS endpoint:"
+        if curl -s --max-time 5 https://sensexbot.ddns.net/health; then
+            echo -e "\n✅ HTTPS: SUCCESS" 
+        else
+            echo -e "\n❌ HTTPS: FAILED"
+        fi
+        
+        echo -e "\n3. Testing status endpoint:"
+        curl -s --max-time 5 http://localhost:8001/status | head -10
+        ;;
+    set-mode)
+        if [ -z "$2" ]; then
+            echo "Usage: $0 set-mode [DEBUG|TEST|LIVE|DISABLED]"
+            echo "Current mode: $(cat $PROJECT_PATH/.trading_mode 2>/dev/null || echo 'NOT SET')"
+            exit 1
+        fi
+        echo "$2" > "$PROJECT_PATH/.trading_mode"
+        echo "Trading mode set to: $2"
+        if [ "$2" != "DISABLED" ]; then
+            echo "Restarting trading system to apply new mode..."
+            sudo systemctl restart trading_system
+        else
+            echo "Trading system disabled"
+        fi
+        ;;
+    venv-test)
+        echo "=== VIRTUAL ENVIRONMENT TEST ==="
+        source "$VENV_PATH/bin/activate"
+        echo "Virtual env: $VIRTUAL_ENV"
+        echo "Python: $(which python3)"
+        echo "Testing imports:"
+        python3 -c "
+import sys
+print(f'Python version: {sys.version}')
+try:
+    import flask, requests, kiteconnect, pytz
+    print('✅ All required packages available')
+except ImportError as e:
+    print(f'❌ Missing package: {e}')
+"
+        ;;
+    manual-start)
+        echo "Starting postback server manually for testing..."
+        cd "$PROJECT_PATH"
+        source "$VENV_PATH/bin/activate"
+        echo "Virtual env activated: $VIRTUAL_ENV"
+        echo "Starting postback server..."
+        python3 postback_server.py
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status|logs|test-postback|set-mode|venv-test|manual-start}"
+        echo
+        echo "Commands:"
+        echo "  start         - Start all services"  
+        echo "  stop          - Stop all services"
+        echo "  restart       - Restart all services"
+        echo "  status        - Show service status"
+        echo "  logs          - Show recent logs"
+        echo "  test-postback - Test postback endpoints"
+        echo "  set-mode MODE - Set trading mode (DEBUG|TEST|LIVE|DISABLED)"
+        echo "  venv-test     - Test virtual environment"
+        echo "  manual-start  - Start postback server manually"
+        exit 1
+        ;;
+esac
+EOF
+
+chmod +x manage_system.sh
+echo "Management script created"
+
+# 9. Set initial configuration
+echo "9. Setting initial configuration..."
+echo "TEST" > .trading_mode
+echo "Initial trading mode set to TEST"
+
+# 10. Start the postback server
+echo "10. Starting postback server..."
+sudo systemctl start postback_server
+sleep 3
+
+# Check if it started successfully
+if sudo systemctl is-active --quiet postback_server; then
+    echo "✅ Postback server started successfully"
+else
+    echo "❌ Postback server failed to start - checking logs..."
+    sudo journalctl -u postback_server --no-pager -n 5
+fi
+
+# 11. Final system test
+echo "11. Running final system tests..."
+
+echo "Testing postback server endpoints..."
+if curl -s --max-time 5 http://localhost:8001/health > /dev/null; then
+    echo "✅ Local endpoint responding"
+else
+    echo "❌ Local endpoint not responding"
+fi
+
+if curl -s --max-time 5 https://sensexbot.ddns.net/health > /dev/null; then
+    echo "✅ HTTPS endpoint responding"  
+else
+    echo "❌ HTTPS endpoint not responding"
+fi
+
+echo
+echo "SYSTEM SETUP COMPLETE"
+echo "====================="
+echo
+echo "Virtual Environment: $VIRTUAL_ENV"
+echo "Postback URL: https://sensexbot.ddns.net/postback"
+echo "Management Script: ./manage_system.sh"
+echo
+echo "Next Steps:"
+echo "1. Test the system:"
+echo "   ./manage_system.sh test-postback"
+echo
+echo "2. Generate authentication token:"
+echo "   python3 debug_token_generator.py"
+echo
+echo "3. Start trading system:"
+echo "   ./manage_system.sh set-mode TEST"
+echo
+echo "4. Monitor system:"
+echo "   ./manage_system.sh status"
+echo "   ./manage_system.sh logs"
+echo
+echo "If you encounter issues:"
+echo "- Check virtual environment: ./manage_system.sh venv-test"
+echo "- Start manually for debugging: ./manage_system.sh manual-start"
+echo "- View detailed logs: ./manage_system.sh logs"

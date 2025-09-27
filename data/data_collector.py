@@ -11,8 +11,9 @@ import pytz
 from kiteconnect import KiteConnect, KiteTicker
 from tenacity import retry, stop_after_attempt, wait_exponential
 from utils.secure_config_manager import SecureConfigManager
-from .telegram_bot import TelegramBot
+from core.telegram_bot import TelegramBot
 from utils.data_manager import DataManager
+from utils.holiday_checker import HolidayChecker
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -20,7 +21,8 @@ logger = logging.getLogger(__name__)
 class DataCollector:
     def __init__(self):
         self.config_manager = SecureConfigManager()
-        self.config = self.config_manager.get_config()
+        self.config = self.config_manager.get_all()
+        self.holiday_checker = HolidayChecker(self.config)
         self.ist = pytz.timezone('Asia/Kolkata')
         self.kite = KiteConnect(api_key=self.config['api_key'])
         self.kite.set_access_token(self.config_manager.get_access_token())
@@ -32,6 +34,8 @@ class DataCollector:
         logger.info("DataCollector initialized")
 
     async def should_collect_data(self):
+        if not self.holiday_checker.is_trading_day():
+            return False
         now = datetime.now(self.ist)
         current_time = now.time()
         target_time = time(15, 25)

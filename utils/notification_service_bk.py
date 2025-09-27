@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
 Telegram Notification Service for Trading System
-Handles all trading alerts and status updates - ASYNCHRONOUS ONLY
+Handles all trading alerts and status updates
 """
 import httpx
+import asyncio
 from datetime import datetime
 from typing import Dict, Any, Optional
 import logging
@@ -15,22 +16,22 @@ class NotificationService:
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        # Support both uppercase and lowercase field names
-        self.telegram_token = config.get("TELEGRAM_TOKEN", "") or config.get("telegram_token", "")
-        self.chat_id = config.get("TELEGRAM_CHAT_ID", "") or config.get("telegram_chat_id", "")
-        self.enabled = config.get("ENABLE_NOTIFICATIONS", True) and config.get("enable_notifications", True)
+        self.telegram_token = config.get("TELEGRAM_TOKEN", "")
+        self.chat_id = config.get("TELEGRAM_CHAT_ID", "")
+        self.enabled = config.get("ENABLE_NOTIFICATIONS", True)
         self.base_url = f"https://api.telegram.org/bot{self.telegram_token}"
         
         if self.enabled and self.telegram_token and self.chat_id:
             logger.info("📱 Telegram notifications enabled")
         else:
-            logger.warning("⚠️ Telegram notifications disabled")
+            logger.warning("⚠️  Telegram notifications disabled")
     
     async def send_message(self, message: str, parse_mode: str = "HTML") -> bool:
-        """Asynchronous send message to Telegram."""
+        """Send message to Telegram."""
         if not self.enabled:
             logger.debug(f"[NOTIFICATION] {message[:100]}...")
             return True
+        
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.post(
@@ -41,31 +42,17 @@ class NotificationService:
                         "parse_mode": parse_mode
                     }
                 )
+                
                 if response.status_code == 200:
                     logger.info("📱 Telegram message sent successfully")
                     return True
                 else:
                     logger.error(f"❌ Telegram API error: {response.status_code}")
                     return False
+                    
         except Exception as e:
             logger.error(f"❌ Telegram notification failed: {e}")
             return False
-    
-    async def send_system_alert(self, alert_data: Dict[str, Any]) -> bool:
-        """Asynchronous send system status alerts."""
-        alert_type = alert_data.get("type", "INFO")
-        emoji = {"ERROR": "🚨", "WARNING": "⚠️", "INFO": "ℹ️", "SUCCESS": "✅"}.get(alert_type, "ℹ️")
-        
-        message = (
-            f"{emoji} <b>SYSTEM {alert_type.upper()}</b>\n\n"
-            f"⚙️ <b>Component:</b> {alert_data.get('component', 'System')}\n"
-            f"💥 <b>Message:</b> {alert_data.get('message', 'N/A')}\n"
-            f"⏰ <b>Time:</b> {datetime.now().strftime('%H:%M:%S IST')}\n"
-            f"📊 <b>Mode:</b> {alert_data.get('mode', 'N/A')}\n"
-            f"🔧 <b>Action:</b> {alert_data.get('action', 'N/A')}"
-        )
-        
-        return await self.send_message(message)
     
     async def send_trade_alert(self, trade_data: Dict[str, Any], mode: str) -> bool:
         """Send detailed trade alert."""
@@ -89,6 +76,7 @@ class NotificationService:
         elif trade_data.get("action") == "EXIT":
             pnl = trade_data.get("pnl", 0)
             pnl_emoji = "🟢" if pnl > 0 else "🔴"
+            pnl_color = "🟢" if pnl > 0 else "🔴"
             
             message = (
                 f"{mode_emoji} <b>{mode} MODE - TRADE EXIT</b>\n\n"
@@ -107,6 +95,22 @@ class NotificationService:
         
         else:
             return False
+        
+        return await self.send_message(message)
+    
+    async def send_system_alert(self, alert_data: Dict[str, Any]) -> bool:
+        """Send system status alerts."""
+        alert_type = alert_data.get("type", "INFO")
+        emoji = {"ERROR": "🚨", "WARNING": "⚠️", "INFO": "ℹ️", "SUCCESS": "✅"}.get(alert_type, "ℹ️")
+        
+        message = (
+            f"{emoji} <b>SYSTEM {alert_type.upper()}</b>\n\n"
+            f"⚙️ <b>Component:</b> {alert_data.get('component', 'System')}\n"
+            f"💥 <b>Message:</b> {alert_data.get('message', 'N/A')}\n"
+            f"⏰ <b>Time:</b> {datetime.now().strftime('%H:%M:%S IST')}\n"
+            f"📊 <b>Mode:</b> {alert_data.get('mode', 'N/A')}\n"
+            f"🔧 <b>Action:</b> {alert_data.get('action', 'N/A')}"
+        )
         
         return await self.send_message(message)
     

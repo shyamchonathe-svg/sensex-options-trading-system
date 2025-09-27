@@ -1,74 +1,71 @@
 #!/usr/bin/env python3
 """
-Health Monitor - Monitors system health (CPU, memory, data freshness)
-Sends alerts via NotificationService
+Health Monitor - Monitors system health and sends alerts
+Phase 2: Disk usage, memory, CPU, and market data freshness
 """
 
 import asyncio
 import logging
 import psutil
-from typing import Dict, Any
-from utils.secure_config_manager import SecureConfigManager as ConfigManager
+from datetime import datetime, timedelta
+import pytz
+from utils.secure_config_manager import SecureConfigManager
 from utils.data_manager import DataManager
-from utils.notification_service import NotificationService
-from datetime import datetime
-import json
-import os
 
+logger = logging.getLogger(__name__)
 
 class HealthMonitor:
-    def __init__(self, config_manager: ConfigManager, data_manager: DataManager,
-                 logger: logging.Logger, notification_service: NotificationService):
+    def __init__(self, config_manager: SecureConfigManager, data_manager: DataManager,
+                 logger_obj: logging.Logger, notification_service=None):
         self.config_manager = config_manager
         self.data_manager = data_manager
-        self.logger = logger
+        self.logger = logger_obj
         self.notification_service = notification_service
+        self.ist = pytz.timezone('Asia/Kolkata')
         self.config = config_manager.get_all()
         self.logger.info("HealthMonitor initialized")
 
     async def monitor_system(self):
-        """Monitor system health and send alerts."""
-        while True:
-            try:
-                metrics = self._collect_metrics()
-                self._save_metrics(metrics)
-                if metrics['cpu_usage_percent'] > self.config.get('cpu_threshold', 80.0):
-                    await self.notification_service.send_message(
-                        f"⚠️ High CPU Usage: {metrics['cpu_usage_percent']:.1f}%"
-                    )
-                if metrics['memory_usage_percent'] > self.config.get('memory_threshold', 80.0):
-                    await self.notification_service.send_message(
-                        f"⚠️ High Memory Usage: {metrics['memory_usage_percent']:.1f}%"
-                    )
-                if not self.data_manager.is_data_fresh(self.config.get('data_freshness_threshold', 300)):
-                    await self.notification_service.send_message("⚠️ Stale market data detected")
-                await asyncio.sleep(60)  # Check every minute
-            except Exception as e:
-                self.logger.error(f"Error monitoring system: {e}")
-                await self.notification_service.send_message(f"❌ Health monitor error: {str(e)[:200]}")
-
-    def _collect_metrics(self) -> Dict[str, Any]:
-        """Collect system metrics."""
+        """Monitor system metrics and alert on issues."""
         try:
-            cpu_usage = psutil.cpu_percent(interval=1)
-            memory_usage = psutil.virtual_memory().percent
-            data_fresh = self.data_manager.is_data_fresh()
-            return {
-                'timestamp': datetime.now().isoformat(),
-                'cpu_usage_percent': cpu_usage,
-                'memory_usage_percent': memory_usage,
-                'data_freshness': data_fresh
-            }
-        except Exception as e:
-            self.logger.error(f"Error collecting metrics: {e}")
-            return {}
-
-    def _save_metrics(self, metrics: Dict[str, Any]):
-        """Save metrics to a file."""
-        try:
-            metrics_file = os.path.join(self.config.get('data_dir', 'option_data'), 'metrics.json')
-            with open(metrics_file, 'w') as f:
-                json.dump(metrics, f)
-            self.logger.info("Saved system metrics")
-        except Exception as e:
-            self.logger.error(f"Error saving metrics: {e}")
+            while True:
+                try:
+                    # Check system metrics
+                    cpu_usage = psutil.cpu_percent(interval=1)
+                    memory = psutil.virtual_memory()
+                    disk = psutil.disk_usage(self.config.get('data_dir', '/home/ubuntu/main_trading/data/live_dumps'))
+                    
+                    metrics = {
+                        'cpu_usage_percent': cpu_usage,
+                        'memory_usage_percent': memory.percent,
+                        'disk_usage_percent': (disk.used / disk.total) * 100,
+                        'timestamp': datetime.now(self.ist).strftime('%Y-%m-%d %H:%M:%S')
+                    }
+                    
+                    self.logger.info("Saved system metrics")
+                    
+                    # Check data freshness
+                    latest_data = self.data_manager.latest_data.get('SENSEX')
+                    if not latest_data or (datetime.now(self.ist) - latest_data.index[-1]).total_seconds() > 600:
+                        self.logger.warning("No data for SENSEX")
+                        if self.notification_service:
+                            await self.notification_service.send_message("⚠️ Stale market data detected")
+                    
+                    # Alert on high usage
+                    if cpu_usage > 80 and self.notification_service:
+                        await self.notification_service.send_message(f"⚠️ High CPU usage: {cpu_usage:.1f}%")
+                    if memory.percent > 80 and self.notification_service:
+                        await self.notification_service.send_message(f"⚠️ High memory usage: {memory.percent:.1f}%")
+                    if metrics['disk_usage_percent'] > 80 and self.notification_service:
+                        await self.notification_service.send_message(f"⚠️ High disk usage: {metrics['disk_usage_percent']:.1f}%")
+                    
+                    await asyncio.sleep(60)
+                
+                except Exception as e:
+                    self.logger.error(f"Error monitoring system: {e}")
+                    if self.notification_service:
+                        await self.notification_service.send_message(f"❌ Health monitor error: {str(e)[:200]}")
+                    await asyncio.sleep(60)
+        
+        except KeyboardInterrupt:
+            self.logger.info("Health monitor stopped")

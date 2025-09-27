@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Main script for Sensex Options Trading System
-Orchestrates debug, test, and live modes with secure logging
+Orchestrates debug, test, and live modes with Telegram control
 """
 import argparse
 import logging
@@ -11,6 +11,7 @@ import asyncio
 from datetime import datetime
 import pytz
 import os
+import sys
 
 try:
     from utils.secure_config_manager import SecureConfigManager
@@ -24,12 +25,13 @@ try:
     from utils.broker_adapter import BrokerAdapter
     from utils.database_layer import DatabaseLayer
     from utils.enums import TradingMode
+    from utils.holiday_checker import HolidayChecker
     from sensex_trading_bot_debug import SensexTradingBot as DebugBot
     from sensex_trading_bot_live import SensexTradingBot as LiveBot
     from notifications import send_telegram_message
 except ImportError as e:
     logging.error(f"Failed to import dependencies: {e}")
-    exit(1)
+    sys.exit(1)
 
 class RedactingFilter(logging.Filter):
     def __init__(self):
@@ -63,7 +65,7 @@ def setup_logging():
     logger.addHandler(console)
     return logger
 
-async def main():
+async def main(args=None):
     parser = argparse.ArgumentParser(description='Sensex Options Trading System')
     parser.add_argument('--mode', choices=['debug', 'test', 'live'], default='test', help='Operation mode')
     parser.add_argument('--date', help='Date for debug mode (YYYY-MM-DD)')
@@ -75,17 +77,26 @@ async def main():
     parser.add_argument('--access-token', help='Kite Connect access token')
     parser.add_argument('--data-dir', default='option_data', help='Data directory')
     parser.add_argument('--csv-path', help='CSV path for debug mode backtest')
-    args = parser.parse_args()
+    parser.add_argument('--force', action='store_true', help='Force run on non-trading days')
+    args = parser.parse_args(args) if args else parser.parse_args()
 
     logger = setup_logging()
     
     try:
         config_manager = SecureConfigManager()
         config = config_manager.get_all()
+        holiday_checker = HolidayChecker(config)
+        if args.access_token:
+            config['access_token'] = args.access_token
     except Exception as e:
         logger.error(f"Failed to load config: {e}")
-        exit(1)
+        sys.exit(1)
     
+    if args.mode in ['test', 'live'] and not args.force and not holiday_checker.is_trading_day():
+        logger.info(f"Cannot start {args.mode} mode on a non-trading day")
+        send_telegram_message(f"❌ <b>{args.mode.upper()} Mode Not Started</b>\nToday is a non-trading day.")
+        sys.exit(0)
+
     # Initialize services
     notification_service = None
     try:
@@ -112,6 +123,10 @@ async def main():
         database_layer = None
     
     try:
+        trading_mode_str = config.get('trading_mode', 'test').upper()
+        if trading_mode_str not in ['DEBUG', 'TEST', 'LIVE']:
+            logger.warning(f"Invalid trading_mode '{trading_mode_str}', defaulting to TEST")
+            trading_mode_str = 'TEST'
         trading_service = TradingService(data_manager, broker_adapter, notification_service, config, database_layer)
     except Exception as e:
         logger.warning(f"Could not initialize trading service: {e}")
@@ -135,11 +150,13 @@ async def main():
         f.write(args.mode.upper())
 
     try:
-        mode = TradingMode.TEST if args.mode == 'test' else TradingMode.LIVE if args.mode == 'live' else TradingMode.DEBUG
+        mode = TradingMode[args.mode.upper()]
         if trading_service:
             await trading_service.start_session(mode)
     except Exception as e:
         logger.warning(f"Could not start trading service session: {e}")
+        send_telegram_message(f"❌ <b>Trading Session Error</b>\n{str(e)[:200]}")
+        sys.exit(1)
 
     try:
         if args.mode == 'debug':
@@ -152,7 +169,7 @@ async def main():
                         'message': 'Debug mode requires --csv-path or --date, --time, --access-token',
                         'mode': args.mode
                     })
-                return
+                sys.exit(1)
             
             if args.csv_path and trading_system:
                 results = trading_system.run_debug_mode(args.csv_path)
@@ -172,10 +189,15 @@ async def main():
                         'risk_level': 'LOW'
                     })
             else:
+                from token_generator import TokenGenerator
+                token_generator = TokenGenerator()
+                if not await token_generator.run(debug=True):
+                    logger.error("Failed to generate debug token")
+                    sys.exit(1)
                 debug_bot = DebugBot(config_file='config.json')
-                if not debug_bot.initialize_kite(args.access_token, args.expiry_date):
+                if not debug_bot.initialize_kite(args.access_token or config.get('access_token')):
                     logger.error("Failed to initialize Kite Connect for debug mode")
-                    return
+                    sys.exit(1)
                 
                 logger.info(f"Running debug mode for {args.date} at {args.time}")
                 debug_bot.debug_specific_conditions(
@@ -195,7 +217,6 @@ async def main():
 
         elif args.mode == 'test':
             logger.info("Starting test mode")
-            
             send_telegram_message(f"""
 🧪 <b>Test Mode Started</b>
 
@@ -229,20 +250,20 @@ System is now in test mode. Monitoring all components.
 
         elif args.mode == 'live':
             logger.info("Starting live mode")
-            if not args.access_token:
-                logger.error("Live mode requires --access-token")
+            if not config.get('access_token'):
+                logger.error("Live mode requires access_token in config")
                 if notification_service:
                     await notification_service.send_system_alert({
                         'type': 'ERROR', 'component': 'Main',
-                        'message': 'Live mode requires --access-token',
+                        'message': 'Live mode requires access_token in config',
                         'mode': args.mode
                     })
-                return
+                sys.exit(1)
             
             live_bot = LiveBot(config_file='config.json', expiry_date=args.expiry_date or '2025-09-11')
-            if not live_bot.initialize_kite(args.access_token):
+            if not live_bot.initialize_kite(config.get('access_token')):
                 logger.error("Failed to initialize Kite Connect for live mode")
-                return
+                sys.exit(1)
             
             logger.info("Starting live trading mode")
             live_bot.start_trading(mode='live', data_dir=args.data_dir)
@@ -256,6 +277,13 @@ System is now in test mode. Monitoring all components.
         logger.error(f"Error in main execution: {e}")
         import traceback
         traceback.print_exc()
+        if notification_service:
+            await notification_service.send_system_alert({
+                'type': 'ERROR', 'component': 'Main',
+                'message': f"Main execution error: {str(e)[:200]}",
+                'mode': args.mode
+            })
+        sys.exit(1)
     
     finally:
         if trading_service:

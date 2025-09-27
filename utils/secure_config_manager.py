@@ -1,48 +1,37 @@
-#!/usr/bin/env python3
-"""
-Secure configuration manager
-"""
 import json
 import logging
 import os
-from pathlib import Path
+from typing import Any, Dict
 
 logger = logging.getLogger(__name__)
 
 class SecureConfigManager:
-    """Securely manage configuration"""
-    
-    def __init__(self, config_path: str = '/home/ubuntu/main_trading/config.json'):
-        self.config_path = Path(config_path)
-        self._config = self._load_config()
-        
-        required_keys = [
-            'api_key', 'api_secret', 'telegram_token', 'telegram_chat_id',
-            'trading_mode', 'server_host', 'auth_timeout_seconds', 'risk_management', 'strategy'
-        ]
-        missing = [key for key in required_keys if key not in self._config]
-        if missing:
-            logger.warning(f"Missing configuration keys: {missing}")
-    
-    def _load_config(self) -> dict:
-        """Load configuration from file"""
+    def __init__(self, config_path: str = "/home/ubuntu/main_trading/config.json"):  # Updated path
+        self.config_path = config_path
+        self.config = self._load_config()
+
+    def _load_config(self) -> Dict[str, Any]:
         try:
             with open(self.config_path, 'r') as f:
                 config = json.load(f)
             logger.info(f"Configuration loaded from {self.config_path}")
             return config
         except Exception as e:
-            logger.error(f"Failed to load config: {e}")
+            logger.error(f"Failed to load config: {e}", exc_info=True)
             raise
-    
-    def get_all(self) -> dict:
-        """Get all configuration settings"""
-        return self._config
-    
-    def get_config(self) -> dict:
-        """Alias for get_all"""
-        return self.get_all()
-    
-    def get_access_token(self) -> str:
-        """Get access token"""
-        return self._config.get('access_token', '')
+
+    def get(self, key: str, default: Any = None) -> Any:
+        return self.config.get(key, default)
+
+    def get_all(self) -> Dict[str, Any]:
+        return self.config
+
+    def update(self, key: str, value: Any) -> None:
+        try:
+            self.config[key] = value
+            with open(self.config_path, 'w') as f:
+                json.dump(self.config, f, indent=4)
+            logger.info(f"Configuration updated: {key}")
+        except Exception as e:
+            logger.error(f"Failed to update config: {e}", exc_info=True)
+            raise
