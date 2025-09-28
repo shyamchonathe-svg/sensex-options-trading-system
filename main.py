@@ -77,7 +77,7 @@ async def main(args=None):
     parser.add_argument('--access-token', help='Kite Connect access token')
     parser.add_argument('--data-dir', default='option_data', help='Data directory')
     parser.add_argument('--csv-path', help='CSV path for debug mode backtest')
-    parser.add_argument('--force', action='store_true', help='Force run on non-trading days')
+    parser.add_argument('--force', '-f', action='store_true', help='Force run on non-trading days')
     args = parser.parse_args(args) if args else parser.parse_args()
 
     logger = setup_logging()
@@ -92,10 +92,15 @@ async def main(args=None):
         logger.error(f"Failed to load config: {e}")
         sys.exit(1)
     
-    if args.mode in ['test', 'live'] and not args.force and not holiday_checker.is_trading_day():
-        logger.info(f"Cannot start {args.mode} mode on a non-trading day")
-        send_telegram_message(f"❌ <b>{args.mode.upper()} Mode Not Started</b>\nToday is a non-trading day.")
-        sys.exit(0)
+    # Check trading day only for test/live modes and only if --force is not used
+    if args.mode in ['test', 'live'] and not args.force:
+        if not holiday_checker.is_trading_day():
+            logger.info(f"Cannot start {args.mode} mode on a non-trading day. Use --force to override.")
+            send_telegram_message(f"❌ <b>{args.mode.upper()} Mode Not Started</b>\nToday is a non-trading day.\nUse --force flag to override this check.")
+            sys.exit(0)
+    elif args.force:
+        logger.info(f"Force flag used - bypassing trading day check for {args.mode} mode")
+        send_telegram_message(f"⚠️ <b>Force Mode Active</b>\nByassing trading day validation for {args.mode.upper()} mode.")
 
     # Initialize services
     notification_service = None
@@ -217,12 +222,14 @@ async def main(args=None):
 
         elif args.mode == 'test':
             logger.info("Starting test mode")
+            force_msg = " (FORCED)" if args.force else ""
             send_telegram_message(f"""
-🧪 <b>Test Mode Started</b>
+🧪 <b>Test Mode Started{force_msg}</b>
 
 📅 Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 🔧 Mode: Testing system components
 🤖 Status: Running diagnostics
+⚠️ Force: {'Yes' if args.force else 'No'}
 
 System is now in test mode. Monitoring all components.
             """)
@@ -259,6 +266,18 @@ System is now in test mode. Monitoring all components.
                         'mode': args.mode
                     })
                 sys.exit(1)
+            
+            force_msg = " (FORCED)" if args.force else ""
+            send_telegram_message(f"""
+🔴 <b>Live Mode Started{force_msg}</b>
+
+📅 Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+💰 Mode: Live Trading Active
+⚠️ Force: {'Yes' if args.force else 'No'}
+🚨 WARNING: Real money trading is active!
+
+System is now in live trading mode.
+            """)
             
             live_bot = LiveBot(config_file='config.json', expiry_date=args.expiry_date or '2025-09-11')
             if not live_bot.initialize_kite(config.get('access_token')):
